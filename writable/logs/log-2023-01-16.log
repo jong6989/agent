@@ -1,0 +1,382 @@
+CRITICAL - 2023-01-16 11:39:05 --> syntax error, unexpected namespaced name "Agent\Controllers", expecting "{"
+in APPPATH\Controllers\Agent.php on line 3.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(260): CodeIgniter\Autoloader\Autoloader->includeFile('APPPATH\\Controllers\\Agent.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(238): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Agent')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Agent')
+ 4 SYSTEMPATH\CodeIgniter.php(875): class_exists('\\App\\Controllers\\Agent', true)
+ 5 SYSTEMPATH\CodeIgniter.php(467): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 11:54:49 --> Undefined variable $first_name
+in APPPATH\Views\sidebar\agent.php on line 14.
+ 1 APPPATH\Views\sidebar\agent.php(14): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $first_name', 'APPPATH\\Views\\sidebar\\agent.php', 14)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\sidebar\\agent.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('sidebar/agent', [], true)
+ 5 APPPATH\Views\agent\downlines.php(5): view('sidebar/agent')
+ 6 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\agent\\downlines.php')
+ 7 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 8 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/downlines', [], true)
+ 9 APPPATH\Controllers\Agent.php(23): view('agent/downlines')
+10 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->downlines()
+11 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+12 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 12:04:49 --> Invalid file: agent/sub_accounts.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/sub_accounts.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/sub_accounts', [], true)
+ 3 APPPATH\Controllers\Agent.php(36): view('agent/sub_accounts')
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->sub_accounts()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 12:59:08 --> Cannot use empty array elements in arrays
+in APPPATH\Controllers\Agent.php on line 13.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2023-01-16 15:53:23 --> Invalid file: agent/players.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/players.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/players', [], true)
+ 3 APPPATH\Controllers\Agent.php(59): view('agent/players', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->players()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:26:17 --> Request URI segment is out of range: 2
+in SYSTEMPATH\HTTP\URI.php on line 529.
+ 1 SYSTEMPATH\HTTP\URI.php(529): CodeIgniter\HTTP\Exceptions\HTTPException::forURISegmentOutOfRange(2)
+ 2 APPPATH\Controllers\Agent.php(10): CodeIgniter\HTTP\URI->getSegment(2)
+ 3 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 4 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 5 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:30:21 --> Undefined variable $request
+in APPPATH\Controllers\Agent.php on line 11.
+ 1 APPPATH\Controllers\Agent.php(11): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $request', 'APPPATH\\Controllers\\Agent.php', 11)
+ 2 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 3 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:30:51 --> Undefined variable $sub_menu
+in APPPATH\Controllers\Agent.php on line 29.
+ 1 APPPATH\Controllers\Agent.php(29): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $sub_menu', 'APPPATH\\Controllers\\Agent.php', 29)
+ 2 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 3 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:10 --> Invalid file: agent/dist/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/dist/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/dist/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/dist/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:33:15 --> Invalid file: agent/accounts/downlines.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/accounts/downlines.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/accounts/downlines', [], true)
+ 3 APPPATH\Controllers\Agent.php(33): view('agent/accounts/downlines', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:35:09 --> Invalid file: agent/accounts.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/accounts.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/accounts', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/accounts', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:35:47 --> Invalid file: agent/downlines/downlines.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/downlines/downlines.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/downlines/downlines', [], true)
+ 3 APPPATH\Controllers\Agent.php(36): view('agent/downlines/downlines', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:36:12 --> Invalid file: agent/accounts/downlines.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/accounts/downlines.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/accounts/downlines', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/accounts/downlines', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:37:00 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:38:56 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:39:39 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 17:43:31 --> Invalid file: agent/img.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/img.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/img', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/img', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+CRITICAL - 2023-01-16 23:51:09 --> Invalid file: agent/sub_account.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('agent/sub_account.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('agent/sub_account', [], true)
+ 3 APPPATH\Controllers\Agent.php(35): view('agent/sub_account', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Agent->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Agent))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()

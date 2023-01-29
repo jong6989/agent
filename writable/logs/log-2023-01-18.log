@@ -1,0 +1,9 @@
+CRITICAL - 2023-01-18 17:26:30 --> Invalid file: admin/operator.php
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 33.
+ 1 SYSTEMPATH\View\View.php(201): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/operator.php')
+ 2 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('admin/operator', [], true)
+ 3 APPPATH\Controllers\Admin.php(35): view('admin/operator', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Admin->index()
+ 5 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()

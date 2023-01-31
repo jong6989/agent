@@ -94,6 +94,11 @@ $routes->get('/api', 'Api::index');
 $routes->post('/api/import_report', 'Api::import_report');
 $routes->post('/api/process_commission', 'Api::process_commission');
 
+//Payouts
+$routes->get('/payouts/(:any)', 'Payout::index/$1');
+$routes->get('/process_payout/(:any)', 'Payout::process_payout/$1');
+$routes->post('/process_payout/(:any)', 'Payout::process_payout/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

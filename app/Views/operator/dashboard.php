@@ -58,7 +58,7 @@
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3> <?= PESO . ' ' . number_format($payouts); ?></h3>
+            <h3> <?= PESO . ' ' . number_format( -$payouts); ?></h3>
 
             <p>Payouts</p>
           </div>

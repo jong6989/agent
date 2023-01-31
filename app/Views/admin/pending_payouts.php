@@ -11,8 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Commissions : <?= PESO . ' ' . number_format($balance); ?> </h1>
-            <h1>Payouts : <?= PESO . ' ' . number_format( -$payouts); ?> </h1>
+            <h1>Pending Payouts: <?= PESO . ' ' . number_format($total_pending); ?></h1>
           </div>
           
         </div>
@@ -28,7 +27,17 @@
           
             <div class="card">
               <div class="card-header">
-                
+                <div class="form-group">
+                    <label for="hallList">Select Hall Operator</label>
+                    <select class="custom-select form-control-border" id="hallList">
+                        <option value="" <?= ($operatorID)? '': 'selected'; ?> >All</option>
+                        <?php foreach ($operators as $k => $v): ?>
+                            <option value="<?= $v['id']; ?>" <?= ($v['id'] == $operatorID)? 'selected': ''; ?> >
+                                <?= $v['name']; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive">
@@ -37,13 +46,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Date</th>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Transaction ID</th>
+                    <th>Access</th>
+                    <th>Name</th>
                     <th>Bank</th>
-                    <th>Account No.</th>
-                    <th>Ref. No.</th>
-                    <th>Ref. Date</th>
+                    <th>Amount</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -52,13 +59,18 @@
                       <tr>
                         <td> <?= $v['id']; ?> </td>
                         <td> <?= $v['created_at']; ?> </td>
-                        <td> <?= PESO . ' ' . $v['amount']; ?> </td>
-                        <td> <?= $v['type']; ?> </td>
-                        <td> <?= $v['transaction']; ?></td>
-                        <td> <?= $v['bank']; ?></td>
-                        <td> <?= $v['account_number']; ?></td>
-                        <td> <?= $v['ref_no']; ?></td>
-                        <td> <?= $v['ref_date']; ?></td>
+                        <td> <?= $v['access']; ?> </td>
+                        <td> <?= $v['name']; ?> </td>
+                        <td> <?= $v['bank_name']; ?> </td>
+                        <td> <?= PESO . ' ' . number_format($v['wallet']); ?> </td>
+                        <td> 
+                          <a href="<?= base_url('process_payout/' . $v['id']); ?>">
+                            <button class="btn btn-warning btn-xs">
+                              <i class="fas fa-shipping-fast"></i>
+                              process
+                            </button>
+                          </a>
+                        </td>
                       </tr>
                     <?php endforeach; ?>
                   
@@ -67,13 +79,11 @@
                   <tr>
                     <th>ID</th>
                     <th>Date</th>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Transaction ID</th>
+                    <th>Access</th>
+                    <th>Name</th>
                     <th>Bank</th>
-                    <th>Account No.</th>
-                    <th>Ref. No.</th>
-                    <th>Ref. Date</th>
+                    <th>Amount</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -105,6 +115,10 @@
 <?= view('scripts/js'); ?>
 
 <script>
+
+    $('#hallList').change( (val)=>{
+        window.location = "<?= base_url('payouts/pending'); ?>?operator=" + $('#hallList').val();
+    } );
 
   $("#tableData").DataTable({
       "responsive": true, 

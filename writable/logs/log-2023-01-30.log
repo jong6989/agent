@@ -48,3 +48,57 @@ INFO - 2023-01-30 02:35:57 --> Session: Class initialized using 'CodeIgniter\Ses
 INFO - 2023-01-30 02:35:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2023-01-30 02:36:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 INFO - 2023-01-30 02:38:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 03:34:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 03:34:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 03:44:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 03:44:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 03:45:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:05:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:05:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-01-30 05:05:38 --> Undefined property: App\Controllers\Payout::$accounts
+in APPPATH\Controllers\Payout.php on line 55.
+ 1 APPPATH\Controllers\Payout.php(55): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: App\\Controllers\\Payout::$accounts', 'APPPATH\\Controllers\\Payout.php', 55)
+ 2 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Payout->index('pending')
+ 3 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Payout))
+ 4 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-01-30 05:05:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-01-30 05:05:56 --> Undefined variable $operators
+in APPPATH\Views\admin\pending_payouts.php on line 34.
+ 1 APPPATH\Views\admin\pending_payouts.php(34): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $operators', 'APPPATH\\Views\\admin\\pending_payouts.php', 34)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\admin\\pending_payouts.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('admin/pending_payouts', [], true)
+ 5 APPPATH\Controllers\Payout.php(64): view('admin/pending_payouts', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Payout->index('pending')
+ 7 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Payout))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-01-30 05:07:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2023-01-30 05:07:37 --> Undefined array key "bank"
+in APPPATH\Views\admin\pending_payouts.php on line 62.
+ 1 APPPATH\Views\admin\pending_payouts.php(62): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "bank"', 'APPPATH\\Views\\admin\\pending_payouts.php', 62)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\admin\\pending_payouts.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1135): CodeIgniter\View\View->render('admin/pending_payouts', [], true)
+ 5 APPPATH\Controllers\Payout.php(64): view('admin/pending_payouts', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(925): App\Controllers\Payout->index('pending')
+ 7 SYSTEMPATH\CodeIgniter.php(480): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Payout))
+ 8 SYSTEMPATH\CodeIgniter.php(349): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+INFO - 2023-01-30 05:08:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:09:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:10:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:11:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:11:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:15:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:15:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:16:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:16:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:16:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+INFO - 2023-01-30 05:32:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

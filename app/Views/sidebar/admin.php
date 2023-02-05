@@ -71,7 +71,7 @@
             <a href="#" class="nav-link <?= ($menu == 'payouts') ? 'active':''; ?>">
               <i class="nav-icon fas fa-money-check-alt"></i>
               <p>
-                Payouts
+                GGR Share
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -79,13 +79,13 @@
               <li class="nav-item">
                 <a href="<?= base_url('payouts/pending'); ?>" class="nav-link <?= ($action == 'pending') ? 'active':''; ?>">
                   <i class="far fa-clock nav-icon"></i>
-                  <p>Pending Payouts</p>
+                  <p>Pending GGR Share</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="<?= base_url('payouts/released'); ?>" class="nav-link <?= ($action == 'released') ? 'active':''; ?>">
                   <i class="fas fa-check nav-icon"></i>
-                  <p>Released Payouts</p>
+                  <p>Released GGR Share</p>
                 </a>
               </li>
             </ul>

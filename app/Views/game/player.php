@@ -77,7 +77,7 @@
                           <div class="inner">
                             <h3><?= number_format($total_payout); ?></h3>
 
-                            <p>Total Payouts</p>
+                            <p>Total GGR Share</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-money-bill-alt"></i>

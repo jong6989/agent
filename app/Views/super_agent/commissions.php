@@ -12,7 +12,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1>Commissions : <?= PESO . ' ' . number_format($balance); ?> </h1>
-            <h1>Payouts : <?= PESO . ' ' . number_format( -$payouts); ?> </h1>
+            <h1>PAID : <?= PESO . ' ' . number_format( -$payouts); ?> </h1>
           </div>
           
         </div>

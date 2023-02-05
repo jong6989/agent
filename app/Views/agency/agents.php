@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Pending GGR Share: <?= PESO . ' ' . number_format($total_pending); ?></h1>
+            <h1>Master Agents</h1>
           </div>
           
         </div>
@@ -27,17 +27,7 @@
           
             <div class="card">
               <div class="card-header">
-                <div class="form-group">
-                    <label for="hallList">Select Hall Operator</label>
-                    <select class="custom-select form-control-border" id="hallList">
-                        <option value="" <?= ($operatorID)? '': 'selected'; ?> >All</option>
-                        <?php foreach ($operators as $k => $v): ?>
-                            <option value="<?= $v['id']; ?>" <?= ($v['id'] == $operatorID)? 'selected': ''; ?> >
-                                <?= $v['name']; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive">
@@ -45,12 +35,14 @@
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Date</th>
-                    <th>Access</th>
                     <th>Name</th>
-                    <th>Bank</th>
-                    <th>Amount</th>
-                    <th>Action</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Commission Share</th>
+                    <th>Super Agent</th>
+                    <th>Total Commisssions</th>
+                    <th>Status</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -58,18 +50,19 @@
                     <?php foreach ($list as $k => $v): ?>
                       <tr>
                         <td> <?= $v['id']; ?> </td>
-                        <td> <?= $v['created_at']; ?> </td>
-                        <td> <?= $v['access']; ?> </td>
                         <td> <?= $v['name']; ?> </td>
-                        <td> <?= $v['bank_name']; ?> </td>
-                        <td> <?= PESO . ' ' . number_format($v['wallet']); ?> </td>
+                        <td> <?= $v['email']; ?> </td>
+                        <td> <?= $v['phone']; ?> </td>
+                        <td> <?= $v['address']; ?> </td>
+                        <td> <?= $v['commission']; ?>% </td>
+                        <td> <?= $v['upline'] ?? ''; ?> </td>
                         <td> 
-                          <a href="<?= base_url('process_payout/' . $v['id']); ?>">
-                            <button class="btn btn-warning btn-xs">
-                              <i class="fas fa-shipping-fast"></i>
-                              process
-                            </button>
-                          </a>
+                          <?= PESO; ?> <?= number_format($v['balance']); ?>
+                        </td>
+                        <td> 
+                          <span class="badge <?= ($v['online'] == '1') ? 'bg-success': 'bg-secondary'; ?>">
+                            <?= ($v['online'] == '1') ? 'Online': 'Offline'; ?>
+                          </span> 
                         </td>
                       </tr>
                     <?php endforeach; ?>
@@ -78,12 +71,14 @@
                   <tfoot>
                   <tr>
                     <th>ID</th>
-                    <th>Date</th>
-                    <th>Access</th>
                     <th>Name</th>
-                    <th>Bank</th>
-                    <th>Amount</th>
-                    <th>Action</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Commission Share</th>
+                    <th>Super Agent</th>
+                    <th>Total Commisssions</th>
+                    <th>Status</th>
                   </tr>
                   </tfoot>
                 </table>
@@ -115,10 +110,6 @@
 <?= view('scripts/js'); ?>
 
 <script>
-
-    $('#hallList').change( (val)=>{
-        window.location = "<?= base_url('payouts/pending'); ?>?operator=" + $('#hallList').val();
-    } );
 
   $("#tableData").DataTable({
       "responsive": true, 

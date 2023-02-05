@@ -175,7 +175,6 @@
 
         
 
-      
         <!-- <div class="card bg-gradient-info">
           <div class="card-header border-0">
             <h3 class="card-title">
@@ -195,7 +194,7 @@
           <div class="card-body">
             <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
           </div>
-          
+
           <div class="card-footer bg-transparent">
             <div class="row">
               <div class="col-4 text-center">

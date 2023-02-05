@@ -73,7 +73,7 @@
 
                                     <hr>
 
-                                    <h5>Payout Details</h5>
+                                    <h5>Bank Account Details</h5>
                                     <div class="form-group row">
                                         <label for="bank_name" class="col-sm-2 col-form-label">Bank Name</label>
                                         <div class="col-sm-10">

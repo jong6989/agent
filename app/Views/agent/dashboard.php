@@ -59,7 +59,7 @@
           <div class="inner">
             <h3> <?= PESO . ' ' . number_format( -$payouts); ?></h3>
 
-            <p>Payouts</p>
+            <p>GGR Share</p>
           </div>
           <div class="icon">
             <i class="fas fa-wallet"></i>
@@ -174,8 +174,8 @@
 
         
 
-        <!-- solid sales graph -->
-        <div class="card bg-gradient-info">
+      
+        <!-- <div class="card bg-gradient-info">
           <div class="card-header border-0">
             <h3 class="card-title">
               <i class="fas fa-th mr-1"></i>
@@ -194,7 +194,7 @@
           <div class="card-body">
             <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
           </div>
-          <!-- /.card-body -->
+          
           <div class="card-footer bg-transparent">
             <div class="row">
               <div class="col-4 text-center">
@@ -203,27 +203,27 @@
 
                 <div class="text-white">WIN/LOSS</div>
               </div>
-              <!-- ./col -->
+              
               <div class="col-4 text-center">
                 <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
                        data-fgColor="#39CCCC">
 
                 <div class="text-white">Online Players</div>
               </div>
-              <!-- ./col -->
+              
               <div class="col-4 text-center">
                 <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
                        data-fgColor="#39CCCC">
 
                 <div class="text-white">Active admins</div>
               </div>
-              <!-- ./col -->
+              
             </div>
-            <!-- /.row -->
+            
           </div>
-          <!-- /.card-footer -->
+          
         </div>
-        <!-- /.card -->
+         -->
 
         
       </section>
@@ -285,93 +285,94 @@ $('.connectedSortable .card-header').css('cursor', 'move')
 
 
 
-/* jQueryKnob */
-$('.knob').knob()
+// $('.knob').knob()
 
 
-// Donut Chart
-var pieData = {
-labels: [
-  'Instore Sales',
-  'Download Sales',
-  'Mail-Order Sales'
-],
-datasets: [
-  {
-    data: [30, 12, 20],
-    backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-  }
-]
-}
-var pieOptions = {
-legend: {
-  display: false
-},
-maintainAspectRatio: false,
-responsive: true
-}
+// // Donut Chart
+// var pieData = {
+// labels: [
+//   'Instore Sales',
+//   'Download Sales',
+//   'Mail-Order Sales'
+// ],
+// datasets: [
+//   {
+//     data: [30, 12, 20],
+//     backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+//   }
+// ]
+// }
+// var pieOptions = {
+// legend: {
+//   display: false
+// },
+// maintainAspectRatio: false,
+// responsive: true
+// }
 
 
-// Sales graph chart
-var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d');
+// // Sales graph chart
+// var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d');
 
-var salesGraphChartData = {
-labels: ['Nov 14', 'Nov 21', 'Nov. 28', 'Dec 5', 'Dec 12', 'Dec 19', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
-datasets: [
-  {
-    label: 'Income',
-    fill: false,
-    borderWidth: 2,
-    lineTension: 0,
-    spanGaps: true,
-    borderColor: '#efefef',
-    pointRadius: 3,
-    pointHoverRadius: 7,
-    pointColor: '#efefef',
-    pointBackgroundColor: '#efefef',
-    data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
-  }
-]
-}
+// var salesGraphChartData = {
+// labels: ['Nov 14', 'Nov 21', 'Nov. 28', 'Dec 5', 'Dec 12', 'Dec 19', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
+// datasets: [
+//   {
+//     label: 'Income',
+//     fill: false,
+//     borderWidth: 2,
+//     lineTension: 0,
+//     spanGaps: true,
+//     borderColor: '#efefef',
+//     pointRadius: 3,
+//     pointHoverRadius: 7,
+//     pointColor: '#efefef',
+//     pointBackgroundColor: '#efefef',
+//     data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+//   }
+// ]
+// }
 
-var salesGraphChartOptions = {
-maintainAspectRatio: false,
-responsive: true,
-legend: {
-  display: false
-},
-scales: {
-  xAxes: [{
-    ticks: {
-      fontColor: '#efefef'
-    },
-    gridLines: {
-      display: false,
-      color: '#efefef',
-      drawBorder: false
-    }
-  }],
-  yAxes: [{
-    ticks: {
-      stepSize: 5000,
-      fontColor: '#efefef'
-    },
-    gridLines: {
-      display: true,
-      color: '#efefef',
-      drawBorder: false
-    }
-  }]
-}
-}
+// var salesGraphChartOptions = {
+// maintainAspectRatio: false,
+// responsive: true,
+// legend: {
+//   display: false
+// },
+// scales: {
+//   xAxes: [{
+//     ticks: {
+//       fontColor: '#efefef'
+//     },
+//     gridLines: {
+//       display: false,
+//       color: '#efefef',
+//       drawBorder: false
+//     }
+//   }],
+//   yAxes: [{
+//     ticks: {
+//       stepSize: 5000,
+//       fontColor: '#efefef'
+//     },
+//     gridLines: {
+//       display: true,
+//       color: '#efefef',
+//       drawBorder: false
+//     }
+//   }]
+// }
+// }
 
-// This will get the first returned node in the jQuery collection.
-// eslint-disable-next-line no-unused-vars
-var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
-type: 'line',
-data: salesGraphChartData,
-options: salesGraphChartOptions
-})
+// // This will get the first returned node in the jQuery collection.
+// // eslint-disable-next-line no-unused-vars
+// var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
+// type: 'line',
+// data: salesGraphChartData,
+// options: salesGraphChartOptions
+// })
+
+
 })
 </script>
 

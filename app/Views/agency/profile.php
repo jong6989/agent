@@ -12,17 +12,8 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1>
-                Master Agent Profile and Settings
+                Agency Profile and Settings
               </h1>
-
-              <?php if($default['phone'] ==''): ?>
-                <hr>
-                <div class="alert alert-warning alert-dismissible">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h5><i class="icon fas fa-exclamation-triangle"></i> Profile Details!</h5>
-                  Please Complete your Profile to continue...
-                </div>
-              <?php endif; ?>
             </div>
             
           </div>
@@ -38,11 +29,10 @@
 
                 <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title">Profile Info</h3>
-
+                    <h3 class="card-title">Profile Info</h3>
                     </div>
                     <div class="card-body">
-                        <?= form_open('agent_profile'); ?>
+                        <?= form_open('operator_profile'); ?>
                         
                             <div style="color:#f00">
                                 <?= ($validation != null) ? $validation->listErrors() : ''; ?>
@@ -51,9 +41,9 @@
                             <div class="form-horizontal">
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                                        <label for="name" class="col-sm-2 col-form-label">Hall Operator Name</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="name" id="name" value="<?= set_value('name',$default['name']); ?>" placeholder="Full name">
+                                            <input type="text" class="form-control" name="name" id="name" value="<?= set_value('name',$default['name']); ?>" placeholder="name of Operator">
                                         </div>
                                     </div>
                                     <div class="form-group row">

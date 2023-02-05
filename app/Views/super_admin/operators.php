@@ -28,12 +28,12 @@
             
               <div class="card">
                 <div class="card-header">
-                    <!-- <a href="<?= base_url('register_operator'); ?>">
+                    <a href="<?= base_url('register_operator'); ?>">
                         <button class="btn btn-info">
                             <i class="fas fa-plus"></i>
                             New Operator
                         </button>
-                    </a> -->
+                    </a>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">

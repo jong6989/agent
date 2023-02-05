@@ -46,6 +46,10 @@ $routes->get('/api/(:any)', 'Api::$1');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/logout', 'Dashboard::logout');
 
+//super admin
+$routes->get('/super_admin', 'Admin::index/dashboard');
+$routes->get('/super_admin/(:any)', 'Admin::index/$1');
+
 //admin
 $routes->get('/admin', 'Admin::index/dashboard');
 $routes->get('/admin/(:any)', 'Admin::index/$1');

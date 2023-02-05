@@ -3,7 +3,7 @@
     <!-- Brand Logo -->
     <a href="<?= base_url(); ?>" class="brand-link">
       <img src="<?= base_url('logo.png') ?>" alt="Buenas Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Hall Operator</span>
+      <span class="brand-text font-weight-light">Agency Operator</span>
     </a>
 
     <!-- Sidebar -->

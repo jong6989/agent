@@ -1,8 +1,9 @@
 
 <div class="wrapper">
 
-  <?= view('navbar/' . session()->get('access') ); ?>
-  <?= view('sidebar/' . session()->get('access')); ?>
+  
+<?= view('navbar/' . session()->get('access') ); ?>
+<?= view('sidebar/' . session()->get('access')); ?>
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -13,7 +14,12 @@
         <div class="col-sm-6">
           <h1 class="m-0">Dashboard</h1>
         </div><!-- /.col -->
-        
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
@@ -28,42 +34,29 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3><?= $agents; ?></h3>
+              <h3> <?= $operators; ?> </h3>
 
-              <p>Agents</p>
+              <p>Hall Operators</p>
             </div>
             <div class="icon">
               <i class="ion ion-merge"></i>
             </div>
-            <a href="<?= base_url( session()->get('access') . '/agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="<?= base_url('admin/operators'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
-        <!-- <div class="col-lg-3 col-6">
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3>0</h3>
+              <h3><?= $super_agents; ?></h3>
 
-              <p>Transactions</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-android-apps"></i>
-            </div>
-            <a href="<?= base_url( session()->get('access') .'/transactions'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div> -->
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-danger">
-            <div class="inner">
-              <h3><?= $players; ?></h3>
-
-              <p>Players</p>
+              <p>Super Agents</p>
             </div>
             <div class="icon">
               <i class="ion ion-android-people"></i>
             </div>
-            <a href="<?= base_url( session()->get('access') .'/players'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="<?= base_url('admin/super_agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -71,14 +64,29 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3> <?= PESO . ' ' . number_format( -$payouts); ?></h3>
+              <h3> <?= PESO; ?> 0</h3>
 
-              <p>GGR Share</p>
+              <p>Commission</p>
             </div>
             <div class="icon">
               <i class="fas fa-wallet"></i>
             </div>
             <a href="#" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3><?= $agents; ?></h3>
+
+              <p>Agents</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-android-people"></i>
+            </div>
+            <a href="<?= base_url('admin/agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -149,21 +157,6 @@
             <!-- /.card-body -->
           </div>
 
-          <div  class="card">
-            <div class="card-header">
-              <h3 class="card-title">Use this link below to invite Players.</h3>
-            </div>
-
-            <div class="card-body p-10"> 
-              <div onclick="copyLink()" >
-                <input type="text" class="form-control" style="padding:10px; background-color: #ddd; cursor:pointer; color: #f00; display:block; " disabled value="<?= base_url('register/' . $id); ?>"  id="inviteLink">
-                <div id="qrcode" style="padding: 20px;"></div>
-              </div>
-              
-              <button type="submit" class="btn btn-info" onclick="PrintDiv('qrcode');">Print QR</button>
-            </div>
-              
-          </div>
           
           
         </section>
@@ -173,8 +166,7 @@
 
           
 
-        
-          <div class="card bg-gradient-info">
+          <!-- <div class="card bg-gradient-info">
             <div class="card-header border-0">
               <h3 class="card-title">
                 <i class="fas fa-th mr-1"></i>
@@ -218,11 +210,13 @@
                 </div>
                 
               </div>
-              <!-- /.row -->
+              
             </div>
-            <!-- /.card-footer -->
+            
           </div>
-          <!-- /.card -->
+           -->
+
+
 
           
         </section>
@@ -248,27 +242,7 @@
 <?= view('scripts/dashboard'); ?>
 <script type="text/javascript">
 
-  new QRCode(document.getElementById("qrcode"), "<?= base_url('register/' . $id); ?>");
-
-  function copyLink() {
-    var copyText = document.getElementById("inviteLink");
-
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);
-
-    navigator.clipboard.writeText(copyText.value);
-
-    alert("Link Copied! ");
-  }
-
-  function PrintDiv(id) {    
-    var divToPrint = document.getElementById(id);
-    var popupWin = window.open('', '_blank', 'width=800,height=800');
-    popupWin.document.open();
-    popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
-    popupWin.document.close();
-  }
-
+  
 $(function () {
 'use strict'
 
@@ -284,30 +258,31 @@ $('.connectedSortable .card-header').css('cursor', 'move')
 
 
 
-$('.knob').knob()
+// /* jQueryKnob */
+// $('.knob').knob()
 
 
-// Donut Chart
-var pieData = {
-  labels: [
-    'Instore Sales',
-    'Download Sales',
-    'Mail-Order Sales'
-  ],
-  datasets: [
-    {
-      data: [30, 12, 20],
-      backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-    }
-  ]
-}
-var pieOptions = {
-  legend: {
-    display: false
-  },
-  maintainAspectRatio: false,
-  responsive: true
-}
+// // Donut Chart
+// var pieData = {
+//   labels: [
+//     'Instore Sales',
+//     'Download Sales',
+//     'Mail-Order Sales'
+//   ],
+//   datasets: [
+//     {
+//       data: [30, 12, 20],
+//       backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+//     }
+//   ]
+// }
+// var pieOptions = {
+//   legend: {
+//     display: false
+//   },
+//   maintainAspectRatio: false,
+//   responsive: true
+// }
 
 
 // // Sales graph chart
@@ -370,7 +345,6 @@ var pieOptions = {
 //   data: salesGraphChartData,
 //   options: salesGraphChartOptions
 // })
-
 
 
 })

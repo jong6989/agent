@@ -149,6 +149,14 @@
             <!-- /.card-body -->
           </div>
 
+          
+          
+          
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5 connectedSortable">
+
           <div  class="card">
             <div class="card-header">
               <h3 class="card-title">Use this link below to invite Players.</h3>
@@ -164,17 +172,9 @@
             </div>
               
           </div>
-          
-          
-        </section>
-        <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-        <section class="col-lg-5 connectedSortable">
-
-          
 
         
-          <div class="card bg-gradient-info">
+          <!-- <div class="card bg-gradient-info">
             <div class="card-header border-0">
               <h3 class="card-title">
                 <i class="fas fa-th mr-1"></i>
@@ -218,11 +218,8 @@
                 </div>
                 
               </div>
-              <!-- /.row -->
             </div>
-            <!-- /.card-footer -->
-          </div>
-          <!-- /.card -->
+          </div> -->
 
           
         </section>
@@ -284,30 +281,30 @@ $('.connectedSortable .card-header').css('cursor', 'move')
 
 
 
-$('.knob').knob()
+// $('.knob').knob()
 
 
-// Donut Chart
-var pieData = {
-  labels: [
-    'Instore Sales',
-    'Download Sales',
-    'Mail-Order Sales'
-  ],
-  datasets: [
-    {
-      data: [30, 12, 20],
-      backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-    }
-  ]
-}
-var pieOptions = {
-  legend: {
-    display: false
-  },
-  maintainAspectRatio: false,
-  responsive: true
-}
+// // Donut Chart
+// var pieData = {
+//   labels: [
+//     'Instore Sales',
+//     'Download Sales',
+//     'Mail-Order Sales'
+//   ],
+//   datasets: [
+//     {
+//       data: [30, 12, 20],
+//       backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+//     }
+//   ]
+// }
+// var pieOptions = {
+//   legend: {
+//     display: false
+//   },
+//   maintainAspectRatio: false,
+//   responsive: true
+// }
 
 
 // // Sales graph chart

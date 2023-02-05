@@ -150,6 +150,14 @@
           <!-- /.card-body -->
         </div>
 
+        
+        
+        
+      </section>
+      <!-- /.Left col -->
+      <!-- right col (We are only adding the ID to make the widgets sortable)-->
+      <section class="col-lg-5 connectedSortable">
+
         <div  class="card">
           <div class="card-header">
             <h3 class="card-title">Use this link below to invite Players.</h3>
@@ -165,14 +173,6 @@
           </div>
             
         </div>
-        
-        
-      </section>
-      <!-- /.Left col -->
-      <!-- right col (We are only adding the ID to make the widgets sortable)-->
-      <section class="col-lg-5 connectedSortable">
-
-        
 
       
         <!-- <div class="card bg-gradient-info">

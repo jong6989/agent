@@ -10,7 +10,7 @@ class TransactionModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['BET_TIME','TRANSACTION_ID','PLAYER_ID','CHANNEL_TYPE','BET_AMOUNT','PAYOUT','REFUND','GROSS_GAMING_REVENUE','completed','operator','agency','super_agent','agent'];
+    protected $allowedFields    = ['BET_TIME','TRANSACTION_ID','PLAYER_ID','CHANNEL_TYPE','BET_AMOUNT','PAYOUT','REFUND','GROSS_GAMING_REVENUE','completed','operator','agency','super_agent','agent','day','month','year'];
     protected $beforeInsert = ['beforeInsert'];
 
     protected $useTimestamps = true;

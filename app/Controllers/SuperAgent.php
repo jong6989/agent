@@ -37,6 +37,8 @@ class SuperAgent extends BaseController
         $myData = $this->account->find($this->id);
         if($myData['phone'] == '') return redirect()->to('super_agent_profile');
 
+        $myOperator = $this->account->find($myData['operator']);
+
         //update account wallet
         if($this->balance > $myData['wallet'] ){
             $this->account->save([
@@ -53,7 +55,8 @@ class SuperAgent extends BaseController
             "balance" => $this->balance,
             "id" => $this->id,
             "menu" => $menu,
-            "action" => $sub_menu
+            "action" => $sub_menu,
+            "operator" => $myOperator,
         ];
 
         if($var == 'agents'){
@@ -75,12 +78,35 @@ class SuperAgent extends BaseController
         }
 
         if($var == 'commissions'){
-            $data['list'] = $this->wallet->where('account_id', $this->id)->find() ?? [];
+            $data['list'] = $this->wallet->where('account_id', $this->id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
             $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
         }
         
         if($var == 'dashboard'){
-            $data['players'] = $this->player->where('super_agent', $this->id)->countAllResults();
+            $day = date('d');
+            $month = date('m');
+            $year = date('Y');
+
+            //trans
+            $data['trans_day'] = $this->transaction->where('super_agent', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->countAllResults();
+            $data['trans_month'] = $this->transaction->where('super_agent', $this->id)->where('month', $month)->where('year', $year)->countAllResults();
+            $data['trans_year'] = $this->transaction->where('super_agent', $this->id)->where('year', $year)->countAllResults();
+            $data['trans_last_year'] = $this->transaction->where('super_agent', $this->id)->where('year', intval($year) - 1)->countAllResults();
+
+            //bets
+            $data['bets_day'] = $this->transaction->where('super_agent', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_month'] = $this->transaction->where('super_agent', $this->id)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_year'] = $this->transaction->where('super_agent', $this->id)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_last_year'] = $this->transaction->where('super_agent', $this->id)->where('year', intval($year) - 1)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+
+            //ggr
+            $data['ggr_day'] = $this->transaction->where('super_agent', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_month'] = $this->transaction->where('super_agent', $this->id)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_year'] = $this->transaction->where('super_agent', $this->id)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_last_year'] = $this->transaction->where('super_agent', $this->id)->where('year', intval($year) - 1)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+
+            $data['all_players'] = $this->player->where('super_agent', $this->id)->countAllResults();
+            $data['paired_players'] = $this->player->where('super_agent', $this->id)->where('player_id !=', 'none')->countAllResults();
             $data['agents'] = $this->account->where('access', 'agent')->where('super_agent', $this->id)->countAllResults();
             $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
         }
@@ -193,6 +219,8 @@ class SuperAgent extends BaseController
             'phone' => $currentItem['phone'] ?? '',
             'fb' => $currentItem['fb'] ?? '',
         ];
+        
+        $myOperator = $this->account->find($currentItem['operator']);
 
         $data = [
             "balance" => $this->balance,
@@ -201,6 +229,7 @@ class SuperAgent extends BaseController
             "action" => '',
             "validation" => $this->validator,
             "default" => $default,
+            "operator" => $myOperator,
         ];
         
 

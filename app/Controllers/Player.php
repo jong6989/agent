@@ -152,6 +152,13 @@ class Player extends BaseController
                         "agent" => $player['agent'],
                         "linked" => 1,
                     ]);
+                    $this->transaction
+                        ->set('operator',$player['operator'])
+                        ->set('agency',$player['agency'])
+                        ->set('super_agent',$player['super_agent'])
+                        ->set('agent',$player['agent'])
+                        ->where('PLAYER_ID', $targetGamePlayerID)
+                        ->update();
                 }
                 
                 $this->player->save($toSave);

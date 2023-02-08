@@ -11,7 +11,9 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?= base_url( session()->get('access') ); ?>" class="nav-link">BUENAS AGENT SYSTEM</a>
+        <a href="<?= base_url( session()->get('access') ); ?>" class="nav-link">
+          <?= $operator['name']; ?>
+        </a>
       </li>
     </ul>
 

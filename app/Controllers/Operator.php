@@ -77,13 +77,36 @@ class Operator extends BaseController
         }
 
         if($var == 'commissions'){
-            $data['list'] = $this->wallet->where('account_id', $this->id)->find() ?? [];
+            $data['list'] = $this->wallet->where('account_id', $this->id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
             $myPayouts = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payouts'] = $myPayouts;
         }
 
         if($var == 'dashboard'){
-            $data['players'] = $this->player->where('operator', $this->id)->countAllResults();
+            $day = date('d');
+            $month = date('m');
+            $year = date('Y');
+
+            //trans
+            $data['trans_day'] = $this->transaction->where('operator', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->countAllResults();
+            $data['trans_month'] = $this->transaction->where('operator', $this->id)->where('month', $month)->where('year', $year)->countAllResults();
+            $data['trans_year'] = $this->transaction->where('operator', $this->id)->where('year', $year)->countAllResults();
+            $data['trans_last_year'] = $this->transaction->where('operator', $this->id)->where('year', intval($year) - 1)->countAllResults();
+
+            //bets
+            $data['bets_day'] = $this->transaction->where('operator', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_month'] = $this->transaction->where('operator', $this->id)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_year'] = $this->transaction->where('operator', $this->id)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $data['bets_last_year'] = $this->transaction->where('operator', $this->id)->where('year', intval($year) - 1)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+
+            //win/loss
+            $data['ggr_day'] = $this->transaction->where('operator', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_month'] = $this->transaction->where('operator', $this->id)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_year'] = $this->transaction->where('operator', $this->id)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $data['ggr_last_year'] = $this->transaction->where('operator', $this->id)->where('year', intval($year) - 1)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            
+            $data['all_players'] = $this->player->where('operator', $this->id)->countAllResults();
+            $data['paired_players'] = $this->player->where('operator', $this->id)->where('player_id !=', 'none')->countAllResults();
             $data['super_agents'] = $this->account->where('access', 'super_agent')->where('operator', $this->id)->countAllResults();
             $data['agents'] = $this->account->where('access', 'agent')->where('operator', $this->id)->countAllResults();
             $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;

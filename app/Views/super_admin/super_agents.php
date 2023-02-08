@@ -45,12 +45,14 @@
                   <thead>
                   <tr>
                     <th>ID</th>
+                    <th>Hall Operator</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Address</th>
                     <th>Commission Share</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -58,6 +60,7 @@
                     <?php foreach ($list as $k => $v): ?>
                       <tr>
                         <td> <?= $v['id']; ?> </td>
+                        <td> <?= $v['hall']; ?> </td>
                         <td> <?= $v['name']; ?> </td>
                         <td> <?= $v['email']; ?> </td>
                         <td> <?= $v['address']; ?> </td>
@@ -70,6 +73,14 @@
                             <?= ($v['online'] == '1') ? 'Online': 'Offline'; ?>
                           </span> 
                         </td>
+                        <td>
+                          <a href="<?= base_url('password/' . $v['id']); ?>">
+                            <button class="btn btn-danger btn-xs">
+                              <i class="fas fa-lock"></i>
+                              Change Password
+                            </button>
+                          </a>
+                        </td>
                       </tr>
                     <?php endforeach; ?>
                   
@@ -77,12 +88,14 @@
                   <tfoot>
                   <tr>
                     <th>ID</th>
+                    <th>Hall Operator</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Address</th>
                     <th>Commission Share</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>

@@ -56,9 +56,9 @@
         <div class="col-lg-3 col-6">
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3><?= $players; ?></h3>
+              <h3><?= $paired_players . '/' . $all_players; ?></h3>
 
-              <p>Players</p>
+              <p>Players (<?= $all_players - $paired_players; ?>pending)</p>
             </div>
             <div class="icon">
               <i class="ion ion-android-people"></i>
@@ -102,46 +102,32 @@
                   <tr>
                     <th></th>
                     <th>Today</th>
-                    <th>Yesterday</th>
-                    <th>This Week</th>
                     <th>This Month</th>
+                    <th>This Year</th>
+                    <th>Last Year</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>Transactions</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>Active Players</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                  </tr>
-                  <tr>
-                    <td>Winning</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
+                    <td><?= number_format($trans_day); ?></td>
+                    <td><?= number_format($trans_month); ?></td>
+                    <td><?= number_format($trans_year); ?></td>
+                    <td><?= number_format($trans_last_year); ?></td>
                   </tr>
                   <tr>
                     <td>Total BET</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
+                    <td><?= PESO; ?> <?= number_format($bets_day); ?></td>
+                    <td><?= PESO; ?> <?= number_format($bets_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($bets_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($bets_last_year); ?></td>
                   </tr>
                   <tr>
-                    <td>Player WIN/LOSS</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
-                    <td><?= PESO; ?> 0</td>
+                    <td>GGR</td>
+                    <td><?= PESO; ?> <?= number_format($ggr_day); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
                   </tr>
                 </tbody>
               </table>

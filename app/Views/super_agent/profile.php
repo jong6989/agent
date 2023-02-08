@@ -34,6 +34,18 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
+
+            
+                <div class="card">
+                  <div class="card-footer">
+                      <a href="<?= base_url('password/' . $id); ?>">
+                        <button class="btn">
+                          <i class="fas fa-lock"></i>
+                          Change Password
+                        </button>
+                      </a>
+                  </div>
+                </div>
               
 
                 <div class="card">

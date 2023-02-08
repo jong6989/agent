@@ -40,11 +40,11 @@ $routes->set404Override();
 
 
 $routes->get('/', 'Login::index');
-$routes->get('/login', 'Login::index');
-$routes->post('/login', 'Login::index');
+$routes->match(['get', 'post'], '/login', 'Login::index');
 $routes->get('/api/(:any)', 'Api::$1');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/logout', 'Dashboard::logout');
+$routes->match(['get', 'post'], '/password/(:any)', 'Dashboard::change_password/$1');
 
 //super admin
 $routes->get('/super_admin', 'Admin::index/dashboard');
@@ -53,44 +53,34 @@ $routes->get('/super_admin/(:any)', 'Admin::index/$1');
 //admin
 $routes->get('/admin', 'Admin::index/dashboard');
 $routes->get('/admin/(:any)', 'Admin::index/$1');
-$routes->get('/register_operator', 'Admin::register_operator');
-$routes->post('/register_operator', 'Admin::register_operator');
-$routes->get('/settings', 'Admin::settings');
-$routes->post('/settings', 'Admin::settings');
-$routes->get('/reports', 'Admin::reports');
-$routes->post('/reports', 'Admin::reports');
+$routes->match(['get', 'post'], '/register_operator', 'Admin::register_operator');
+$routes->match(['get', 'post'], '/settings', 'Admin::settings');
+$routes->match(['get', 'post'], '/reports', 'Admin::reports');
 
 
 //operator
 $routes->get('/operator', 'Operator::index/dashboard');
 $routes->get('/operator/(:any)', 'Operator::index/$1');
-$routes->get('/register_super_agent', 'Operator::register_super_agent');
-$routes->post('/register_super_agent', 'Operator::register_super_agent');
-$routes->get('/operator_profile', 'Operator::operator_profile');
-$routes->post('/operator_profile', 'Operator::operator_profile');
+$routes->match(['get', 'post'], '/register_super_agent', 'Operator::register_super_agent');
+$routes->match(['get', 'post'], '/operator_profile', 'Operator::operator_profile');
 
 //super_agent
 $routes->get('/super_agent', 'SuperAgent::index/dashboard');
 $routes->get('/super_agent/(:any)', 'SuperAgent::index/$1');
-$routes->get('/register_agent', 'SuperAgent::register_agent');
-$routes->post('/register_agent', 'SuperAgent::register_agent');
-$routes->get('/super_agent_profile', 'SuperAgent::super_agent_profile');
-$routes->post('/super_agent_profile', 'SuperAgent::super_agent_profile');
+$routes->match(['get', 'post'], '/register_agent', 'SuperAgent::register_agent');
+$routes->match(['get', 'post'], '/super_agent_profile', 'SuperAgent::super_agent_profile');
 
 
 //agent
 $routes->get('/agent', 'Agent::index/dashboard');
 $routes->get('/agent/(:any)', 'Agent::index/$1');
-$routes->get('/agent_profile', 'Agent::agent_profile');
-$routes->post('/agent_profile', 'Agent::agent_profile');
+$routes->match(['get', 'post'], '/agent_profile', 'Agent::agent_profile');
 
 //player
-$routes->get('/register/(:any)', 'Login::player/$1');
-$routes->post('/register/(:any)', 'Login::player/$1');
+$routes->match(['get', 'post'], '/register/(:any)', 'Login::player/$1');
 
 $routes->get('/player/(:any)', 'Player::index/$1');
-$routes->get('/edit_player/(:any)', 'Player::edit_player/$1');
-$routes->post('/edit_player/(:any)', 'Player::edit_player/$1');
+$routes->match(['get', 'post'], '/edit_player/(:any)', 'Player::edit_player/$1');
 
 
 //API
@@ -100,8 +90,7 @@ $routes->post('/api/process_commission', 'Api::process_commission');
 
 //Payouts
 $routes->get('/payouts/(:any)', 'Payout::index/$1');
-$routes->get('/process_payout/(:any)', 'Payout::process_payout/$1');
-$routes->post('/process_payout/(:any)', 'Payout::process_payout/$1');
+$routes->match(['get', 'post'], '/process_payout/(:any)', 'Payout::process_payout/$1');
 
 /*
  * --------------------------------------------------------------------

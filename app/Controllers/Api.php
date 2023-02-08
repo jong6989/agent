@@ -102,17 +102,31 @@ class Api extends BaseController
                             }
                             //save to database count($target_keys)
                             if(count($newTransData) == count($target_keys) ){
-                                $data['inserts'][] = $newTransData;
-                                $this->transaction->save($newTransData);
-
                                 //save game player data
                                 $playerId = $v[$target_index[1]];
-                                $player_exist = $this->gameplayer->where('game_player_id', $playerId)->countAllResults();
-                                if($player_exist == 0){
+                                $player = $this->gameplayer->where('game_player_id', $playerId)->find();
+                                if(count($player) == 0){
                                     $this->gameplayer->save([
                                         "game_player_id" => $playerId
                                     ]);
+                                }else {
+                                    $p = $player[0];
+                                    $newTransData['operator'] = $p['operator'];
+                                    $newTransData['agency'] = $p['agency'];
+                                    $newTransData['super_agent'] = $p['super_agent'];
+                                    $newTransData['agent'] = $p['agent'];
                                 }
+                                $dateRaw = explode(' ',$newTransData['BET_TIME']);
+                                
+                                if(count($dateRaw) > 1){
+                                    $dateArray = explode('/',$dateRaw[0]);
+                                    if(count($dateArray) == 3){
+                                        $newTransData['month'] = $dateArray[0];
+                                        $newTransData['day'] = $dateArray[1];
+                                        $newTransData['year'] = $dateArray[2];
+                                    }
+                                }
+                                $this->transaction->save($newTransData);
 
                                 $saved++;
                             }

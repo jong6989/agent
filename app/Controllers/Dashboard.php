@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\AccountModel;
 use App\Models\LogsModel;
+use App\Models\WalletModel;
 
 class Dashboard extends BaseController
 {
@@ -10,9 +11,11 @@ class Dashboard extends BaseController
         helper('form');
         $this->account = new AccountModel();
         $this->logs = new LogsModel();
+        $this->wallet = new WalletModel();
         $this->id = session()->get('id');
         $this->access = session()->get('access');
         $this->logged = session()->get('isLoggedIn') ?? false;
+        $this->balance = $this->wallet->where('account_id', $this->id)->select('sum(amount) as total')->first()['total'] ?? 0;
     }
 
     public function index()
@@ -38,6 +41,54 @@ class Dashboard extends BaseController
 
         session()->destroy();
 		return redirect()->to('/');
+    }
+
+    public function change_password($id){
+        if(!$this->logged){
+            return redirect()->to('login');
+        }
+
+        $currentItem = $this->account->find($id);
+        
+        $data = [
+            "balance" => $this->balance,
+            "id" => $this->id,
+            "menu" => '',
+            "action" => 'password',
+            "validation" => $this->validator,
+            "currentItem" => $currentItem,
+            'updated' => false
+        ];
+        
+
+        if($this->request->getMethod() == 'post'){
+            
+            $rules = [
+                'password' => [
+                    'rules' => 'trim|required|matches[re_password]|min_length[6]|max_length[255]',
+                    'errors' => [
+                        'matches' => 'Password did not match!'
+                    ] 
+                ]
+            ];
+
+            if( $this->validate($rules) ){
+                $newData = [
+                    'id' => $id,
+                    'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+                ];
+
+                $this->account->save($newData);
+                $data["updated"] = true;
+            }else {
+              $data["validation"] = $this->validator;
+            }
+        }
+
+        
+        return  view('header/dashboard')
+                .view( 'password',$data)
+                .view('footer/dashboard');
     }
 
 }

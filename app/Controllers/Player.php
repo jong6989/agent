@@ -81,6 +81,9 @@ class Player extends BaseController
         }
 
         $player = $this->player->find($player_id);
+        
+        $myData = $this->account->find($this->id);
+        $myOperator = $this->account->find($myData['operator']);
 
         $default = [
             'email' => $player['email'],
@@ -98,7 +101,8 @@ class Player extends BaseController
             "player_id" => $player_id,
             "default" => $default,
             "saved" => false,
-            "valid_access" => (session()->get('access') =='admin')
+            "valid_access" => (session()->get('access') =='admin'),
+            "operator" => $myOperator,
         ];
         
         if(session()->get('access') =='operator'){

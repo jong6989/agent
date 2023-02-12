@@ -48,6 +48,9 @@ class Dashboard extends BaseController
             return redirect()->to('login');
         }
 
+        $myData = $this->account->find($this->id);
+        $myOperator = $this->account->find($myData['operator']);
+
         $currentItem = $this->account->find($id);
         
         $data = [
@@ -57,7 +60,8 @@ class Dashboard extends BaseController
             "action" => 'password',
             "validation" => $this->validator,
             "currentItem" => $currentItem,
-            'updated' => false
+            'updated' => false,
+            "operator" => $myOperator,
         ];
         
 

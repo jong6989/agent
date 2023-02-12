@@ -155,7 +155,12 @@ class Operator extends BaseController
             $rules = [
                 'email' => 'trim|required|valid_email',
                 'name' => 'trim|required',
-                'commission' => 'required',
+                'commission' => [
+                    'rules' => 'required|limitCommission',
+                    'errors' => [
+                        'limitCommission' => 'Commision share limit is ' . $myData['commission'] . '%'
+                    ] 
+                ],
             ];
 
             if(!$id){

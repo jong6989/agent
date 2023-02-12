@@ -174,34 +174,46 @@ class Api extends BaseController
                 if($ggr > 0){
 
                     $agent_commission = $ggr * ( $agent_share / 100 );
-                    $super_agent_commission = $ggr * ( ($super_agent_share - $agent_share) / 100 );
-                    $agency_commission = ($agency_share == 0)? 0 : ( $ggr * ( ($agency_share - $super_agent_share) / 100 ) );
-                    $operator_commission = ($agency_share == 0)? ( $ggr * ( ($operator_share - $super_agent_share) / 100 ) ) : ( $ggr * ( ($operator_share - $agency_share) / 100 ) );
+                    $super_raw_share = $ggr * ( $super_agent_share / 100 );
+                    $super_agent_commission = $super_raw_share - $agent_commission;
+                    $agency_raw = ($agency_share == 0)? 0 : ( $ggr * ( $agency_share / 100 ) );
+                    $agency_commission = ($agency_share == 0)? 0 : ($agency_raw - $super_raw_share);
+                    $operator_raw = $ggr * ( $operator_share / 100 );
+                    $operator_commission = ($agency_share == 0)? ($operator_raw - $super_raw_share) : ($operator_raw - $agency_raw);
 
                     //agent share
-                    $this->wallet->save([
-                        "account_id" => $v['agent'],
-                        "amount" => $agent_commission,
-                        "type" => 'income',
-                        "transaction" => $transID,
-                        "player_id" => $playerID,
-                    ]);
+                    if($agent_commission > 0){
+                        $this->wallet->save([
+                            "account_id" => $v['agent'],
+                            "amount" => $agent_commission,
+                            "type" => 'income',
+                            "transaction" => $transID,
+                            "player_id" => $playerID,
+                        ]);
+                    }
+                    
                     //super agent share
-                    $this->wallet->save([
-                        "account_id" => $v['super_agent'],
-                        "amount" => $super_agent_commission,
-                        "type" => 'income',
-                        "transaction" => $transID,
-                        "player_id" => $playerID,
-                    ]);
+                    if($super_agent_commission > 0){
+                        $this->wallet->save([
+                            "account_id" => $v['super_agent'],
+                            "amount" => $super_agent_commission,
+                            "type" => 'income',
+                            "transaction" => $transID,
+                            "player_id" => $playerID,
+                        ]);
+                    }
+                    
                     //operator share
-                    $this->wallet->save([
-                        "account_id" => $v['operator'],
-                        "amount" => $operator_commission,
-                        "type" => 'income',
-                        "transaction" => $transID,
-                        "player_id" => $playerID,
-                    ]);
+                    if($operator_commission > 0){
+                        $this->wallet->save([
+                            "account_id" => $v['operator'],
+                            "amount" => $operator_commission,
+                            "type" => 'income',
+                            "transaction" => $transID,
+                            "player_id" => $playerID,
+                        ]);
+                    }
+                    
                     if($agency_commission > 0){
                         //agent share
                         $this->wallet->save([

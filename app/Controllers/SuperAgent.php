@@ -127,6 +127,10 @@ class SuperAgent extends BaseController
         if($id){
             $currentItem = $this->account->find($id);
         }
+
+        
+        $myOperator = $this->account->find($myData['operator']);
+
         $default = [
             'email' => ($id) ? $currentItem['email'] : '',
             'name' => ($id) ? $currentItem['name'] : '',
@@ -144,7 +148,8 @@ class SuperAgent extends BaseController
             "validation" => $this->validator,
             "item_id" => $id ?? '',
             "default" => $default,
-            "formUrl" => $formURL
+            "formUrl" => $formURL,
+            "operator" => $myOperator,
         ];
         
         
@@ -154,7 +159,12 @@ class SuperAgent extends BaseController
             $rules = [
                 'email' => 'trim|required|valid_email',
                 'name' => 'trim|required',
-                'commission' => 'required',
+                'commission' => [
+                    'rules' => 'required|limitCommission',
+                    'errors' => [
+                        'limitCommission' => 'Commision share limit is ' . $myData['commission'] . '%'
+                    ] 
+                ],
             ];
 
             if(!$id){

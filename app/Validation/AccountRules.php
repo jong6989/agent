@@ -45,8 +45,12 @@ class AccountRules
   }
 
   public function checkGamePlayerId(string $id){
-    $exist = $this->gameplayer->where('game_player_id', $id)->countAllResults();
-    return ($exist == 0)? false:true;
+    if($id == ''){
+      return true;
+    }else {
+      $exist = $this->gameplayer->where('game_player_id', $id)->countAllResults();
+      return ($exist == 0)? false:true;
+    }
   }
 
   public function limitCommission(int $x){

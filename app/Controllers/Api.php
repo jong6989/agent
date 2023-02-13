@@ -152,10 +152,6 @@ class Api extends BaseController
         $all_linked_players = $this->gameplayer->where("linked",1)->find();
         foreach ($all_linked_players as $k => $v) {
             $available = $this->transaction->where("completed",0)->where("PLAYER_ID", $v['game_player_id'])->find();
-            // $v['operator']
-            // $v['agency']
-            // $v['super_agent']
-            // $v['agent']
 
             $agent_share = $this->account->find($v['agent'])['commission'];
             $super_agent_share = $this->account->find($v['super_agent'])['commission'];
@@ -189,6 +185,9 @@ class Api extends BaseController
                             "type" => 'income',
                             "transaction" => $transID,
                             "player_id" => $playerID,
+                            "day" => $vv['day'],
+                            "month" => $vv['month'],
+                            "year" => $vv['year'],
                         ]);
                     }
                     
@@ -200,6 +199,9 @@ class Api extends BaseController
                             "type" => 'income',
                             "transaction" => $transID,
                             "player_id" => $playerID,
+                            "day" => $vv['day'],
+                            "month" => $vv['month'],
+                            "year" => $vv['year'],
                         ]);
                     }
                     
@@ -211,6 +213,9 @@ class Api extends BaseController
                             "type" => 'income',
                             "transaction" => $transID,
                             "player_id" => $playerID,
+                            "day" => $vv['day'],
+                            "month" => $vv['month'],
+                            "year" => $vv['year'],
                         ]);
                     }
                     
@@ -222,6 +227,9 @@ class Api extends BaseController
                             "type" => 'income',
                             "transaction" => $transID,
                             "player_id" => $playerID,
+                            "day" => $vv['day'],
+                            "month" => $vv['month'],
+                            "year" => $vv['year'],
                         ]);
                     }
                 }

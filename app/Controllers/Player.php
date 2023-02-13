@@ -90,6 +90,7 @@ class Player extends BaseController
             'name' => $player['name'],
             'phone' => $player['phone'],
             'player_id' => ($player['player_id'] == 'none')? '': $player['player_id'] ,
+            'note' => $player['note'],
         ];
 
         $data = [
@@ -142,6 +143,7 @@ class Player extends BaseController
                     'name' => $this->request->getVar('name'),
                     'phone' => $this->request->getVar('phone'),
                     'player_id' => ($targetGamePlayerID == '')? 'none': $targetGamePlayerID,
+                    'note' => $this->request->getVar('note'),
                 ];
 
                 $toSave['id'] = $player['id'];

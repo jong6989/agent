@@ -10,7 +10,7 @@ class WalletModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['amount','account_id','transaction','type','bank','account_number','account_name','ref_no','ref_date','player_id'];
+    protected $allowedFields    = ['amount','account_id','transaction','type','bank','account_number','account_name','ref_no','ref_date','player_id','day','month','year'];
     protected $beforeInsert = ['beforeInsert'];
 
     protected $useTimestamps = true;

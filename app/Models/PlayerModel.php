@@ -10,7 +10,7 @@ class PlayerModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['name','email','phone','player_id','agency','operator','super_agent','agent'];
+    protected $allowedFields    = ['name','email','phone','player_id','note','agency','operator','super_agent','agent'];
     protected $beforeInsert = ['beforeInsert'];
 
     protected $useTimestamps = true;

@@ -83,8 +83,8 @@ class Operator extends BaseController
         }
 
         if($var == 'dashboard'){
-            $day = date('d');
-            $month = date('m');
+            $day = date('j');
+            $month = date('n');
             $year = date('Y');
 
             //trans
@@ -99,11 +99,11 @@ class Operator extends BaseController
             $data['bets_year'] = $this->transaction->where('operator', $this->id)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
             $data['bets_last_year'] = $this->transaction->where('operator', $this->id)->where('year', intval($year) - 1)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
 
-            //win/loss
-            $data['ggr_day'] = $this->transaction->where('operator', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
-            $data['ggr_month'] = $this->transaction->where('operator', $this->id)->where('month', $month)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
-            $data['ggr_year'] = $this->transaction->where('operator', $this->id)->where('year', $year)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
-            $data['ggr_last_year'] = $this->transaction->where('operator', $this->id)->where('year', intval($year) - 1)->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            //income
+            $data['commission_day'] = $this->wallet->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_month'] = $this->wallet->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_year'] = $this->wallet->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_last_year'] = $this->wallet->where('year', intval($year) - 1)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             
             $data['all_players'] = $this->player->where('operator', $this->id)->countAllResults();
             $data['paired_players'] = $this->player->where('operator', $this->id)->where('player_id !=', 'none')->countAllResults();

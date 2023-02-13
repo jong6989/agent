@@ -130,11 +130,11 @@
                     <td><?= PESO; ?> <?= number_format($bets_last_year); ?></td>
                   </tr>
                   <tr>
-                    <td>GGR</td>
-                    <td><?= PESO; ?> <?= number_format($ggr_day); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
+                    <td>GGR Share</td>
+                    <td><?= PESO; ?> <?= number_format($commission_day); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
                   </tr>
                 </tbody>
               </table>

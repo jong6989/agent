@@ -83,8 +83,20 @@ class Admin extends BaseController
 
         if($var == 'players'){
             $list = [];
-            foreach ( $this->player->find() as $k => $v) {
+            $limit = $this->request->getVar('limit') ?? 2000;
+            $like = $this->request->getVar('like') ?? '';
+            $like_key = $this->request->getVar('like_key') ?? '';
+            $q = $this->player;
+            if($like != '' && $like_key != ''){
+                $q = $q->like($like_key,$like);
+            }
+            $q = $q->limit($limit)->find();
+            foreach ( $q as $k => $v) {
                 $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+                $v['operator'] = $this->account->find($v['operator']);
+                $v['super_agent'] = $this->account->find($v['super_agent']);
+                $v['agent'] = $this->account->find($v['agent']);
+                $v['agency'] = $this->account->find($v['agency'] ?? ['name'=>'']);
                 $list[] = $v;
             }
             $data['list'] = $list;
@@ -271,6 +283,10 @@ class Admin extends BaseController
             "inserts" => [],
             "targetPath" => ''
         ];
+
+        if (isset($_POST["clear_reports"])) {
+            $this->transaction->truncate();
+        }
 
 
         if (isset($_POST["import"])) {

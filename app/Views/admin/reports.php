@@ -27,44 +27,75 @@
             <div class="col-12">
               
 
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Upload Buenas report via spreedsheet with the following KEYS: ( 'TRANSACTION ID','PLAYER ID','BET TIME','CHANNEL TYPE','BET AMOUNT','PAYOUT','REFUND','GROSS GAMING REVENUE' ) </h3>
+              <?php if($current_trans_pending == 0): ?>
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Upload Buenas report via spreedsheet with the following KEYS: ( 'TRANSACTION ID','PLAYER ID','BET TIME','CHANNEL TYPE','BET AMOUNT','PAYOUT','REFUND','GROSS GAMING REVENUE' ) </h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                      
+
+                      <div id="import_success" class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-check"></i> Data Imported!</h5>
+                        Saved: <span id="imported_numbers"></span>
+                      </div>
+
+                      <div class="outer-container">
+
+                          <?= form_open_multipart( 'reports' )  ?>
+                              <div>
+                                  <label>Choose Excel
+                                      File</label> <input type="file" name="file"
+                                      id="file" accept=".xls,.xlsx">
+                                  <button type="submit" id="submit" name="import" class="btn btn-info"
+                                      class="btn-submit">Import</button>
+                          
+                              </div>
+                          <?= form_close(); ?>
+                          <div id="spinner" class="row">
+                            <div  class="spinner-border text-primary" role="status"></div>
+                            <h5> ------- Importing...</h5>
+                          </div>
+                          
+                      </div>
+
+
+                  </div>
+                  <!-- /.card-body -->
                 </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    
+              <?php endif; ?>
 
-                    <div id="import_success" class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                      <h5><i class="icon fas fa-check"></i> Data Imported!</h5>
-                      Saved: <span id="imported_numbers"></span>
-                    </div>
+              <?php if($current_trans_pending > 0): ?>
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title"> Payout must be completed or closed before uploading new report. </h3>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body">
+                      
 
-                    <div class="outer-container">
+                      
 
-                        <?= form_open_multipart( 'reports' )  ?>
-                            <div>
-                                <label>Choose Excel
-                                    File</label> <input type="file" name="file"
-                                    id="file" accept=".xls,.xlsx">
-                                <button type="submit" id="submit" name="import" class="btn btn-info"
-                                    class="btn-submit">Import</button>
-                        
-                            </div>
-                        <?= form_close(); ?>
-                        <div id="spinner" class="row">
-                          <div  class="spinner-border text-primary" role="status"></div>
-                          <h5> ------- Importing...</h5>
-                        </div>
-                        
-                    </div>
+                      <div class="outer-container">
+
+                          <?= form_open( 'reports' )  ?>
+                              <div>
+                                  <label>Clear Payout Data and Upload new Report</label>
+                                  <button type="submit" id="submit" name="clear_reports" class="btn btn-info"
+                                      class="btn-submit">Clear Report</button>
+                          
+                              </div>
+                          <?= form_close(); ?>
+                          
+                      </div>
 
 
+                  </div>
+                  <!-- /.card-body -->
                 </div>
-                <!-- /.card-body -->
-              </div>
-
+              <?php endif; ?>
 
               <div class="card">
                 <div class="card-header">

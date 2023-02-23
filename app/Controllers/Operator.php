@@ -68,9 +68,21 @@ class Operator extends BaseController
         }
         if($var == 'players'){
             $list = [];
-            foreach ( $this->player->where('operator', $this->id)->find() as $k => $v) {
+            $limit = $this->request->getVar('limit') ?? 2000;
+            $like = $this->request->getVar('like') ?? '';
+            $like_key = $this->request->getVar('like_key') ?? '';
+            $q = $this->player;
+            if($like != '' && $like_key != ''){
+                $q = $q->like($like_key,$like);
+            }
+            $q = $q->limit($limit)->where('operator', $this->id)->find();
+            foreach ( $q as $k => $v) {
                 $v['commission'] = $this->wallet->where('account_id', $this->id)->where('player_id', $v['player_id'])->select('sum(amount) as total')->first()['total'] ?? 0;
                 $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+                $v['operator'] = $this->account->find($v['operator']);
+                $v['super_agent'] = $this->account->find($v['super_agent']);
+                $v['agent'] = $this->account->find($v['agent']);
+                $v['agency'] = $this->account->find($v['agency'] ?? ['name'=>'']);
                 $list[] = $v;
             }
             $data['list'] = $list;

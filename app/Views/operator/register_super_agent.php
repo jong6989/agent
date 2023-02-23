@@ -10,7 +10,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1><?= ($item_id == '') ? 'Register New Super Agent': 'Edit Super Agent' ; ?></h1>
+              <h1><?= ($item_id == '') ? 'Register New Area Distributor': 'Edit Area Distributor' ; ?></h1>
             </div>
             
           </div>
@@ -47,7 +47,7 @@
                                 <div class="form-group row">
                                     <label for="commission" class="col-sm-2 col-form-label">Commission (%)</label>
                                     <div class="col-sm-10">
-                                        <input type="number" class="form-control" value="10" minimum="0" maximum="100" value="<?= set_value('commission',$default['commission']); ?>" name="commission" id="commission" placeholder="%">
+                                        <input type="number" class="form-control" minimum="0" maximum="100" value="<?= set_value('commission',$default['commission']); ?>" name="commission" id="commission" placeholder="%">
                                     </div>
                                 </div>
                                 <div class="form-group row">

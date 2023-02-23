@@ -42,7 +42,7 @@
             <a href="<?= base_url( session()->get('access') . '/super_agents'); ?>" class="nav-link <?= ($menu == 'super_agents') ? 'active':''; ?>">
               <i class="nav-icon fas fa-mask"></i>
               <p>
-                Super Agents
+              Area Distributors
               </p>
             </a>
           </li>
@@ -51,7 +51,7 @@
             <a href="<?= base_url( session()->get('access') . '/agents'); ?>" class="nav-link <?= ($menu == 'agents') ? 'active':''; ?>">
               <i class="nav-icon fas fa-user-friends"></i>
               <p>
-                Master Agents
+              Affiliates
               </p>
             </a>
           </li>

@@ -30,7 +30,7 @@
           <div class="inner">
             <h3><?= $super_agents; ?></h3>
 
-            <p>Super Agents</p>
+            <p>Area Distributors</p>
           </div>
           <div class="icon">
             <i class="ion ion-merge"></i>
@@ -45,7 +45,7 @@
           <div class="inner">
             <h3><?= $agents; ?></h3>
 
-            <p>Master Agents</p>
+            <p>Affiliates</p>
           </div>
           <div class="icon">
             <i class="ion ion-android-people"></i>

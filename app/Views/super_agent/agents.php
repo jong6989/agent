@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Master Agents</h1>
+            <h1>Affiliates</h1>
           </div>
           
         </div>
@@ -30,7 +30,7 @@
                   <a href="<?= base_url('register_agent'); ?>">
                       <button class="btn btn-info">
                           <i class="fas fa-plus"></i>
-                          New Master Agent
+                          New Affiliate
                       </button>
                   </a>
               </div>

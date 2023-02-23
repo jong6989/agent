@@ -30,7 +30,7 @@
           <div class="inner">
             <h3><?= $super_agents; ?></h3>
 
-            <p>Super Agents</p>
+            <p>Area Distributors</p>
           </div>
           <div class="icon">
             <i class="ion ion-merge"></i>
@@ -45,7 +45,7 @@
           <div class="inner">
             <h3><?= $agents; ?></h3>
 
-            <p>Master Agents</p>
+            <p>Affiliates</p>
           </div>
           <div class="icon">
             <i class="ion ion-android-people"></i>
@@ -122,13 +122,6 @@
                     <td><?= PESO; ?> <?= number_format($bets_month); ?></td>
                     <td><?= PESO; ?> <?= number_format($bets_year); ?></td>
                     <td><?= PESO; ?> <?= number_format($bets_last_year); ?></td>
-                  </tr>
-                  <tr>
-                    <td>GGR Share</td>
-                    <td><?= PESO; ?> <?= number_format($commission_day); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
                   </tr>
                 </tbody>
               </table>

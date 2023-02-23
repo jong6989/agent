@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Master Agents</h1>
+            <h1>Affiliates</h1>
           </div>
           
         </div>
@@ -40,7 +40,7 @@
                     <th>Phone</th>
                     <th>Address</th>
                     <th>Commission Share</th>
-                    <th>Super Agent</th>
+                    <th>Area Distributor</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
                   </tr>
@@ -76,7 +76,7 @@
                     <th>Phone</th>
                     <th>Address</th>
                     <th>Commission Share</th>
-                    <th>Super Agent</th>
+                    <th>Area Distributor</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
                   </tr>

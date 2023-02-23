@@ -10,7 +10,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1><?= ($item_id == '') ? 'Register New Super Agent': 'Edit Super Agent' ; ?></h1>
+              <h1><?= ($item_id == '') ? 'Register New Area Distributor': 'Edit Area Distributor' ; ?></h1>
             </div>
             
           </div>

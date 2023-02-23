@@ -51,7 +51,7 @@
             <div class="inner">
               <h3><?= $super_agents; ?></h3>
 
-              <p>Super Agents</p>
+              <p>Area Distributors</p>
             </div>
             <div class="icon">
               <i class="ion ion-android-people"></i>

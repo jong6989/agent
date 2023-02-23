@@ -62,13 +62,19 @@ class Player extends BaseController
 
         
         $data['operator_commission'] = $data['operator']['commission'];
-        $data['agency_commission'] = $data['agency']['commission'];
+        $data['agency_commission'] = $data['agency']['commission'] ?? 0;
         $data['super_agent_commission'] = $data['super_agent']['commission'];
         $data['agent_commission'] = $data['agent']['commission'];
         
-        $data['operator_share'] = $data['operator_commission'] - $data['agency_commission'] - $data['super_agent_commission'] - $data['agent_commission'];
-        $data['agency_share'] = $data['agency_commission'] - $data['super_agent_commission'] - $data['agent_commission'];
+        $data['operator_share'] = ($data['agency_commission'] == 0) ? $data['operator_commission'] - $data['super_agent_commission'] : $data['operator_commission'] - $data['agency_commission'];
+        $data['agency_share'] = $data['agency_commission'] - $data['super_agent_commission'];
         $data['super_agent_share'] = $data['super_agent_commission'] - $data['agent_commission'];
+        
+        
+        $data['operator_wallet'] = $this->wallet->where('type','income')->where('player_id',$player['player_id'])->where('account_id',$player['operator'])->select('sum(amount) as total')->first()['total'] ?? 0;
+        //$data['agency_wallet'] = $this->wallet->where('type','income')->where('player_id',$player['player_id'])->where('account_id',$player['agency'])->select('sum(amount) as total')->first()['total'] ?? 0;
+        $data['super_agent_wallet'] = $this->wallet->where('type','income')->where('player_id',$player['player_id'])->where('account_id',$player['super_agent'])->select('sum(amount) as total')->first()['total'] ?? 0;
+        $data['agent_wallet'] = $this->wallet->where('type','income')->where('player_id',$player['player_id'])->where('account_id',$player['agent'])->select('sum(amount) as total')->first()['total'] ?? 0;
 
         return  view('header/dashboard')
                 .view('game/player' ,$data)

@@ -44,6 +44,17 @@
                       Phone: <strong><?= $player['phone']; ?></strong>
                     </h4>
                     <hr>
+                    <h5>
+                      Operator: <strong><?= $operator['name']; ?> (<?= $operator_commission - $super_agent_commission; ?>%) , Commission: <?= PESO . $operator_wallet; ?></strong>
+                    </h5>
+                    <h5>
+                      Area Distributor: <strong><?= $super_agent['name']; ?> (<?= $super_agent_commission - $agent_commission; ?>%) , Commission: <?= PESO . $super_agent_wallet; ?></strong>
+                    </h5>
+                    <h5>
+                      Affiliate: <strong><?= $agent['name']; ?> (<?= $agent_commission; ?>%) , Commission: <?= PESO . $agent_wallet; ?></strong>
+                    </h5>
+                    <hr>
+                    
                     <div class="row">
 
                       <div class="col-lg-3 col-6">
@@ -77,20 +88,21 @@
                           <div class="inner">
                             <h3><?= number_format($total_payout); ?></h3>
 
-                            <p>Total GGR Share</p>
+                            <p>Total Payout</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-money-bill-alt"></i>
                           </div>
                         </div>
                       </div>
-
+                      
+                      
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3><?= number_format($total_refund); ?></h3>
+                            <h3><?= number_format($total_ggr); ?></h3>
 
-                            <p>Total Refunds</p>
+                            <p>Total GGR</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-wallet"></i>
@@ -106,9 +118,9 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr); ?></h3>
+                            <h3><?= number_format($total_ggr * ( $ggr_share / 100 ) ); ?></h3>
 
-                            <p>Total GGR</p>
+                            <p>Admin Commission</p>
                           </div>
                           <div class="icon">
                             <i class="far fa-money-bill-alt"></i>
@@ -119,9 +131,9 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ( $ggr_share / 100 ) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ( $operator_share / 100 ) ); ?></h3>
 
-                            <p>Admin Share</p>
+                            <p>Operator Commission</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-money-bill-wave"></i>
@@ -132,9 +144,9 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ( $operator_share / 100 ) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ($super_agent_share / 100) ); ?></h3>
 
-                            <p>Operator Share</p>
+                            <p>Area Distributor Commission</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-money-bill-wave"></i>
@@ -145,9 +157,9 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ($super_agent_share / 100) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ($agent_commission / 100) ); ?></h3>
 
-                            <p>Agents Share</p>
+                            <p>Affiliate Commission</p>
                           </div>
                           <div class="icon">
                             <i class="fas fa-money-bill-wave"></i>

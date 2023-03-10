@@ -63,7 +63,7 @@
                         <td> <?= $v['bank']; ?> </td>
                         <td> <?= $v['account_name']; ?> </td>
                         <td> <?= $v['account_number']; ?> </td>
-                        <td> <?= PESO . ' ' . number_format( -$v['amount']); ?> </td>
+                        <td> <?= PESO . ' ' . number_format( -$v['amount'],2); ?> </td>
                         <td> <?= $v['ref_no']; ?> </td>
                         <td> <?= $v['ref_date']; ?> </td>
                       </tr>

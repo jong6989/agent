@@ -22,7 +22,7 @@
 
       <li class="nav-item">
         <a class="nav-link" href="#">
-          <i class="fas fa-wallet"></i> <?= PESO . ' ' . number_format($balance); ?>
+          <i class="fas fa-wallet"></i> <?= PESO . ' ' . number_format($balance,2); ?>
         </a>
       </li>
 

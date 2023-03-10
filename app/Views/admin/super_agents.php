@@ -66,7 +66,7 @@
                         <td> <?= $v['address']; ?> </td>
                         <td> <?= $v['commission']; ?>% </td>
                         <td> 
-                          <?= PESO; ?><?= number_format($v['balance']); ?>
+                          <?= PESO; ?><?= number_format($v['balance'],2); ?>
                         </td>
                         <td> 
                           <span class="badge <?= ($v['online'] == '1') ? 'bg-success': 'bg-secondary'; ?>">
@@ -74,12 +74,21 @@
                           </span> 
                         </td>
                         <td>
+
                           <a href="<?= base_url('password/' . $v['id']); ?>">
                             <button class="btn btn-danger btn-xs">
                               <i class="fas fa-lock"></i>
                               Change Password
                             </button>
                           </a>
+                              
+                          <a href="<?= base_url('admin/commissions') . '?id=' . $v['id']; ?>">
+                            <button class="btn btn-primary btn-xs">
+                              <i class="fas fa-edit"></i>
+                              View Commissions
+                            </button>
+                          </a>
+
                         </td>
                       </tr>
                     <?php endforeach; ?>

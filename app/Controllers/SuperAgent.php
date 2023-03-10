@@ -87,23 +87,18 @@ class SuperAgent extends BaseController
             $month = date('n');
             $year = date('Y');
 
-            //trans
-            $data['trans_day'] = $this->transaction->where('super_agent', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->countAllResults();
-            $data['trans_month'] = $this->transaction->where('super_agent', $this->id)->where('month', $month)->where('year', $year)->countAllResults();
-            $data['trans_year'] = $this->transaction->where('super_agent', $this->id)->where('year', $year)->countAllResults();
-            $data['trans_last_year'] = $this->transaction->where('super_agent', $this->id)->where('year', intval($year) - 1)->countAllResults();
+            //payout
+            $data['payout_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['payout_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['payout_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['payout_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
 
-            //bets
-            $data['bets_day'] = $this->transaction->where('super_agent', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
-            $data['bets_month'] = $this->transaction->where('super_agent', $this->id)->where('month', $month)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
-            $data['bets_year'] = $this->transaction->where('super_agent', $this->id)->where('year', $year)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
-            $data['bets_last_year'] = $this->transaction->where('super_agent', $this->id)->where('year', intval($year) - 1)->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
-
+            
             //income
-            $data['commission_day'] = $this->wallet->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
-            $data['commission_month'] = $this->wallet->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
-            $data['commission_year'] = $this->wallet->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
-            $data['commission_last_year'] = $this->wallet->where('year', intval($year) - 1)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
 
             $data['all_players'] = $this->player->where('super_agent', $this->id)->countAllResults();
             $data['paired_players'] = $this->player->where('super_agent', $this->id)->where('player_id !=', 'none')->countAllResults();

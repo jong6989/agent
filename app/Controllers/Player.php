@@ -148,29 +148,33 @@ class Player extends BaseController
                     'email' => $this->request->getVar('email'),
                     'name' => $this->request->getVar('name'),
                     'phone' => $this->request->getVar('phone'),
-                    'player_id' => ($targetGamePlayerID == '')? 'none': $targetGamePlayerID,
                     'note' => $this->request->getVar('note'),
                 ];
 
                 $toSave['id'] = $player['id'];
                 $gameplayer = $this->gameplayer->where('game_player_id',$targetGamePlayerID)->first();
                 if($gameplayer){
-                    $this->gameplayer->save([
-                        "id" => $gameplayer['id'],
-                        "affiliate_player_id" => $player['id'],
-                        "operator" => $player['operator'],
-                        "agency" => $player['agency'],
-                        "super_agent" => $player['super_agent'],
-                        "agent" => $player['agent'],
-                        "linked" => 1,
-                    ]);
-                    $this->transaction
-                        ->set('operator',$player['operator'])
-                        ->set('agency',$player['agency'])
-                        ->set('super_agent',$player['super_agent'])
-                        ->set('agent',$player['agent'])
-                        ->where('PLAYER_ID', $targetGamePlayerID)
-                        ->update();
+                    //update if not yet paired
+                    if($gameplayer['linked'] == 0){
+                        $this->gameplayer->save([
+                            "id" => $gameplayer['id'],
+                            "affiliate_player_id" => $player['id'],
+                            "operator" => $player['operator'],
+                            "agency" => $player['agency'],
+                            "super_agent" => $player['super_agent'],
+                            "agent" => $player['agent'],
+                            "linked" => 1,
+                        ]);
+                        $this->transaction
+                            ->set('operator',$player['operator'])
+                            ->set('agency',$player['agency'])
+                            ->set('super_agent',$player['super_agent'])
+                            ->set('agent',$player['agent'])
+                            ->where('PLAYER_ID', $targetGamePlayerID)
+                            ->update();
+                        $toSave['player_id'] = $targetGamePlayerID;
+                    }
+                    
                 }
                 
                 $this->player->save($toSave);

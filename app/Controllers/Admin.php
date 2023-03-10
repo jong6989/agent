@@ -27,6 +27,45 @@ class Admin extends BaseController
         $this->id = session()->get('id');
         $this->access = session()->get('access');
         $this->balance = $this->wallet->where('account_id', $this->id)->select('sum(amount) as total')->first()['total'] ?? 0;
+
+        //process player id
+        $pending_pair = $this->player->where('note !=','')->where('player_id','none')->find();
+        foreach ($pending_pair as $key => $player) {
+            $gameplayer_query = $this->gameplayer->where('game_player_id',$player['note'])->find();
+            if(count($gameplayer_query) > 0){
+                $gamePLayer = $gameplayer_query[0];
+
+                //if already paired
+                if($gamePLayer["linked"] == 1){
+                    $this->player->save([
+                        'id' => $player['id'],
+                        'note' => ''
+                    ]); // remove the note
+                }else {
+                    $this->gameplayer->save([
+                        "id" => $gamePLayer['id'],
+                        "affiliate_player_id" => $player['id'],
+                        "operator" => $player['operator'],
+                        "agency" => $player['agency'],
+                        "super_agent" => $player['super_agent'],
+                        "agent" => $player['agent'],
+                        "linked" => 1,
+                    ]);//update game player
+                    $this->transaction
+                        ->set('operator',$player['operator'])
+                        ->set('agency',$player['agency'])
+                        ->set('super_agent',$player['super_agent'])
+                        ->set('agent',$player['agent'])
+                        ->where('PLAYER_ID', $player['note'])
+                        ->update();//update all connected transactions
+                    $this->player->save([
+                        'id' => $player['id'],
+                        'note' => '',
+                        'player_id' => $player['note'],
+                    ]);
+                }
+            }
+        }
     }
 
     public function index($var)
@@ -44,7 +83,7 @@ class Admin extends BaseController
             "id" => $this->id,
             "menu" => $menu,
             "action" => $sub_menu,
-            "operatorID" => false
+            "operatorID" => false,
         ];
 
         if($var == 'operators'){
@@ -83,7 +122,7 @@ class Admin extends BaseController
 
         if($var == 'players'){
             $list = [];
-            $limit = $this->request->getVar('limit') ?? 2000;
+            $limit = $this->request->getVar('limit') ?? 20;
             $like = $this->request->getVar('like') ?? '';
             $like_key = $this->request->getVar('like_key') ?? '';
             $q = $this->player;
@@ -132,6 +171,24 @@ class Admin extends BaseController
             $data['operators'] = $this->account->where('access', 'operator')->countAllResults();
             $data['super_agents'] = $this->account->where('access', 'super_agent')->countAllResults();
             $data['agents'] = $this->account->where('access', 'agent')->countAllResults();
+        }
+
+        if($var == 'commissions'){
+            
+            $account_id = $this->request->getVar('id') ?? '';
+
+            if($account_id == ''){
+                $view = $this->access . '/dashboard';
+            }else{
+                $data['selected_account'] = $this->account->find($account_id);
+                $data['list'] = $this->wallet->where('account_id', $account_id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
+                foreach ($data['list'] as $key => $value) {
+                    $data['list'][$key]['player'] = $this->player->where('player_id',$value['player_id'])->first();
+                }
+                
+                $data['payouts'] = $this->wallet->where('account_id', $account_id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+                $data['commissions'] = $this->wallet->where('account_id', $account_id)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            }
         }
 
         return  view('header/dashboard')
@@ -272,6 +329,8 @@ class Admin extends BaseController
         if(!$this->logged){
             return redirect()->to('login');
         }
+
+        $import_logs = $this->logs->where("name","import_reports")->limit(100)->orderBy('id','DESC')->find();
         
         $data = [
             "balance" => $this->balance,
@@ -281,7 +340,8 @@ class Admin extends BaseController
             "reports" => [],
             "saved" => 0,
             "inserts" => [],
-            "targetPath" => ''
+            "targetPath" => '',
+            "import_logs" => $import_logs,
         ];
 
         if (isset($_POST["clear_reports"])) {
@@ -302,6 +362,8 @@ class Admin extends BaseController
         
                 $targetPath = 'uploads/' . $_FILES['file']['name'];
                 move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+
+                $this->logs->save(["name"=>"import_reports","account_id"=> $this->id, "info" => $_FILES['file']['name'] ]);
         
                 $data['targetPath'] = $targetPath;
             }

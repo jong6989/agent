@@ -39,36 +39,42 @@
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Player ID</th>
-                      <th>Player Name</th>
-                      <th>Player Email</th>
-                      <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
-                      <th>Source</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                        <th>ID</th>
+                        <th>Operator</th>
+                        <th>Area Distributor</th>
+                        <th>Affiliate</th>
+                        <th>Player ID</th>
+                        <th>Player Name</th>
+                        <th>Player Email</th>
+                        <th>Player Contact</th>
+                        <th>Transactions</th>
+                        <th>Commissions</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
 
                       <?php foreach ($list as $k => $v): ?>
                         <tr>
-                          <td> <?= $v['id']; ?> </td>
-                          <td> <?= $v['player_id']; ?> </td>
-                          <td> <?= $v['name']; ?> </td>
-                          <td> <?= $v['email']; ?> </td>
-                          <td> <?= $v['phone']; ?> </td>
-                          <td> <?= $v['transactions']; ?> </td>
-                          <td> 
-                            <?= PESO; ?><?= number_format($v['commission']); ?>
-                          </td>
-                          <td> 
-                            <?=  ($v['agent'] == $id) ? 'link':'agent' ; ?>
-                          </td>
-                          <td> 
-                            <span class="badge <?= ($v['player_id'] == 'none') ? 'bg-secondary' : 'bg-success'; ?>">
+                            <td> <?= $v['id']; ?> </td>
+                            <td> <?= $v['operator']['name']; ?> </td>
+                            <td> <?= $v['super_agent']['name']; ?> </td>
+                            <td> <?= $v['agent']['name']; ?> </td>
+                            <td> <?= $v['player_id']; ?> </td>
+                            <td> <?= $v['name']; ?> </td>
+                            <td> <?= $v['email']; ?> </td>
+                            <td> <?= $v['phone']; ?> </td>
+                            <td> <?= $v['transactions']; ?> </td>
+                            <td> 
+                                <?= PESO; ?><?= number_format($v['commission'],2); ?>
+                            </td>
+                            <td> 
+                                <?=  ($v['agent'] == $id) ? 'link':'agent' ; ?>
+                            </td>
+                            <td> 
+                                <span class="badge <?= ($v['player_id'] == 'none') ? 'bg-secondary' : 'bg-success'; ?>">
                               <?= ($v['player_id'] == 'none') ? 'Pending':'Paired'; ?>
                             </span> 
                           </td>
@@ -87,16 +93,19 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                      <th>ID</th>
-                      <th>Player ID</th>
-                      <th>Player Name</th>
-                      <th>Player Email</th>
-                      <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
-                      <th>Source</th>
-                      <th>Status</th>
-                      <th>Action</th>
+                        <th>ID</th>
+                        <th>Operator</th>
+                        <th>Area Distributor</th>
+                        <th>Affiliate</th>
+                        <th>Player ID</th>
+                        <th>Player Name</th>
+                        <th>Player Email</th>
+                        <th>Player Contact</th>
+                        <th>Transactions</th>
+                        <th>Commissions</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </tfoot>
                   </table>

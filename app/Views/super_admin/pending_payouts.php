@@ -62,7 +62,7 @@
                         <td> <?= $v['access']; ?> </td>
                         <td> <?= $v['name']; ?> </td>
                         <td> <?= $v['bank_name']; ?> </td>
-                        <td> <?= PESO . ' ' . number_format($v['wallet']); ?> </td>
+                        <td> <?= PESO . ' ' . number_format($v['wallet'],2); ?> </td>
                         <td> 
                           <a href="<?= base_url('process_payout/' . $v['id']); ?>">
                             <button class="btn btn-warning btn-xs">

@@ -1,118 +1,192 @@
+
 <div class="wrapper">
 
-  
 <?= view('navbar/' . session()->get('access') ); ?>
 <?= view('sidebar/' . session()->get('access')); ?>
 
-  <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1>Commissions</h1>
-            </div>
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h4>Account Name : <strong><?= $selected_account['name']; ?></strong> </h4>
+            <h6>Email : <strong><?= $selected_account['email']; ?></strong> </h6>
+            <h6>Contact : <strong><?= $selected_account['phone']; ?></strong> </h6>
+            <h6>Address : <strong><?= $selected_account['address']; ?></strong> </h6>
+            <h6>Commission Rate : <strong><?= $selected_account['commission']; ?>%</strong> </h6>
+            <h6>Rank : <strong>
+              <?= ($selected_account['access'] == 'agent')? 'Affiliate' : '' ; ?>
+              <?= ($selected_account['access'] == 'super_agent')? 'Area Distributor' : '' ; ?>
+              <?= ($selected_account['access'] == 'operator')? 'Hall Operator' : '' ; ?>
+              <?= ($selected_account['access'] == 'agency')? 'Agency Distributor' : '' ; ?>
+            </strong> </h6>
+
+            <?php if($selected_account['operator'] != ''): ?>
+              <a href="<?= base_url('admin/commissions') . '?id=' . $selected_account['operator']; ?>">
+                <button class="btn btn-primary btn-xs">
+                  <i class="fas fa-eye"></i>
+                  View Operator
+                </button>
+              </a>
+            <?php endif; ?>
+
+
+            <?php if($selected_account['agency'] != ''): ?>
+              <a href="<?= base_url('admin/commissions') . '?id=' . $selected_account['agency']; ?>">
+                <button class="btn btn-danger btn-xs">
+                  <i class="fas fa-eye"></i>
+                  View Agency Distributor
+                </button>
+              </a>
+            <?php endif; ?>
+
             
-          </div>
-        </div><!-- /.container-fluid -->
-      </section>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
+            <?php if($selected_account['super_agent'] != ''): ?>
+              <a href="<?= base_url('admin/commissions') . '?id=' . $selected_account['super_agent']; ?>">
+                <button class="btn btn-warning btn-xs">
+                  <i class="fas fa-eye"></i>
+                  View Area Distributor
+                </button>
+              </a>
+            <?php endif; ?>
+            
               
-
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Registered Agents using your referal link</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>NAME</th>
-                      <th>Players</th>
-                      <th>Wallet</th>
-                      <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                    <tr>
-                      <td>1</td>
-                      <td>Anna Fe
-                      </td>
-                      <td> 12</td>
-                      <td> <?= PESO; ?> 200,000</td>
-                      <td> <span class="badge bg-success">Online</span> </td>
-                    </tr>
-
-                    <tr>
-                      <td>2</td>
-                      <td>Marvin Sultan
-                      </td>
-                      <td> 15</td>
-                      <td> <?= PESO; ?> 340,500</td>
-                      <td> <span class="badge bg-secondary">Offline</span> </td>
-                    </tr>
-
-                    <tr>
-                      <td>3</td>
-                      <td>Kevin Chan
-                      </td>
-                      <td> 35</td>
-                      <td> <?= PESO; ?> 412,450</td>
-                      <td> <span class="badge bg-secondary">Offline</span> </td>
-                    </tr>
-
-                    <tr>
-                      <td>4</td>
-                      <td>Girlie Ocampo
-                      </td>
-                      <td> 6</td>
-                      <td> <?= PESO; ?> 65,300</td>
-                      <td> <span class="badge bg-success">Online</span> </td>
-                    </tr>
-                    
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                      <th>ID</th>
-                      <th>NAME</th>
-                      <th>Players</th>
-                      <th>Wallet</th>
-                      <th>Status</th>
-                    </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col -->
+              
+            <hr>
+            <h4>Commissions : <strong><?= PESO . ' ' . number_format($commissions,2); ?></strong> </h4>
+            <h4>PAID : <strong><?= PESO . ' ' . number_format( -$payouts,2); ?></strong> </h4>
           </div>
-          <!-- /.row -->
+          
         </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    
-    <?= view('footer/copyright'); ?>
+      </div><!-- /.container-fluid -->
+    </section>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            
+          
+            <div class="card">
+              <div class="card-header">
+                
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive">
+                <table id="tableData" class="table table-bordered table-striped ">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Transaction ID</th>
+                    <th>Network</th>
+                    <th>Bank</th>
+                    <th>Account No.</th>
+                    <th>Ref. No.</th>
+                    <th>Ref. Date</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                    <?php foreach ($list as $k => $v): ?>
+                      <tr>
+                        <td> <?= $v['id']; ?> </td>
+                        <td> <?= $v['created_at']; ?> </td>
+                        <td> <?= PESO . ' ' . $v['amount']; ?> </td>
+                        <td> <?= $v['type']; ?></td>
+                        <td> <?= $v['transaction']; ?>-<?= $v['player_id']; ?></td>
+                        <td>
+                          
+                          <?php if($selected_account['id'] != $v['player']['agent']): ?>
+                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['agent']; ?>">
+                              <button class="btn btn-primary btn-xs">
+                                <i class="fas fa-eye"></i>
+                                View Affiliate
+                              </button>
+                            </a>
+                          <?php endif; ?>
+
+                          <?php if($selected_account['id'] != $v['player']['super_agent']): ?>
+                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['super_agent']; ?>">
+                              <button class="btn btn-warning btn-xs">
+                                <i class="fas fa-eye"></i>
+                                View Area Distributor
+                              </button>
+                            </a>
+                          <?php endif; ?>
+
+                          <?php if($selected_account['id'] != $v['player']['operator']): ?>
+                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['operator']; ?>">
+                              <button class="btn btn-danger btn-xs">
+                                <i class="fas fa-eye"></i>
+                                View Operator
+                              </button>
+                            </a>
+                          <?php endif; ?>
+                          
+                        </td>
+                        <td> <?= $v['bank']; ?></td>
+                        <td> <?= $v['account_number']; ?></td>
+                        <td> <?= $v['ref_no']; ?></td>
+                        <td> <?= $v['ref_date']; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                    <th>Transaction ID</th>
+                    <th>Network</th>
+                    <th>Bank</th>
+                    <th>Account No.</th>
+                    <th>Ref. No.</th>
+                    <th>Ref. Date</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
   </div>
+  <!-- /.content-wrapper -->
+  
+  <?= view('footer/copyright'); ?>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
 <!-- ./wrapper -->
 
-<?= view('scripts/data_table'); ?>
+<?= view('scripts/js'); ?>
+
+<script>
+
+  $("#tableData").DataTable({
+      "responsive": true, 
+      "lengthChange": false, 
+      "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#tableData_wrapper .col-md-6:eq(0)');
+  
+</script>

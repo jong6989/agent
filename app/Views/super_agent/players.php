@@ -62,7 +62,7 @@
                           <td> <?= $v['phone']; ?> </td>
                           <td> <?= $v['transactions']; ?> </td>
                           <td> 
-                            <?= PESO; ?><?= number_format($v['commission']); ?>
+                            <?= PESO; ?><?= number_format($v['commission'],2); ?>
                           </td>
                           <td> 
                             <?=  ($v['agent'] == $id) ? 'link':'agent' ; ?>

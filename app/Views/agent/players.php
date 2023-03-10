@@ -61,7 +61,7 @@
                           <td> <?= $v['phone']; ?> </td>
                           <td> <?= $v['transactions']; ?> </td>
                           <td> 
-                            <?= PESO; ?><?= number_format($v['commission']); ?>
+                            <?= PESO; ?><?= number_format($v['commission'],2); ?>
                           </td>
                           <td> 
                             <span class="badge <?= ($v['player_id'] == 'none') ? 'bg-secondary' : 'bg-success'; ?>">

@@ -68,7 +68,7 @@
                         <td> <?= $v['commission']; ?>% </td>
                         <td> <?= $v['upline'] ?? ''; ?> </td>
                         <td> 
-                          <?= PESO; ?><?= number_format($v['balance']); ?>
+                          <?= PESO; ?><?= number_format($v['balance'],2); ?>
                         </td>
                         <td> 
                           <span class="badge <?= ($v['online'] == '1') ? 'bg-success': 'bg-secondary'; ?>">

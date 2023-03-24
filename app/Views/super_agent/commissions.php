@@ -11,8 +11,23 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Commissions : <?= PESO . ' ' . number_format($balance); ?> </h1>
-            <h1>PAID : <?= PESO . ' ' . number_format( -$payouts); ?> </h1>
+            <h4>Account Name : <strong><?= $selected_account['name']; ?></strong> </h4>
+            <h6>Email : <strong><?= $selected_account['email']; ?></strong> </h6>
+            <h6>Contact : <strong><?= $selected_account['phone']; ?></strong> </h6>
+            <h6>Address : <strong><?= $selected_account['address']; ?></strong> </h6>
+            <h6>Commission Rate : <strong><?= $selected_account['commission']; ?>%</strong> </h6>
+            <h6>Rank : <strong>
+              <?= ($selected_account['access'] == 'agent')? 'Affiliate' : '' ; ?>
+              <?= ($selected_account['access'] == 'super_agent')? 'Area Distributor' : '' ; ?>
+              <?= ($selected_account['access'] == 'operator')? 'Hall Operator' : '' ; ?>
+              <?= ($selected_account['access'] == 'agency')? 'Agency Distributor' : '' ; ?>
+            </strong> </h6>
+
+          
+              
+            <hr>
+            <h4>Commissions : <strong><?= PESO . ' ' . number_format($commissions,2); ?></strong> </h4>
+            <h4>PAID : <strong><?= PESO . ' ' . number_format( -$payouts,2); ?></strong> </h4>
           </div>
           
         </div>
@@ -40,6 +55,7 @@
                     <th>Amount</th>
                     <th>Type</th>
                     <th>Transaction ID</th>
+                    <th>Network</th>
                     <th>Bank</th>
                     <th>Account No.</th>
                     <th>Ref. No.</th>
@@ -54,7 +70,19 @@
                         <td> <?= $v['created_at']; ?> </td>
                         <td> <?= PESO . ' ' . $v['amount']; ?> </td>
                         <td> <?= $v['type']; ?> </td>
-                        <td> <?= $v['transaction']; ?></td>
+                        <td> <?= $v['transaction']; ?>-<?= $v['player_id']; ?></td>
+                        <td>
+                          
+                          <?php if($selected_account['id'] != $v['player']['agent']): ?>
+                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['agent']; ?>">
+                              <button class="btn btn-primary btn-xs">
+                                <i class="fas fa-eye"></i>
+                                View Affiliate
+                              </button>
+                            </a>
+                          <?php endif; ?>
+                          
+                        </td>
                         <td> <?= $v['bank']; ?></td>
                         <td> <?= $v['account_number']; ?></td>
                         <td> <?= $v['ref_no']; ?></td>
@@ -70,6 +98,7 @@
                     <th>Amount</th>
                     <th>Type</th>
                     <th>Transaction ID</th>
+                    <th>Network</th>
                     <th>Bank</th>
                     <th>Account No.</th>
                     <th>Ref. No.</th>

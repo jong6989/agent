@@ -44,7 +44,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Player ID</th>
-                    <th>Transactions</th>
+                    <!-- <th>Transactions</th> -->
                     <th>Action</th>
                   </tr>
                   </thead>
@@ -60,7 +60,7 @@
                         <td> <?= $v['email']; ?> </td>
                         <td> <?= $v['phone']; ?> </td>
                         <td> <?= $v['player_id']; ?> </td>
-                        <td> <?= number_format($v['transactions']); ?> </td>
+                        <!-- <td> <?= '';// number_format($v['transactions']); ?> </td> -->
                         <td> 
 
                           <a href="<?= base_url('edit_player/' . $v['id']); ?>">
@@ -94,7 +94,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Player ID</th>
-                    <th>Transactions</th>
+                    <!-- <th>Transactions</th> -->
                     <th>Action</th>
                   </tr>
                   </tfoot>

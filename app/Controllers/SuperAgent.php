@@ -70,35 +70,54 @@ class SuperAgent extends BaseController
         if($var == 'players'){
             $list = [];
             foreach ( $this->player->where('super_agent', $this->id)->find() as $k => $v) {
-                $v['commission'] = $this->wallet->where('account_id', $this->id)->where('player_id', $v['player_id'])->select('sum(amount) as total')->first()['total'] ?? 0;
-                $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+                // $v['commission'] = $this->wallet->where('account_id', $this->id)->where('player_id', $v['player_id'])->select('sum(amount) as total')->first()['total'] ?? 0;
+                // $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
                 $list[] = $v;
             }
             $data['list'] = $list;
         }
 
         if($var == 'commissions'){
-            $data['list'] = $this->wallet->where('account_id', $this->id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
-            $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $account_id = $this->request->getVar('id') ?? $this->id;
+
+            $data['selected_account'] = $this->account->find($account_id);
+            $data['list'] = $this->wallet->where('account_id', $account_id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
+            $data['payouts'] = $this->wallet->where('account_id', $account_id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            foreach ($data['list'] as $key => $value) {
+                $data['list'][$key]['player'] = $this->player->where('player_id',$value['player_id'])->first();
+            }
+            $data['commissions'] = $this->wallet->where('account_id', $account_id)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            
+            foreach ( $data['list'] as $k => $v) {
+                $data['list'][$k]['player'] = $this->player->where('player_id', $v['player_id'])->first();
+            }
         }
         
         if($var == 'dashboard'){
             $day = date('j');
-            $month = date('n');
+            $month = date('m');
+            $last_month = date('m', strtotime("-1 month"));
             $year = date('Y');
-
+            
             //payout
-            $data['payout_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['payout_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
-
             
             //income
-            $data['commission_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            $data['commission_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
+            
+            //GGR
+            $data['ggr_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(ggr) as total')->first()['total'] ?? 0;
+            $data['ggr_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'income')->select('sum(ggr) as total')->first()['total'] ?? 0;
+            $data['ggr_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'income')->select('sum(ggr) as total')->first()['total'] ?? 0;
+            $data['ggr_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'income')->select('sum(ggr) as total')->first()['total'] ?? 0;
+            $data['total_ggr'] = $this->wallet->where('account_id', $this->id)->where('type', 'income')->select('sum(ggr) as total')->first()['total'] ?? 0;
+
 
             $data['all_players'] = $this->player->where('super_agent', $this->id)->countAllResults();
             $data['paired_players'] = $this->player->where('super_agent', $this->id)->where('player_id !=', 'none')->countAllResults();

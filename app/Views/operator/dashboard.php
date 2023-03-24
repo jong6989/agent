@@ -58,9 +58,9 @@
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3> <?= PESO . ' ' . number_format( -$payouts); ?></h3>
+            <h3> <?= PESO . ' ' . number_format( $total_ggr); ?></h3>
 
-            <p>GGR Share</p>
+            <p>Total GGR</p>
           </div>
           <div class="icon">
             <i class="fas fa-wallet"></i>
@@ -102,26 +102,33 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Today</th>
                     <th>This Month</th>
+                    <th>Last Month</th>
                     <th>This Year</th>
                     <th>Last Year</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Transactions</td>
-                    <td><?= number_format($trans_day); ?></td>
-                    <td><?= number_format($trans_month); ?></td>
-                    <td><?= number_format($trans_year); ?></td>
-                    <td><?= number_format($trans_last_year); ?></td>
+                    <td>GGR</td>
+                    <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_last_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
                   </tr>
                   <tr>
-                    <td>Total BET</td>
-                    <td><?= PESO; ?> <?= number_format($bets_day); ?></td>
-                    <td><?= PESO; ?> <?= number_format($bets_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($bets_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($bets_last_year); ?></td>
+                    <td>Payout</td>
+                    <td><?= PESO; ?> <?= number_format($payout_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($payout_last_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($payout_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($payout_last_year); ?></td>
+                  </tr>
+                  <tr>
+                    <td>Commission</td>
+                    <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_last_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
                   </tr>
                 </tbody>
               </table>

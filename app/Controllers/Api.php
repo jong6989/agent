@@ -153,6 +153,8 @@ class Api extends BaseController
         foreach ($all_linked_players as $k => $v) {
 
             $ggr = $this->transaction->where("completed",0)->where("PLAYER_ID", $v['game_player_id'])->select('sum(GROSS_GAMING_REVENUE) as total')->first()['total'] ?? 0;
+            $bet = $this->transaction->where("completed",0)->where("PLAYER_ID", $v['game_player_id'])->select('sum(BET_AMOUNT) as total')->first()['total'] ?? 0;
+            $win = $this->transaction->where("completed",0)->where("PLAYER_ID", $v['game_player_id'])->select('sum(PAYOUT) as total')->first()['total'] ?? 0;
 
             $agent_share = $this->account->find($v['agent'])['commission'];
             $super_agent_share = $this->account->find($v['super_agent'])['commission'];
@@ -182,6 +184,9 @@ class Api extends BaseController
                     $this->wallet->save([
                         "account_id" => $v['agent'],
                         "amount" => $agent_commission,
+                        "bet" => $bet,
+                        "win" => $win,
+                        "ggr" => $ggr,
                         "type" => 'income',
                         "transaction" => $transID,
                         "player_id" => $playerID,
@@ -196,6 +201,9 @@ class Api extends BaseController
                     $this->wallet->save([
                         "account_id" => $v['super_agent'],
                         "amount" => $super_agent_commission,
+                        "bet" => $bet,
+                        "win" => $win,
+                        "ggr" => $ggr,
                         "type" => 'income',
                         "transaction" => $transID,
                         "player_id" => $playerID,
@@ -210,6 +218,9 @@ class Api extends BaseController
                     $this->wallet->save([
                         "account_id" => $v['operator'],
                         "amount" => $operator_commission,
+                        "bet" => $bet,
+                        "win" => $win,
+                        "ggr" => $ggr,
                         "type" => 'income',
                         "transaction" => $transID,
                         "player_id" => $playerID,
@@ -224,6 +235,9 @@ class Api extends BaseController
                     $this->wallet->save([
                         "account_id" => $v['agency'],
                         "amount" => $agency_commission,
+                        "bet" => $bet,
+                        "win" => $win,
+                        "ggr" => $ggr,
                         "type" => 'income',
                         "transaction" => $transID,
                         "player_id" => $playerID,

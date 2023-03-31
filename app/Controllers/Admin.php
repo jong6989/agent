@@ -124,7 +124,7 @@ class Admin extends BaseController
 
         if ($var == 'players') {
             $list = [];
-            $limit = $this->request->getVar('limit') ?? 40;
+            $limit = $this->request->getVar('limit') ?? 5000;
             $like = $this->request->getVar('like') ?? '';
             $like_key = $this->request->getVar('like_key') ?? '';
             $q = $this->player;
@@ -133,8 +133,8 @@ class Admin extends BaseController
                 $q = $q->like($like_key, $like);
             }
             $q = $q->limit($limit)->find();
-            foreach ($q as $k => $v) {
-                $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+            foreach ( $q as $k => $v) {
+                // $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
                 $v['operator'] = $this->account->find($v['operator']);
                 $v['super_agent'] = $this->account->find($v['super_agent']);
                 $v['agent'] = $this->account->find($v['agent']);

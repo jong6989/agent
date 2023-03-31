@@ -8,13 +8,14 @@ use App\Models\WalletModel;
 use App\Models\MetaModel;
 use App\Models\PlayerModel;
 use App\Models\GamePlayerModel;
+use App\Models\NewsModel;
 use App\Models\TransactionModel;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 class Admin extends BaseController
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         helper('form');
         $this->account = new AccountModel();
         $this->wallet = new WalletModel();
@@ -23,25 +24,26 @@ class Admin extends BaseController
         $this->player = new PlayerModel();
         $this->gameplayer = new GamePlayerModel();
         $this->transaction = new TransactionModel();
+        $this->news = new NewsModel();
         $this->logged = session()->get('isLoggedIn') ?? false;
         $this->id = session()->get('id');
         $this->access = session()->get('access');
         $this->balance = $this->wallet->where('account_id', $this->id)->select('sum(amount) as total')->first()['total'] ?? 0;
 
         //process player id
-        $pending_pair = $this->player->where('note !=','')->where('player_id','none')->find();
+        $pending_pair = $this->player->where('note !=', '')->where('player_id', 'none')->find();
         foreach ($pending_pair as $key => $player) {
-            $gameplayer_query = $this->gameplayer->where('game_player_id',$player['note'])->find();
-            if(count($gameplayer_query) > 0){
+            $gameplayer_query = $this->gameplayer->where('game_player_id', $player['note'])->find();
+            if (count($gameplayer_query) > 0) {
                 $gamePLayer = $gameplayer_query[0];
 
                 //if already paired
-                if($gamePLayer["linked"] == 1){
+                if ($gamePLayer["linked"] == 1) {
                     $this->player->save([
                         'id' => $player['id'],
                         'note' => ''
                     ]); // remove the note
-                }else {
+                } else {
                     $this->gameplayer->save([
                         "id" => $gamePLayer['id'],
                         "affiliate_player_id" => $player['id'],
@@ -50,14 +52,14 @@ class Admin extends BaseController
                         "super_agent" => $player['super_agent'],
                         "agent" => $player['agent'],
                         "linked" => 1,
-                    ]);//update game player
+                    ]); //update game player
                     $this->transaction
-                        ->set('operator',$player['operator'])
-                        ->set('agency',$player['agency'])
-                        ->set('super_agent',$player['super_agent'])
-                        ->set('agent',$player['agent'])
+                        ->set('operator', $player['operator'])
+                        ->set('agency', $player['agency'])
+                        ->set('super_agent', $player['super_agent'])
+                        ->set('agent', $player['agent'])
                         ->where('PLAYER_ID', $player['note'])
-                        ->update();//update all connected transactions
+                        ->update(); //update all connected transactions
                     $this->player->save([
                         'id' => $player['id'],
                         'note' => '',
@@ -70,7 +72,7 @@ class Admin extends BaseController
 
     public function index($var)
     {
-        if(!$this->logged){
+        if (!$this->logged) {
             return redirect()->to('login');
         }
 
@@ -86,62 +88,202 @@ class Admin extends BaseController
             "operatorID" => false,
         ];
 
-        if($var == 'operators'){
+        if ($var == 'operators') {
             $list = [];
-            foreach ( $this->account->where('access', 'operator')->find() as $k => $v) {
+            foreach ($this->account->where('access', 'operator')->find() as $k => $v) {
                 $v['balance'] = $this->wallet->where('account_id', $v['id'])->select('sum(amount) as total')->first()['total'] ?? 0;
                 $list[] = $v;
             }
             $data['list'] = $list;
         }
 
-        if($var == 'super_agents' || $var == 'agents'){
+        if ($var == 'super_agents' || $var == 'agents') {
             $operators = $this->account->where('access', 'operator')->find();
             $data['operators'] = $operators;
             $list = [];
             $query = [];
             $accessFilter = ($var == 'agents') ? 'agent' : 'super_agent';
             $operatorID = $this->request->getVar('operator') ?? false;
-            if($operatorID){
+            if ($operatorID) {
                 $data['operatorID'] = $operatorID;
                 $query = $this->account->where('access', $accessFilter)->where('operator', $operatorID)->find();
-            }else {
+            } else {
                 $query = $this->account->where('access', $accessFilter)->find();
             }
-            foreach ( $query as $k => $v) {
+            foreach ($query as $k => $v) {
                 $v['balance'] = $this->wallet->where('account_id', $v['id'])->select('sum(amount) as total')->first()['total'] ?? 0;
                 $v['hall'] = $this->account->find($v['operator'])['name'] ?? '';
-                if($var == 'agents' && ($v['super_agent'] != '') ){
+                if ($var == 'agents' && ($v['super_agent'] != '')) {
                     $v['upline'] = $this->account->find($v['super_agent'])['name'];
                 }
                 $list[] = $v;
             }
             $data['list'] = $list;
         }
-        
 
-        if($var == 'players'){
+
+        if ($var == 'players') {
             $list = [];
-            $limit = $this->request->getVar('limit') ?? 20;
+            $limit = $this->request->getVar('limit') ?? 40;
             $like = $this->request->getVar('like') ?? '';
             $like_key = $this->request->getVar('like_key') ?? '';
             $q = $this->player;
-            if($like != '' && $like_key != ''){
-                $q = $q->like($like_key,$like);
+
+            if ($like != '' && $like_key != '') {
+                $q = $q->like($like_key, $like);
             }
             $q = $q->limit($limit)->find();
-            foreach ( $q as $k => $v) {
+            foreach ($q as $k => $v) {
                 $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
                 $v['operator'] = $this->account->find($v['operator']);
                 $v['super_agent'] = $this->account->find($v['super_agent']);
                 $v['agent'] = $this->account->find($v['agent']);
-                $v['agency'] = $this->account->find($v['agency'] ?? ['name'=>'']);
+                $v['agency'] = $this->account->find($v['agency'] ?? ['name' => '']);
                 $list[] = $v;
             }
             $data['list'] = $list;
         }
 
-        if($var == 'dashboard'){
+
+        if ($var == 'players-test') {
+            
+            $list = [];
+            
+
+            if($this->request->getGet('name')){
+
+                $nameToSearch = $this->request->getGet('name', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                if($this->request->getGet('per-page')){
+                    $perPage = $this->request->getGet('per-page',FILTER_SANITIZE_SPECIAL_CHARS);
+                    $q = $this->player->like('name', $nameToSearch, 'both' )->paginate($perPage, 'allPlayers');    
+                    $data['perPage'] = $perPage;
+                }else{
+                    $data['perPage'] = 10;
+                    $q = $this->player->like('name', $nameToSearch, 'both' )->paginate(10, 'allPlayers');
+                }
+
+                $pager = $this->player->pager;
+                
+                foreach ($q as $k => $v) {
+    
+                    // $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+                    $v['operator'] = $this->account->find($v['operator']);
+                    $v['super_agent'] = $this->account->find($v['super_agent']);
+                    $v['agent'] = $this->account->find($v['agent']);
+                    $v['agency'] = $this->account->find($v['agency'] ?? ['name' => '']);
+                    $list[] = $v;
+                }
+                $data['nameSearch'] = $nameToSearch;
+            }else{
+
+                if($this->request->getGet('per-page')){
+                    $perPage = $this->request->getGet('per-page',FILTER_SANITIZE_SPECIAL_CHARS);
+                    $q = $this->player->paginate($perPage, 'allPlayers');    
+                    $data['perPage'] = $perPage;
+                }else{
+                    $data['perPage'] = 10;
+                    $q = $this->player->paginate(10, 'allPlayers');
+                }
+                
+                $pager = $this->player->pager;
+                
+                foreach ($q as $k => $v) {
+    
+                    // $v['transactions'] = $this->transaction->where('PLAYER_ID', $v['player_id'])->countAllResults();
+                    $v['operator'] = $this->account->find($v['operator']);
+                    $v['super_agent'] = $this->account->find($v['super_agent']);
+                    $v['agent'] = $this->account->find($v['agent']);
+                    $v['agency'] = $this->account->find($v['agency'] ?? ['name' => '']);
+                    $list[] = $v;
+                }
+            }
+                    
+            $data['list'] = $list;
+            $data['playersPager'] = $pager;
+   
+        }
+
+        if ($var == 'players-test2') {
+
+
+            $pager = service('pager');
+
+            $page    = (int) ($this->request->getGet('page') ?? 1);
+            $perPage = (int) ($this->request->getGet('per-page') ?? 25);;
+
+            $total   = $this->player->getPlayersNumRows();
+            $allPlayers = $this->player->getPlayersWithSearch(null,$page,$perPage);
+
+            if($this->request->getGet('search')){
+                $search = $this->request->getGet('search', FILTER_SANITIZE_SPECIAL_CHARS);
+                $total   = $this->player->getPlayersNumRows($search);
+                $allPlayers = $this->player->getPlayersWithSearch($search,$page,$perPage);
+                $data['search'] = $search;
+            }
+
+    
+            // Call makeLinks() to make pagination links.
+            $pager_links = $pager->makeLinks($page, $perPage, $total, 'default_full');
+
+            $data['list'] = $allPlayers;
+            $data['pager_links'] = $pager_links;
+            $data['perPage'] = $perPage;
+
+            
+
+            // $allPlayers = $this->player->findAll();
+            // $data['list'] = $allPlayers;
+            // $data['account'] = $this->account;
+            // $data['transactions'] = $this->transaction;
+                    
+        }
+
+        //NEWS
+        if ($var == 'news') {
+
+            $perPage = 2;
+
+            //SET PERPAGE
+            if ($this->request->getGet('per-page')) {
+                $perPage = $this->request->getVar('per-page', FILTER_SANITIZE_SPECIAL_CHARS);
+                $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                //SET PER PAGE WITH SEARCH DATA
+                if ($q) {
+                    $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
+                    $searchNews = $this->news->allSearchNewsWithRelation($q)->paginate($perPage, 'allNews');
+                    $pager = $this->news->pager;
+                    // $allNews = $searchNews->getResult();
+                    $data['allNews'] = $searchNews;
+                    $data['pager'] = $pager;
+                    $data['searchNews'] = $q;
+                } else {
+                    $allNews = $this->news->allNewsWithRelation()->paginate($perPage, 'allNews');
+                    $pager = $this->news->pager;
+                    // die(print_r($allNews));
+                    $data['allNews'] = $allNews;
+                    $data['pager'] = $pager;
+                }
+                //SEARCH ONLY
+            } else if ($this->request->getGet('q')) {
+                $search = $this->request->getVar('q', FILTER_SANITIZE_SPECIAL_CHARS);
+                $searchNews = $this->news->allSearchNewsWithRelation($search)->paginate($perPage, 'allNews');
+                $pager = $this->news->pager;
+
+                $data['allNews'] = $searchNews;
+                $data['pager'] = $pager;
+                $data['searchNews'] = $search;
+            } else {
+                $allNews = $this->news->allNewsWithRelation()->paginate($perPage, 'allNews');
+                $pager = $this->news->pager;
+
+                $data['allNews'] = $allNews;
+                $data['pager'] = $pager;
+            }
+        }
+
+        if ($var == 'dashboard') {
             $day = date('j');
             $month = date('n');
             $year = date('Y');
@@ -173,36 +315,37 @@ class Admin extends BaseController
             $data['agents'] = $this->account->where('access', 'agent')->countAllResults();
         }
 
-        if($var == 'commissions'){
-            
+        if ($var == 'commissions') {
+
             $account_id = $this->request->getVar('id') ?? '';
 
-            if($account_id == ''){
+            if ($account_id == '') {
                 $view = $this->access . '/dashboard';
-            }else{
+            } else {
                 $data['selected_account'] = $this->account->find($account_id);
-                $data['list'] = $this->wallet->where('account_id', $account_id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
+                $data['list'] = $this->wallet->where('account_id', $account_id)->limit(2000)->orderBy('id', 'DESC')->find() ?? [];
                 foreach ($data['list'] as $key => $value) {
-                    $data['list'][$key]['player'] = $this->player->where('player_id',$value['player_id'])->first();
+                    $data['list'][$key]['player'] = $this->player->where('player_id', $value['player_id'])->first();
                 }
-                
+
                 $data['payouts'] = $this->wallet->where('account_id', $account_id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
                 $data['commissions'] = $this->wallet->where('account_id', $account_id)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             }
         }
 
         return  view('header/dashboard')
-                .view($view ,$data)
-                .view('footer/dashboard');
+            . view($view, $data)
+            . view('footer/dashboard');
     }
 
-    public function register_operator(){
-        if(!$this->logged){
+    public function register_operator()
+    {
+        if (!$this->logged) {
             return redirect()->to('login');
         }
 
         $id = $this->request->getVar('id') ?? false;
-        if($id){
+        if ($id) {
             $currentItem = $this->account->find($id);
         }
         $default = [
@@ -213,7 +356,7 @@ class Admin extends BaseController
         ];
 
         $formURL = ($id) ? 'register_operator?id=' . $id : 'register_operator';
-        
+
         $data = [
             "balance" => $this->balance,
             "id" => $this->id,
@@ -224,27 +367,27 @@ class Admin extends BaseController
             "default" => $default,
             "formUrl" => $formURL
         ];
-        
 
-        if($this->request->getMethod() == 'post'){
-            
+
+        if ($this->request->getMethod() == 'post') {
+
             $rules = [
                 'email' => 'trim|required|valid_email',
                 'name' => 'trim|required',
                 'commission' => 'required',
             ];
 
-            if(!$id){
+            if (!$id) {
                 $rules['password'] = [
                     'rules' => 'trim|required|matches[re_password]|min_length[6]|max_length[255]',
                     'errors' => [
                         'matches' => 'Password did not match!'
-                    ] 
+                    ]
                 ];
             }
 
-            
-            if( $this->validate($rules) ){
+
+            if ($this->validate($rules)) {
                 $data = [
                     'email' => $this->request->getVar('email'),
                     'name' => $this->request->getVar('name'),
@@ -252,10 +395,10 @@ class Admin extends BaseController
                     'address' => $this->request->getVar('address'),
                 ];
 
-                if($id){
+                if ($id) {
                     $data['id'] = $id;
                     $this->account->save($data);
-                }else {
+                } else {
                     $data['password'] = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
                     $data['access'] = 'operator';
                     $data['status'] = 'new';
@@ -271,27 +414,28 @@ class Admin extends BaseController
                 }
 
                 return redirect()->to($this->access . '/operators');
-            }else {
-              $data["validation"] = $this->validator;
+            } else {
+                $data["validation"] = $this->validator;
             }
         }
 
-        
+
         return  view('header/dashboard')
-                .view($this->access . '/register_operator',$data)
-                .view('footer/dashboard');
+            . view($this->access . '/register_operator', $data)
+            . view('footer/dashboard');
     }
 
-    
 
-    public function settings(){
-        if(!$this->logged){
+
+    public function settings()
+    {
+        if (!$this->logged) {
             return redirect()->to('login');
         }
-        
+
         $ggr_share = $this->meta->where('name', 'ggr_share')->first();
         $minimum_payout = $this->meta->where('name', 'minimum_payout')->first();
-        
+
         $data = [
             "balance" => $this->balance,
             "id" => $this->id,
@@ -301,17 +445,17 @@ class Admin extends BaseController
             'minimum_payout' => $minimum_payout['value']
         ];
 
-        if($this->request->getMethod() == 'post'){
-            
+        if ($this->request->getMethod() == 'post') {
+
             $rules = [
                 'ggr_share' => 'required',
                 'minimum_payout' => 'required',
             ];
 
-            if( $this->validate($rules) ){
-                
-                $this->meta->save([ 'id' => $ggr_share['id'], 'value' => $this->request->getVar('ggr_share')]);
-                $this->meta->save([ 'id' => $minimum_payout['id'], 'value' => $this->request->getVar('minimum_payout')]);
+            if ($this->validate($rules)) {
+
+                $this->meta->save(['id' => $ggr_share['id'], 'value' => $this->request->getVar('ggr_share')]);
+                $this->meta->save(['id' => $minimum_payout['id'], 'value' => $this->request->getVar('minimum_payout')]);
                 $data['ggr_share'] = $this->request->getVar('ggr_share');
                 $data['minimum_payout'] = $this->request->getVar('minimum_payout');
             }
@@ -319,19 +463,20 @@ class Admin extends BaseController
 
 
         return  view('header/dashboard')
-                .view($this->access . '/settings',$data)
-                .view('footer/dashboard');
+            . view($this->access . '/settings', $data)
+            . view('footer/dashboard');
     }
 
-    
 
-    public function reports(){
-        if(!$this->logged){
+
+    public function reports()
+    {
+        if (!$this->logged) {
             return redirect()->to('login');
         }
 
-        $import_logs = $this->logs->where("name","import_reports")->limit(100)->orderBy('id','DESC')->find();
-        
+        $import_logs = $this->logs->where("name", "import_reports")->limit(100)->orderBy('id', 'DESC')->find();
+
         $data = [
             "balance" => $this->balance,
             "id" => $this->id,
@@ -357,35 +502,192 @@ class Admin extends BaseController
                 'text/xlsx',
                 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
             ];
-        
+
             if (in_array($_FILES["file"]["type"], $allowedFileType)) {
-        
+
                 $targetPath = 'uploads/' . $_FILES['file']['name'];
                 move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
-                $this->logs->save(["name"=>"import_reports","account_id"=> $this->id, "info" => $_FILES['file']['name'] ]);
-        
+                $this->logs->save(["name" => "import_reports", "account_id" => $this->id, "info" => $_FILES['file']['name']]);
+
                 $data['targetPath'] = $targetPath;
             }
         }
 
-        $data['current_trans_pending'] = $this->transaction->where("completed",0)->countAllResults();
-        $data['current_trans_processed'] = $this->transaction->where("completed",1)->countAllResults();
-        $data['game_players_pending'] = $this->gameplayer->where("linked",0)->countAllResults();
-        $data['game_players_linked'] = $this->gameplayer->where("linked",1)->countAllResults();
+        $data['current_trans_pending'] = $this->transaction->where("completed", 0)->countAllResults();
+        $data['current_trans_processed'] = $this->transaction->where("completed", 1)->countAllResults();
+        $data['game_players_pending'] = $this->gameplayer->where("linked", 0)->countAllResults();
+        $data['game_players_linked'] = $this->gameplayer->where("linked", 1)->countAllResults();
 
-        $all_linked_players = $this->gameplayer->where("linked",1)->find();
+        $all_linked_players = $this->gameplayer->where("linked", 1)->find();
         $available_for_processing = 0;
         foreach ($all_linked_players as $k => $v) {
-            $available = $this->transaction->where("completed",0)->where("PLAYER_ID", $v['game_player_id'])->countAllResults();
+            $available = $this->transaction->where("completed", 0)->where("PLAYER_ID", $v['game_player_id'])->countAllResults();
             $available_for_processing += $available;
         }
         $data['available_for_processing'] = $available_for_processing;
 
         return  view('header/dashboard')
-                .view($this->access . '/reports',$data)
-                .view('footer/dashboard');
+            . view($this->access . '/reports', $data)
+            . view('footer/dashboard');
     }
 
+    public function news()
+    {
+        // NEWS
+        if (!$this->logged) {
+            return redirect()->to('login');
+        }
 
+
+        $data = [
+            "action" => '',
+            'menu' => '',
+        ];
+
+        // ADD NEWS
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('addNews')) {
+            $rules = [
+                'title' => 'required',
+                'content' => 'required',
+                'image' => 'is_image[image]|uploaded[image]|max_size[image, 2048]',
+            ];
+
+            if ($this->validate($rules)) {
+
+                $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                //HANDLING IMAGE
+                $image = $this->request->getFile('image');
+
+                $imageName = date('Y-m-d') . "_" . time() . "_" . $image->getName();
+
+                // die($imageName);
+
+                $newsData = [
+                    'account_id' => $this->id,
+                    'title' => $title,
+                    'content' => $content,
+                    'img_path' => $imageName,
+                ];
+
+                if ($this->news->insert($newsData) && $image->move('images', $imageName)) {
+                    return redirect()->to($this->access . '/news');
+                }
+            } else {
+                $data['validation'] = $this->validator;
+            }
+        }
+
+        //EDIT NEWS
+        if ($this->request->getGet('edit') != null) {
+            $id = $this->request->getGet('edit');
+            $newsToEdit = $this->news->where('id', $id)->first();
+
+            //IF NEWS TO EDIT FOUND
+            if ($newsToEdit) {
+                $data['formUrl'] = 'news?edit=' . $newsToEdit['id'];
+                $data['newsToEdit'] = $newsToEdit;
+
+                // NEWS EDIT SUBMIT
+                if ($this->request->getVar('editNews') && $this->request->getMethod() == 'post') {
+
+
+                    //CHECK IF EDIT NEWS SUBMIT A FILE
+                    if ($this->request->getFile('image')->getName() != null) {
+
+                        $rules = [
+                            'title' => 'required',
+                            'content' => 'required',
+                            'image' => 'is_image[image]|uploaded[image]|max_size[image, 2048]',
+                        ];
+
+                        //PASS VALIDATION
+                        if ($this->validate($rules)) {
+
+                            $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                            $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                            //DELETING PREVIOUS IMAGE
+                            unlink('images/' . $newsToEdit['img_path']);
+
+                            //HANDLING IMAGE
+                            $image = $this->request->getFile('image');
+                            $imageName = date('Y-m-d') . "_" . time() . "_" . $image->getName();
+
+                            $dataToUpdate = [
+                                'title' => $title,
+                                'content' => $content,
+                                'img_path' => $imageName,
+                            ];
+
+
+                            if ($this->news->update($newsToEdit['id'], $dataToUpdate) && $image->move('images', $imageName)) {
+                                return redirect()->to($this->access . '/news');
+                            }
+
+                            // ERROR VALIDATION
+                        } else {
+                            $data['validation'] = $this->validator;
+                        }
+
+                        //NEWS EDIT DOES NOT SUBMIT A FILE
+                    } else {
+
+                        $rules = [
+                            'title' => 'required',
+                            'content' => 'required',
+                        ];
+
+                        //PASS VALIDATION
+                        if ($this->validate($rules)) {
+
+                            $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                            $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                            $dataToUpdate = [
+                                'title' => $title,
+                                'content' => $content,
+                            ];
+
+
+                            if ($this->news->update($newsToEdit['id'], $dataToUpdate)) {
+                                return redirect()->to($this->access . '/news');
+                            }
+
+                            // ERROR VALIDATION
+                        } else {
+                            $data['validation'] = $this->validator;
+                        }
+                    }
+                }
+
+                return  view('header/dashboard')
+                    . view($this->access . '/edit_news', $data)
+                    . view('footer/dashboard');
+            } else {
+                return redirect()->to($this->access . '/news');
+            }
+        }
+
+        //DELETE A POST
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('d-news')) {
+            $id = $this->request->getVar('d-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            $newsToDelete = $this->news->where('id', $id)->first();
+
+            //IF NEWS TO DELETE FOUND
+            if ($newsToDelete) {
+                unlink('images/' . $newsToDelete['img_path']);
+                $this->news->delete($newsToDelete['id']);
+                return redirect()->back();
+            } else {
+                return redirect()->to($this->access . '/news');
+            }
+        }
+
+        return  view('header/dashboard')
+            . view($this->access . '/add_news', $data)
+            . view('footer/dashboard');
+    }
 }

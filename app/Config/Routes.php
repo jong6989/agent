@@ -56,6 +56,7 @@ $routes->get('/admin/(:any)', 'Admin::index/$1');
 $routes->match(['get', 'post'], '/register_operator', 'Admin::register_operator');
 $routes->match(['get', 'post'], '/settings', 'Admin::settings');
 $routes->match(['get', 'post'], '/reports', 'Admin::reports');
+$routes->match(['get', 'post'], '/news', 'Admin::news');
 
 
 //operator

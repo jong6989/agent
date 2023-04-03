@@ -32,7 +32,7 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                        <a href="<?= base_url('news') ?>" class="my-2 btn btn-primary">Add news</a>
+                                        <a href="<?= base_url('super_agent_news') ?>" class="my-2 btn btn-primary">Add news</a>
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -50,10 +50,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php if (!empty($allNews)) : ?>
+                                                <?php if (!empty($allOperatorNews)) : ?>
 
                                                     <!-- DISPLAY NEWS -->
-                                                    <?php foreach ($allNews as $news) : ?>
+                                                    <?php foreach ($allOperatorNews as $news) : ?>
                                                         <tr>
                                                             <td><?= $news['id'] ?></td>
                                                             <td>
@@ -64,12 +64,12 @@
                                                             <td><?= $news['name'] ?></td>
                                                             <td><?= $news['created_at'] ?></td>
                                                             <td>
-                                                                <a href="<?= base_url('news?edit=' . $news['id']) ?>" class="btn btn-warning btn-xs">
+                                                                <a href="<?= base_url('super_agent_news?edit=' . $news['id']) ?>" class="btn btn-warning btn-xs">
                                                                     <i class="fas fa-edit"></i>
                                                                     Edit
                                                                 </a>
 
-                                                                <form action="<?= base_url('news'); ?>" method="post">
+                                                                <form action="<?= base_url('super_agent_news'); ?>" method="post">
                                                                     <input type="text" name="d-id" value="<?= $news['id'] ?>" hidden>
                                                                     <input type="text" hidden readonly value="Delete" class="btn btn-danger" name="d-news">
                                                                     <button type="submit" class="btn btn-danger btn-xs">

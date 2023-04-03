@@ -242,45 +242,46 @@ class Admin extends BaseController
         //NEWS
         if ($var == 'news') {
 
-            $perPage = 2;
-
-            //SET PERPAGE
-            if ($this->request->getGet('per-page')) {
-                $perPage = $this->request->getVar('per-page', FILTER_SANITIZE_SPECIAL_CHARS);
-                $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
-
-                //SET PER PAGE WITH SEARCH DATA
-                if ($q) {
-                    $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
-                    $searchNews = $this->news->allSearchNewsWithRelation($q)->paginate($perPage, 'allNews');
-                    $pager = $this->news->pager;
-                    // $allNews = $searchNews->getResult();
-                    $data['allNews'] = $searchNews;
-                    $data['pager'] = $pager;
-                    $data['searchNews'] = $q;
-                } else {
-                    $allNews = $this->news->allNewsWithRelation()->paginate($perPage, 'allNews');
-                    $pager = $this->news->pager;
-                    // die(print_r($allNews));
-                    $data['allNews'] = $allNews;
-                    $data['pager'] = $pager;
-                }
-                //SEARCH ONLY
-            } else if ($this->request->getGet('q')) {
-                $search = $this->request->getVar('q', FILTER_SANITIZE_SPECIAL_CHARS);
-                $searchNews = $this->news->allSearchNewsWithRelation($search)->paginate($perPage, 'allNews');
-                $pager = $this->news->pager;
-
-                $data['allNews'] = $searchNews;
-                $data['pager'] = $pager;
-                $data['searchNews'] = $search;
-            } else {
-                $allNews = $this->news->allNewsWithRelation()->paginate($perPage, 'allNews');
-                $pager = $this->news->pager;
+            $allNews = $this->news->allNewsWithRelation()->find();
+                
 
                 $data['allNews'] = $allNews;
-                $data['pager'] = $pager;
-            }
+                
+            // $perPage = 2;
+
+            // //SET PERPAGE
+            // if ($this->request->getGet('per-page')) {
+            //     $perPage = $this->request->getVar('per-page', FILTER_SANITIZE_SPECIAL_CHARS);
+            //     $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            //     //SET PER PAGE WITH SEARCH DATA
+            //     if ($q) {
+            //         $q = $this->request->getGet('q', FILTER_SANITIZE_SPECIAL_CHARS);
+            //         $searchNews = $this->news->allSearchNewsWithRelation($q)->paginate($perPage, 'allNews');
+            //         $pager = $this->news->pager;
+            //         // $allNews = $searchNews->getResult();
+            //         $data['allNews'] = $searchNews;
+            //         $data['pager'] = $pager;
+            //         $data['searchNews'] = $q;
+            //     } else {
+            //         $allNews = $this->news->allNewsWithRelation()->paginate($perPage, 'allNews');
+            //         $pager = $this->news->pager;
+            //         // die(print_r($allNews));
+            //         $data['allNews'] = $allNews;
+            //         $data['pager'] = $pager;
+            //     }
+            //     //SEARCH ONLY
+            // } else if ($this->request->getGet('q')) {
+            //     $search = $this->request->getVar('q', FILTER_SANITIZE_SPECIAL_CHARS);
+            //     $searchNews = $this->news->allSearchNewsWithRelation($search)->paginate($perPage, 'allNews');
+            //     $pager = $this->news->pager;
+
+            //     $data['allNews'] = $searchNews;
+            //     $data['pager'] = $pager;
+            //     $data['searchNews'] = $search;
+            // } else {
+                
+            // }
         }
 
         if ($var == 'dashboard') {

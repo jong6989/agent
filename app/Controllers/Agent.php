@@ -7,6 +7,7 @@ use App\Models\LogsModel;
 use App\Models\WalletModel;
 use App\Models\PlayerModel;
 use App\Models\GamePlayerModel;
+use App\Models\NewsModel;
 use App\Models\TransactionModel;
 
 class Agent extends BaseController
@@ -20,6 +21,7 @@ class Agent extends BaseController
         $this->logs = new LogsModel();
         $this->gameplayer = new GamePlayerModel();
         $this->transaction = new TransactionModel();
+        $this->news = new NewsModel();
         $this->logged = session()->get('isLoggedIn') ?? false;
         $this->id = session()->get('id');
         $this->operator = session()->get('operator');
@@ -85,7 +87,15 @@ class Agent extends BaseController
             $data['payout_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
 
-            
+            //NEWS
+            $data['adminAndOperatorAndSuperAgentNews'] = $this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')
+                                                        ->join('accounts', 'accounts.id = news.account_id')
+                                                        ->where('accounts.access', 'admin')
+                                                        ->orWhere('accounts.access', 'operator')
+                                                        ->orWhere('accounts.access', 'super_agent')
+                                                        ->orderBy('news.id', 'desc')
+                                                        ->findAll(5);
+
             //income
             $data['commission_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;

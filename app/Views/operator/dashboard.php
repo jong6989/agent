@@ -1,167 +1,223 @@
-
 <div class="wrapper">
 
-<?= view('navbar/' . session()->get('access') ); ?>
-<?= view('sidebar/' . session()->get('access')); ?>
+  <?= view('navbar/' . session()->get('access')); ?>
+  <?= view('sidebar/' . session()->get('access')); ?>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-<!-- Content Header (Page header) -->
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0">Dashboard</h1>
-      </div><!-- /.col -->
-      
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div><!-- /.col -->
 
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-info">
-          <div class="inner">
-            <h3><?= $super_agents; ?></h3>
-
-            <p>Area Distributors</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-merge"></i>
-          </div>
-          <a href="<?= base_url( session()->get('access') . '/super_agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-success">
-          <div class="inner">
-            <h3><?= $agents; ?></h3>
-
-            <p>Affiliates</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-android-people"></i>
-          </div>
-          <a href="<?= base_url( session()->get('access') .'/agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3> <?= PESO . ' ' . number_format( $total_ggr); ?></h3>
-
-            <p>Total GGR</p>
-          </div>
-          <div class="icon">
-            <i class="fas fa-wallet"></i>
-          </div>
-          <a href="#" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
-      <div class="col-lg-3 col-6">
-        <div class="small-box bg-danger">
-          <div class="inner">
-            <h3><?= $paired_players . '/' . $all_players; ?></h3>
-
-            <p>Players (<?= $all_players - $paired_players; ?>pending)</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-android-people"></i>
-          </div>
-          <a href="<?= base_url( session()->get('access') .'/players'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>
-      <!-- ./col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
     </div>
-    <!-- /.row -->
-    <!-- Main row -->
-    <div class="row">
-      <!-- Left col -->
-      <section class="col-lg-7 connectedSortable">
-        
+    <!-- /.content-header -->
 
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Accounting Info</h3>
-          </div>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3><?= $super_agents; ?></h3>
 
-          <!-- /.card-header -->
-          <div class="card-body p-0">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>This Month</th>
-                    <th>Last Month</th>
-                    <th>This Year</th>
-                    <th>Last Year</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>GGR</td>
-                    <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_last_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
-                  </tr>
-                  <tr>
-                    <td>Payout</td>
-                    <td><?= PESO; ?> <?= number_format($payout_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($payout_last_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($payout_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($payout_last_year); ?></td>
-                  </tr>
-                  <tr>
-                    <td>Commission</td>
-                    <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_last_month); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
-                    <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
-                  </tr>
-                </tbody>
-              </table>
+                <p>Area Distributors</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-merge"></i>
+              </div>
+              <a href="<?= base_url(session()->get('access') . '/super_agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          <!-- /.card-body -->
-        </div>
-
-        
-        
-        
-      </section>
-      <!-- /.Left col -->
-      <!-- right col (We are only adding the ID to make the widgets sortable)-->
-      <section class="col-lg-5 connectedSortable">
-
-        
-        <div  class="card">
-          <div class="card-header">
-            <h3 class="card-title">Use this link below to invite Players.</h3>
           </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3><?= $agents; ?></h3>
 
-          <div class="card-body p-10"> 
-            <div onclick="copyLink()" >
-              <input type="text" class="form-control" style="padding:10px; background-color: #ddd; cursor:pointer; color: #f00; display:block; " disabled value="<?= base_url('register/' . $id); ?>"  id="inviteLink">
-              <div id="qrcode" style="padding: 20px;"></div>
+                <p>Affiliates</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-android-people"></i>
+              </div>
+              <a href="<?= base_url(session()->get('access') . '/agents'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-            
-            <button type="submit" class="btn btn-info" onclick="PrintDiv('qrcode');">Print QR</button>
           </div>
-            
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3> <?= PESO . ' ' . number_format($total_ggr); ?></h3>
+
+                <p>Total GGR</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-wallet"></i>
+              </div>
+              <a href="#" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3><?= $paired_players . '/' . $all_players; ?></h3>
+
+                <p>Players (<?= $all_players - $paired_players; ?>pending)</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-android-people"></i>
+              </div>
+              <a href="<?= base_url(session()->get('access') . '/players'); ?>" class="small-box-footer">View <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
         </div>
-      
-        <!-- <div class="card bg-gradient-info">
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-7 connectedSortable">
+
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Accounting Info</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>This Month</th>
+                      <th>Last Month</th>
+                      <th>This Year</th>
+                      <th>Last Year</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>GGR</td>
+                      <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($ggr_last_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
+                      <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
+                    </tr>
+                    <tr>
+                      <td>Payout</td>
+                      <td><?= PESO; ?> <?= number_format($payout_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($payout_last_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($payout_year); ?></td>
+                      <td><?= PESO; ?> <?= number_format($payout_last_year); ?></td>
+                    </tr>
+                    <tr>
+                      <td>Commission</td>
+                      <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($commission_last_month); ?></td>
+                      <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
+                      <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">News</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div id="accordion">
+
+                  <?php if (!empty($adminNews)) : ?>
+                    <?php foreach ($adminNews as $news) : ?>
+                      <div class="card mb-0">
+                        <div class="card-header " id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn news-trigger w-100 " data-toggle="collapse" data-target="#collapse<?= $news['id'] ?>" aria-expanded="true" aria-controls="collapseOne">
+                              <h5 class="d-inline-block float-left">
+                                <?= $news['title'] ?>
+                                
+                              </h5>
+                              <i class="fas fa-caret-down my-auto float-right"></i>
+                            </button>
+                          </h5>
+
+                          <div id="collapse<?= $news['id'] ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <img class="img-fluid" src="<?= base_url('images/' . $news['img_path']) ?>" alt="" width="100" height="50px">
+                                </div>
+                                <div class="col-lg-6">
+                                  <h5>
+                                    <?= $news['content'] ?>
+                                  </h5>
+                                  <hr>
+                                  <p>
+                                    Created By: <?= $news['name'] ?>
+                                  </p>
+                                  <p>
+                                    Created at: <?= $news['created_at'] ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+
+
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+
+
+
+
+          </section>
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-5 connectedSortable">
+
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Use this link below to invite Players.</h3>
+              </div>
+
+              <div class="card-body p-10">
+                <div onclick="copyLink()">
+                  <input type="text" class="form-control" style="padding:10px; background-color: #ddd; cursor:pointer; color: #f00; display:block; " disabled value="<?= base_url('register/' . $id); ?>" id="inviteLink">
+                  <div id="qrcode" style="padding: 20px;"></div>
+                </div>
+
+                <button type="submit" class="btn btn-info" onclick="PrintDiv('qrcode');">Print QR</button>
+              </div>
+
+            </div>
+
+            <!-- <div class="card bg-gradient-info">
           <div class="card-header border-0">
             <h3 class="card-title">
               <i class="fas fa-th mr-1"></i>
@@ -211,155 +267,159 @@
         </div>
          -->
 
-        
-      </section>
-      <!-- right col -->
-    </div>
-    <!-- /.row (main row) -->
-  </div><!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 
-<?= view('footer/copyright'); ?>
+          </section>
+          <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-<!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
+  <?= view('footer/copyright'); ?>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
 <?= view('scripts/dashboard'); ?>
 <script type="text/javascript">
+  $('.collapse').on('shown.bs.collapse', function() {
+    $(this).parent().find('i').removeClass('fas fa-caret-down').addClass('fas fa-caret-up')
+  }).on('hidden.bs.collapse', function(){
+    $(this).parent().find('i').removeClass('fas fa-caret-up').addClass('fas fa-caret-down')
+  });
 
-new QRCode(document.getElementById("qrcode"), "<?= base_url('register/' . $id); ?>");
+  new QRCode(document.getElementById("qrcode"), "<?= base_url('register/' . $id); ?>");
 
-function copyLink() {
-  var copyText = document.getElementById("inviteLink");
+  function copyLink() {
+    var copyText = document.getElementById("inviteLink");
 
-  copyText.select();
-  copyText.setSelectionRange(0, 99999);
+    copyText.select();
+    copyText.setSelectionRange(0, 99999);
 
-  navigator.clipboard.writeText(copyText.value);
+    navigator.clipboard.writeText(copyText.value);
 
-  alert("Link Copied! ");
-}
+    alert("Link Copied! ");
+  }
 
-function PrintDiv(id) {    
-  var divToPrint = document.getElementById(id);
-  var popupWin = window.open('', '_blank', 'width=800,height=800');
-  popupWin.document.open();
-  popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
-  popupWin.document.close();
-}
+  function PrintDiv(id) {
+    var divToPrint = document.getElementById(id);
+    var popupWin = window.open('', '_blank', 'width=800,height=800');
+    popupWin.document.open();
+    popupWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</html>');
+    popupWin.document.close();
+  }
 
-$(function () {
-'use strict'
+  $(function() {
+    'use strict'
 
-// Make the dashboard widgets sortable Using jquery UI
-$('.connectedSortable').sortable({
-placeholder: 'sort-highlight',
-connectWith: '.connectedSortable',
-handle: '.card-header, .nav-tabs',
-forcePlaceholderSize: true,
-zIndex: 999999
-})
-$('.connectedSortable .card-header').css('cursor', 'move')
-
-
-
-
-// $('.knob').knob()
-
-
-// // Donut Chart
-// var pieData = {
-// labels: [
-//   'Instore Sales',
-//   'Download Sales',
-//   'Mail-Order Sales'
-// ],
-// datasets: [
-//   {
-//     data: [30, 12, 20],
-//     backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-//   }
-// ]
-// }
-// var pieOptions = {
-// legend: {
-//   display: false
-// },
-// maintainAspectRatio: false,
-// responsive: true
-// }
+    // Make the dashboard widgets sortable Using jquery UI
+    $('.connectedSortable').sortable({
+      placeholder: 'sort-highlight',
+      connectWith: '.connectedSortable',
+      handle: '.card-header, .nav-tabs',
+      forcePlaceholderSize: true,
+      zIndex: 999999
+    })
+    $('.connectedSortable .card-header').css('cursor', 'move')
 
 
-// // Sales graph chart
-// var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d');
-
-// var salesGraphChartData = {
-// labels: ['Nov 14', 'Nov 21', 'Nov. 28', 'Dec 5', 'Dec 12', 'Dec 19', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
-// datasets: [
-//   {
-//     label: 'Income',
-//     fill: false,
-//     borderWidth: 2,
-//     lineTension: 0,
-//     spanGaps: true,
-//     borderColor: '#efefef',
-//     pointRadius: 3,
-//     pointHoverRadius: 7,
-//     pointColor: '#efefef',
-//     pointBackgroundColor: '#efefef',
-//     data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
-//   }
-// ]
-// }
-
-// var salesGraphChartOptions = {
-// maintainAspectRatio: false,
-// responsive: true,
-// legend: {
-//   display: false
-// },
-// scales: {
-//   xAxes: [{
-//     ticks: {
-//       fontColor: '#efefef'
-//     },
-//     gridLines: {
-//       display: false,
-//       color: '#efefef',
-//       drawBorder: false
-//     }
-//   }],
-//   yAxes: [{
-//     ticks: {
-//       stepSize: 5000,
-//       fontColor: '#efefef'
-//     },
-//     gridLines: {
-//       display: true,
-//       color: '#efefef',
-//       drawBorder: false
-//     }
-//   }]
-// }
-// }
-
-// // This will get the first returned node in the jQuery collection.
-// // eslint-disable-next-line no-unused-vars
-// var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
-// type: 'line',
-// data: salesGraphChartData,
-// options: salesGraphChartOptions
-// })
 
 
-})
+    // $('.knob').knob()
+
+
+    // // Donut Chart
+    // var pieData = {
+    // labels: [
+    //   'Instore Sales',
+    //   'Download Sales',
+    //   'Mail-Order Sales'
+    // ],
+    // datasets: [
+    //   {
+    //     data: [30, 12, 20],
+    //     backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+    //   }
+    // ]
+    // }
+    // var pieOptions = {
+    // legend: {
+    //   display: false
+    // },
+    // maintainAspectRatio: false,
+    // responsive: true
+    // }
+
+
+    // // Sales graph chart
+    // var salesGraphChartCanvas = $('#line-chart').get(0).getContext('2d');
+
+    // var salesGraphChartData = {
+    // labels: ['Nov 14', 'Nov 21', 'Nov. 28', 'Dec 5', 'Dec 12', 'Dec 19', 'Dec 26', 'Jan 2', 'Jan 9', 'Jan 16'],
+    // datasets: [
+    //   {
+    //     label: 'Income',
+    //     fill: false,
+    //     borderWidth: 2,
+    //     lineTension: 0,
+    //     spanGaps: true,
+    //     borderColor: '#efefef',
+    //     pointRadius: 3,
+    //     pointHoverRadius: 7,
+    //     pointColor: '#efefef',
+    //     pointBackgroundColor: '#efefef',
+    //     data: [2666, 2778, 4912, 3767, 6810, 5670, 4820, 15073, 10687, 8432]
+    //   }
+    // ]
+    // }
+
+    // var salesGraphChartOptions = {
+    // maintainAspectRatio: false,
+    // responsive: true,
+    // legend: {
+    //   display: false
+    // },
+    // scales: {
+    //   xAxes: [{
+    //     ticks: {
+    //       fontColor: '#efefef'
+    //     },
+    //     gridLines: {
+    //       display: false,
+    //       color: '#efefef',
+    //       drawBorder: false
+    //     }
+    //   }],
+    //   yAxes: [{
+    //     ticks: {
+    //       stepSize: 5000,
+    //       fontColor: '#efefef'
+    //     },
+    //     gridLines: {
+    //       display: true,
+    //       color: '#efefef',
+    //       drawBorder: false
+    //     }
+    //   }]
+    // }
+    // }
+
+    // // This will get the first returned node in the jQuery collection.
+    // // eslint-disable-next-line no-unused-vars
+    // var salesGraphChart = new Chart(salesGraphChartCanvas, { // lgtm[js/unused-local-variable]
+    // type: 'line',
+    // data: salesGraphChartData,
+    // options: salesGraphChartOptions
+    // })
+
+
+  })
 </script>
-

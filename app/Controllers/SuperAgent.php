@@ -7,6 +7,7 @@ use App\Models\LogsModel;
 use App\Models\WalletModel;
 use App\Models\PlayerModel;
 use App\Models\GamePlayerModel;
+use App\Models\NewsModel;
 use App\Models\TransactionModel;
 
 class SuperAgent extends BaseController
@@ -20,6 +21,7 @@ class SuperAgent extends BaseController
         $this->logs = new LogsModel();
         $this->gameplayer = new GamePlayerModel();
         $this->transaction = new TransactionModel();
+        $this->news = new NewsModel();
         $this->logged = session()->get('isLoggedIn') ?? false;
         $this->id = session()->get('id');
         $this->operator = session()->get('operator');
@@ -100,12 +102,23 @@ class SuperAgent extends BaseController
             $year = date('Y');
             
             //payout
+            $data['payout_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             
+            //NEWS
+            // dd(print_r($this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')->join('accounts', 'accounts.id = news.account_id')->where('accounts.access', 'admin')->orWhere('accounts.access', 'operator')->findAll()));
+            $data['adminAndOperatorNews'] = $this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')
+                                                        ->join('accounts', 'accounts.id = news.account_id')
+                                                        ->where('accounts.access', 'admin')
+                                                        ->orWhere('accounts.access', 'operator')
+                                                        ->orderBy('news.id', 'desc')
+                                                        ->findAll(5);
+            
             //income
+            $data['commission_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
@@ -123,6 +136,12 @@ class SuperAgent extends BaseController
             $data['paired_players'] = $this->player->where('super_agent', $this->id)->where('player_id !=', 'none')->countAllResults();
             $data['agents'] = $this->account->where('access', 'agent')->where('super_agent', $this->id)->countAllResults();
             $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
+        }
+
+        if($var == 'news'){
+            $allOperatorNews = $this->news->allNewsWithRelation($this->id)->find();
+            
+            $data['allOperatorNews'] = $allOperatorNews;
         }
 
         return  view('header/dashboard')
@@ -289,6 +308,183 @@ class SuperAgent extends BaseController
         return  view('header/dashboard')
                 .view($this->access . '/profile',$data)
                 .view('footer/dashboard');
+    }
+
+    public function news()
+    {
+        // NEWS
+        if (!$this->logged) {
+            return redirect()->to('login');
+        }
+
+        $currentItem = $this->account->find($this->id);
+        $default = [
+            'email' => $currentItem['email'] ?? '',
+            'name' => $currentItem['name'] ?? '',
+            'address' => $currentItem['address'] ?? '',
+            'bank_name' => $currentItem['bank_name'] ?? '',
+            'account_number' => $currentItem['account_number'] ?? '',
+            'account_name' => $currentItem['account_name'] ?? '',
+            'phone' => $currentItem['phone'] ?? '',
+            'fb' => $currentItem['fb'] ?? '',
+        ];
+        
+        $myOperator = $this->account->find($currentItem['operator']);
+
+        $data = [
+            "balance" => $this->balance,
+            "id" => $this->id,
+            "menu" => 'super_agent_profile',
+            "action" => '',
+            "validation" => $this->validator,
+            "default" => $default,
+            "operator" => $myOperator,
+        ];
+
+        //CREATE OPERATOR NEWS
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('addNews')) {
+            $rules = [
+                'title' => 'required',
+                'content' => 'required',
+                'image' => 'is_image[image]|uploaded[image]|max_size[image, 2048]',
+            ];
+
+            if ($this->validate($rules)) {
+
+                $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                //HANDLING IMAGE
+                $image = $this->request->getFile('image');
+
+                $imageName = date('Y-m-d') . "_" . time() . "_" . $image->getName();
+
+                // die($imageName);
+
+                $newsData = [
+                    'account_id' => $this->id,
+                    'title' => $title,
+                    'content' => $content,
+                    'img_path' => $imageName,
+                ];
+
+                if ($this->news->insert($newsData) && $image->move('images', $imageName)) {
+                    return redirect()->to($this->access . '/news');
+                }
+            } else {
+                $data['validation'] = $this->validator;
+            }
+        }
+
+        //EDIT NEWS
+        if ($this->request->getGet('edit') != null) {
+            $id = $this->request->getGet('edit');
+            $newsToEdit = $this->news->where('id', $id)->first();
+
+
+            //IF NEWS TO EDIT FOUND
+            if ($newsToEdit && ($newsToEdit['account_id'] == $this->id) ) {
+                $data['formUrl'] = 'news?edit=' . $newsToEdit['id'];
+                $data['newsToEdit'] = $newsToEdit;
+
+                // NEWS EDIT SUBMIT
+                if ($this->request->getVar('editNews') && $this->request->getMethod() == 'post') {
+
+
+                    //CHECK IF EDIT NEWS SUBMIT A FILE
+                    if ($this->request->getFile('image')->getName() != null) {
+
+                        $rules = [
+                            'title' => 'required',
+                            'content' => 'required',
+                            'image' => 'is_image[image]|uploaded[image]|max_size[image, 2048]',
+                        ];
+
+                        //PASS VALIDATION
+                        if ($this->validate($rules)) {
+
+                            $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                            $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                            //DELETING PREVIOUS IMAGE
+                            unlink('images/' . $newsToEdit['img_path']);
+
+                            //HANDLING IMAGE
+                            $image = $this->request->getFile('image');
+                            $imageName = date('Y-m-d') . "_" . time() . "_" . $image->getName();
+
+                            $dataToUpdate = [
+                                'title' => $title,
+                                'content' => $content,
+                                'img_path' => $imageName,
+                            ];
+
+
+                            if ($this->news->update($newsToEdit['id'], $dataToUpdate) && $image->move('images', $imageName)) {
+                                return redirect()->to($this->access . '/news');
+                            }
+
+                            // ERROR VALIDATION
+                        } else {
+                            $data['validation'] = $this->validator;
+                        }
+
+                        //NEWS EDIT DOES NOT SUBMIT A FILE
+                    } else {
+
+                        $rules = [
+                            'title' => 'required',
+                            'content' => 'required',
+                        ];
+
+                        //PASS VALIDATION
+                        if ($this->validate($rules)) {
+
+                            $title = $this->request->getPost('title', FILTER_SANITIZE_SPECIAL_CHARS);
+                            $content = $this->request->getPost('content', FILTER_SANITIZE_SPECIAL_CHARS);
+
+                            $dataToUpdate = [
+                                'title' => $title,
+                                'content' => $content,
+                            ];
+
+
+                            if ($this->news->update($newsToEdit['id'], $dataToUpdate)) {
+                                return redirect()->to($this->access . '/news');
+                            }
+
+                            // ERROR VALIDATION
+                        } else {
+                            $data['validation'] = $this->validator;
+                        }
+                    }
+                }
+
+                return  view('header/dashboard')
+                    . view($this->access . '/edit_news', $data)
+                    . view('footer/dashboard');
+            } else {
+                return redirect()->to($this->access . '/news');
+            }
+        }
+
+        if ($this->request->getMethod() == 'post' && $this->request->getVar('d-news')) {
+            $id = $this->request->getVar('d-id', FILTER_SANITIZE_SPECIAL_CHARS);
+            $newsToDelete = $this->news->where('id', $id)->first();
+
+            //IF NEWS TO DELETE FOUND
+            if ($newsToDelete) {
+                unlink('images/' . $newsToDelete['img_path']);
+                $this->news->delete($newsToDelete['id']);
+                return redirect()->back();
+            } else {
+                return redirect()->to($this->access . '/super_agent_news');
+            }
+        }
+
+        return  view('header/dashboard')
+            . view($this->access . '/add_news', $data)
+            . view('footer/dashboard');
     }
 
 

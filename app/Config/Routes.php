@@ -64,12 +64,14 @@ $routes->get('/operator', 'Operator::index/dashboard');
 $routes->get('/operator/(:any)', 'Operator::index/$1');
 $routes->match(['get', 'post'], '/register_super_agent', 'Operator::register_super_agent');
 $routes->match(['get', 'post'], '/operator_profile', 'Operator::operator_profile');
+$routes->match(['get', 'post'], '/operator_news', 'Operator::news');
 
 //super_agent
 $routes->get('/super_agent', 'SuperAgent::index/dashboard');
 $routes->get('/super_agent/(:any)', 'SuperAgent::index/$1');
 $routes->match(['get', 'post'], '/register_agent', 'SuperAgent::register_agent');
 $routes->match(['get', 'post'], '/super_agent_profile', 'SuperAgent::super_agent_profile');
+$routes->match(['get', 'post'], '/super_agent_news', 'SuperAgent::news');
 
 
 //agent

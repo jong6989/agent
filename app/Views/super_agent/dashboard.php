@@ -128,7 +128,62 @@
             <!-- /.card-body -->
           </div>
 
-          
+          <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">News</h3>
+              </div>
+
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div id="accordion">
+
+                  <?php if (!empty($adminAndOperatorNews)) : ?>
+                    <?php foreach ($adminAndOperatorNews as $news) : ?>
+                      <div class="card mb-0">
+                        <div class="card-header " id="headingOne">
+                          <h5 class="mb-0">
+                            <button class="btn news-trigger w-100 " data-toggle="collapse" data-target="#collapse<?= $news['id'] ?>" aria-expanded="true" aria-controls="collapseOne">
+                              <h5 class="d-inline-block float-left">
+                                <?= $news['title'] ?>
+                                
+                              </h5>
+                              <i class="fas fa-caret-down my-auto float-right"></i>
+                            </button>
+                          </h5>
+
+                          <div id="collapse<?= $news['id'] ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <img class="img-fluid" src="<?= base_url('images/' . $news['img_path']) ?>" alt="" width="100" height="50px">
+                                </div>
+                                <div class="col-lg-6">
+                                  <h5>
+                                    <?= $news['content'] ?>
+                                  </h5>
+                                  <hr>
+                                  <p>
+                                    Created By: <?= $news['name'] ?>
+                                  </p>
+                                  <p>
+                                    Created at: <?= $news['created_at'] ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+
+
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
           
           
         </section>
@@ -223,6 +278,11 @@
 
 <?= view('scripts/dashboard'); ?>
 <script type="text/javascript">
+  $('.collapse').on('shown.bs.collapse', function() {
+    $(this).parent().find('i').removeClass('fas fa-caret-down').addClass('fas fa-caret-up')
+  }).on('hidden.bs.collapse', function(){
+    $(this).parent().find('i').removeClass('fas fa-caret-up').addClass('fas fa-caret-down')
+  });
 
   new QRCode(document.getElementById("qrcode"), "<?= base_url('register/' . $id); ?>");
 

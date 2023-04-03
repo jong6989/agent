@@ -40,23 +40,45 @@ class NewsModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function allNewsWithRelation()
+    public function allNewsWithRelation($id = null)
     {
-        $this->builder()->select(['news.id','news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
-        $this->builder()->join('accounts', 'accounts.id = news.account_id');
-        $this->builder()->orderBy('news.id','DESC');
 
-        return $this;
+        if ($id) {
+            $this->builder()->select(['news.id', 'news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
+            $this->builder()->join('accounts', 'accounts.id = news.account_id');
+            $this->builder()->where('account_id',$id);
+            $this->builder()->orderBy('news.id', 'DESC');
+
+            return $this;
+        } else {
+            $this->builder()->select(['news.id', 'news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
+            $this->builder()->join('accounts', 'accounts.id = news.account_id');
+            $this->builder()->orderBy('news.id', 'DESC');
+
+            return $this;
+        }
+    }
+
+    public function getAdminAllNews(){
+        $this->builder()->select(['news.id', 'news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
+            $this->builder()->join('accounts', 'accounts.id = news.account_id');
+            $this->builder()->where('access', 'admin');
+            $this->builder()->orderBy('news.id', 'DESC');
+            $this->builder()->limit(5);
+
+            return $this;
     }
 
     public function allSearchNewsWithRelation($search)
     {
-        $this->builder()->select(['news.id','news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
+        $this->builder()->select(['news.id', 'news.title', 'news.content', 'news.img_path', 'news.created_at', 'accounts.name']);
         $this->builder()->join('accounts', 'accounts.id = news.account_id');
         $this->builder()->like('news.content', $search, 'both');
         $this->builder()->orLike('news.title', $search, 'both');
         $this->builder()->orLike('accounts.name', $search, 'both');
-        $this->builder()->orderBy('news.id','DESC');
+        $this->builder()->orderBy('news.id', 'DESC');
         return $this;
     }
+
+    
 }

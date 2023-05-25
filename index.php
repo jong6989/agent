@@ -1,1 +1,1 @@
-<?php header('Location: http://localhost/agent/public/ '); ?>
+<?php header('Location: /agent/public/ '); ?>

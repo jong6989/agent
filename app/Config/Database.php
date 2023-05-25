@@ -31,10 +31,10 @@ class Database extends Config
      * @var array
      */
     public $default = [
-        'DSN'      => 'mysql:unix_socket=/cloudsql/agentlink-8c911:asia-southeast1:agentlinkdb;dbname=agenytpi_agent',
+        'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => 'bqY3!nP8D;hG',
+        'username' => 'debian-sys-maint',
+        'password' => 'Z4KX1HLWfE9oGfg3',
         'database' => 'agenytpi_agent',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',

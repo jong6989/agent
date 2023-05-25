@@ -23,7 +23,7 @@
               <?= ($selected_account['access'] == 'agency')? 'Agency Distributor' : '' ; ?>
             </strong> </h6>
 
-          
+              
               
             <hr>
             <h4>Commissions : <strong><?= PESO . ' ' . number_format($commissions,2); ?></strong> </h4>
@@ -74,7 +74,7 @@
                         <td>
                           
                           <?php if($selected_account['id'] != $v['player']['agent']): ?>
-                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['agent']; ?>">
+                            <a href="<?= base_url('super_agent/commissions') . '?id=' . $v['player']['agent']; ?>">
                               <button class="btn btn-primary btn-xs">
                                 <i class="fas fa-eye"></i>
                                 View Affiliate

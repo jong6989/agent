@@ -74,7 +74,6 @@
                           </span> 
                         </td>
                         <td>
-
                           <a href="<?= base_url('password/' . $v['id']); ?>">
                             <button class="btn btn-danger btn-xs">
                               <i class="fas fa-lock"></i>

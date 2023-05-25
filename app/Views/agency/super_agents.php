@@ -11,7 +11,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Area Distributors</h1>
+              <h1>Super Agents</h1>
             </div>
             
           </div>
@@ -30,7 +30,7 @@
                     <a href="<?= base_url('register_super_agent'); ?>">
                         <button class="btn btn-info">
                             <i class="fas fa-plus"></i>
-                            New Area Distributor
+                            New Super Agent
                         </button>
                     </a>
                 </div>
@@ -61,7 +61,7 @@
                           <td> <?= $v['address']; ?> </td>
                           <td> <?= $v['commission']; ?>% </td>
                           <td> 
-                            <?= PESO; ?> <?= number_format($v['balance'],2); ?>
+                            <?= PESO; ?> <?= number_format($v['balance']); ?>
                           </td>
                           <td> 
                             <span class="badge <?= ($v['online'] == '1') ? 'bg-success': 'bg-secondary'; ?>">

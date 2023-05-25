@@ -32,66 +32,114 @@
                 </div>
               </div>
               <!-- /.card-header -->
-              <div class="card-body table-responsive">
+               <div class="card-body table-responsive">
+                <form action="" method="get" class="mb-2 form-row">
+                  <div class="col-3">
+                    <label for="">Search:</label>
+                    <input type="text" class="form-control" name="search" id="" value="<?= (isset($search)) ? $search : '' ?>">
+                  </div>
+
+                  <div class="col-3">
+                    <div class="mb-3">
+                      <label for="" class="form-label">Number per page</label>
+                      <select class="form-select form-control" name="per-page" id="">
+                        <option value="25" <?php echo ($perPage == '25') ? 'selected'  : '' ?>>25</option>
+                        <option value="50" <?php echo ($perPage == '50') ? 'selected'  : '' ?>>50</option>
+                        <option value="100" <?php echo ($perPage == '100') ? 'selected'  : '' ?>>100</option>
+                        <option value="250" <?php echo ($perPage == '250') ? 'selected'  : '' ?>>250</option>
+                        <option value="500" <?php echo ($perPage == '500') ? 'selected'  : '' ?>>500</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-3">
+                    <label for="" class="form-label invisible">submit</label>
+                    <input type="submit" value="set" class="btn btn btn-success form-control">
+                  </div>
+
+                </form>
                 <table id="tableData" class="table table-bordered table-striped ">
                   <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Player ID</th>
-                    <th>Transactions</th>
-                    <th>Action</th>
-                  </tr>
+                    <tr>
+                      <th>ID</th>
+                      <th>Operator</th>
+                      <th>Area Distributor</th>
+                      <th>Affiliate</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Player ID</th>
+                      <!-- <th>Transactions</th> -->
+                      <th>Action</th>
+                    </tr>
                   </thead>
                   <tbody>
 
-                    <?php foreach ($list as $k => $v): ?>
-                      <tr>
-                        <td> <?= $v['id']; ?> </td>
-                        <td> <?= $v['name']; ?> </td>
-                        <td> <?= $v['email']; ?> </td>
-                        <td> <?= $v['phone']; ?> </td>
-                        <td> <?= $v['player_id']; ?> </td>
-                        <td> <?= number_format($v['transactions']); ?> </td>
-                        <td> 
+                    <?php if (!empty($list)) : ?>
+                      <?php foreach ($list as $k => $v) : ?>
+                        <tr>
+                          <td> <?= $v['id']; ?> </td>
+                          <td> <?= $v['operator-name']; ?> </td>
+                          <td> <?= $v['super-agent-name']; ?> </td>
+                          <td> <?= $v['agent-name']; ?> </td>
+                          <td> <?= $v['name']; ?> </td>
+                          <td> <?= $v['email']; ?> </td>
+                          <td> <?= $v['phone']; ?> </td>
+                          <td> <?= $v['player_id']; ?> </td>
+                          <!-- <td> <? //= number_format($v['transactions']); 
+                                    ?> </td> -->
+                          <td>
 
-                          <a href="<?= base_url('edit_player/' . $v['id']); ?>">
-                            <button class="btn btn-warning btn-xs">
-                              <i class="fas fa-edit"></i>
-                              Edit
-                            </button>
-                          </a>
-
-                          <?php if($v['player_id'] !== 'none'): ?>
-                            <a href="<?= base_url('player/' . $v['id']); ?>">
-                              <button class="btn btn-info btn-xs">
-                                <i class="fas fa-eye"></i>
-                                View
+                            <a href="<?= base_url('edit_player/' . $v['id']); ?>">
+                              <button class="btn btn-warning btn-xs">
+                                <i class="fas fa-edit"></i>
+                                Edit
                               </button>
                             </a>
-                          <?php endif; ?>
-                          
+
+                            <?php if ($v['player_id'] !== 'none') : ?>
+                              <a href="<?= base_url('player/' . $v['id']); ?>">
+                                <button class="btn btn-info btn-xs">
+                                  <i class="fas fa-eye"></i>
+                                  View
+                                </button>
+                              </a>
+                            <?php endif; ?>
+
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php else : ?>
+                      <tr>
+                        <td colspan="10">
+                          NO DATA
                         </td>
                       </tr>
-                    <?php endforeach; ?>
-                  
+                    <?php endif; ?>
+
                   </tbody>
                   <tfoot>
-                  <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Player ID</th>
-                    <th>Transactions</th>
-                    <th>Action</th>
-                  </tr>
+                    <tr>
+                      <th>ID</th>
+                      <th>Operator</th>
+                      <th>Area Distributor</th>
+                      <th>Affiliate</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Player ID</th>
+                      <!-- <th>Transactions</th> -->
+                      <th>Action</th>
+                    </tr>
                   </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
+              <div class="card-footer ">
+                <div class="float-right">
+                  <?= $pager_links ?>
+                </div>
+              </div>
             </div>
             <!-- /.card -->
           </div>
@@ -119,11 +167,82 @@
 
 <script>
 
-  $("#tableData").DataTable({
-      "responsive": true, 
-      "lengthChange": false, 
-      "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#tableData_wrapper .col-md-6:eq(0)');
+//   $("#tableData").DataTable({
+//       "responsive": true, 
+//       "lengthChange": false, 
+//       "autoWidth": false,
+//       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+//     }).buttons().container().appendTo('#tableData_wrapper .col-md-6:eq(0)');
   
 </script>
+
+
+<!--OLD CODE-->
+<!--<div class="card-body table-responsive">-->
+<!--                <table id="tableData" class="table table-bordered table-striped ">-->
+<!--                  <thead>-->
+<!--                  <tr>-->
+<!--                    <th>ID</th>-->
+<!--                    <th>Operator</th>-->
+<!--                    <th>Area Distributor</th>-->
+<!--                    <th>Affiliate</th>-->
+<!--                    <th>Name</th>-->
+<!--                    <th>Email</th>-->
+<!--                    <th>Phone</th>-->
+<!--                    <th>Player ID</th>-->
+                    <!--<th>Transactions</th>-->
+<!--                    <th>Action</th>-->
+<!--                  </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody>-->
+
+<!--                    <?php //foreach ($list as $k => $v): ?>-->
+<!--                      <tr>-->
+<!--                        <td> <?//= $v['id']; ?> </td>-->
+<!--                        <td> <?//= $v['operator']['name']; ?> </td>-->
+<!--                        <td> <?//= $v['super_agent']['name']; ?> </td>-->
+<!--                        <td> <?//= $v['agent']['name']; ?> </td>-->
+<!--                        <td> <?//= $v['name']; ?> </td>-->
+<!--                        <td> <?//= $v['email']; ?> </td>-->
+<!--                        <td> <?//= $v['phone']; ?> </td>-->
+<!--                        <td> <?//= $v['player_id']; ?> </td>-->
+                        <!--<td> <?//= '';// number_format($v['transactions']); ?> </td>-->
+<!--                        <td> -->
+
+<!--                          <a href="<?//= base_url('edit_player/' . $v['id']); ?>">-->
+<!--                            <button class="btn btn-warning btn-xs">-->
+<!--                              <i class="fas fa-edit"></i>-->
+<!--                              Edit-->
+<!--                            </button>-->
+<!--                          </a>-->
+
+<!--                          <?php //if($v['player_id'] !== 'none'): ?>-->
+<!--                            <a href="<?//= base_url('player/' . $v['id']); ?>">-->
+<!--                              <button class="btn btn-info btn-xs">-->
+<!--                                <i class="fas fa-eye"></i>-->
+<!--                                View-->
+<!--                              </button>-->
+<!--                            </a>-->
+<!--                          <?php// endif; ?>-->
+                          
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                    <?php //endforeach; ?>-->
+                  
+<!--                  </tbody>-->
+<!--                  <tfoot>-->
+<!--                  <tr>-->
+<!--                    <th>ID</th>-->
+<!--                    <th>Operator</th>-->
+<!--                    <th>Area Distributor</th>-->
+<!--                    <th>Affiliate</th>-->
+<!--                    <th>Name</th>-->
+<!--                    <th>Email</th>-->
+<!--                    <th>Phone</th>-->
+<!--                    <th>Player ID</th>-->
+                    <!--<th>Transactions</th>-->
+<!--                    <th>Action</th>-->
+<!--                  </tr>-->
+<!--                  </tfoot>-->
+<!--                </table>-->
+<!--              </div>-->

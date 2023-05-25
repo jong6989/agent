@@ -57,9 +57,9 @@
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3> <?= PESO . ' ' . number_format( -$payouts); ?></h3>
+            <h3> <?= PESO . ' ' . number_format( $total_ggr); ?></h3>
 
-            <p>GGR Share</p>
+            <p>Total GGR</p>
           </div>
           <div class="icon">
             <i class="fas fa-wallet"></i>
@@ -101,24 +101,31 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Today</th>
                     <th>This Month</th>
+                    <th>Last Month</th>
                     <th>This Year</th>
                     <th>Last Year</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>GGR</td>
+                    <td><?= PESO; ?> <?= number_format($ggr_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_last_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_year); ?></td>
+                    <td><?= PESO; ?> <?= number_format($ggr_last_year); ?></td>
+                  </tr>
+                  <tr>
                     <td>Payout</td>
-                    <td><?= PESO; ?> <?= number_format($payout_day); ?></td>
                     <td><?= PESO; ?> <?= number_format($payout_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($payout_last_month); ?></td>
                     <td><?= PESO; ?> <?= number_format($payout_year); ?></td>
                     <td><?= PESO; ?> <?= number_format($payout_last_year); ?></td>
                   </tr>
                   <tr>
                     <td>Commission</td>
-                    <td><?= PESO; ?> <?= number_format($commission_day); ?></td>
                     <td><?= PESO; ?> <?= number_format($commission_month); ?></td>
+                    <td><?= PESO; ?> <?= number_format($commission_last_month); ?></td>
                     <td><?= PESO; ?> <?= number_format($commission_year); ?></td>
                     <td><?= PESO; ?> <?= number_format($commission_last_year); ?></td>
                   </tr>
@@ -127,8 +134,9 @@
             </div>
           <!-- /.card-body -->
         </div>
-
-        <div class="card">
+        
+        
+          <div class="card">
               <div class="card-header">
                 <h3 class="card-title">News</h3>
               </div>
@@ -137,16 +145,31 @@
               <div class="card-body p-0">
                 <div id="accordion">
 
-                  <?php if (!empty($adminAndOperatorAndSuperAgentNews)) : ?>
-                    <?php foreach ($adminAndOperatorAndSuperAgentNews as $news) : ?>
+                  <!-- ADMIN NEWS -->
+                  <?php if (!empty($adminNews)) : ?>
+                    
+                    <?php foreach ($adminNews as $news) : ?>
                       <div class="card mb-0">
-                        <div class="card-header " id="headingOne">
+                        <div class="card-header pb-0 " id="headingOne">
+                          <span class="badge bg-danger">New! Admin news</span>
+                          
                           <h5 class="mb-0">
                             <button class="btn news-trigger w-100 " data-toggle="collapse" data-target="#collapse<?= $news['id'] ?>" aria-expanded="true" aria-controls="collapseOne">
-                              <h5 class="d-inline-block float-left">
-                                  <?= $news['title'] ?>
-                              </h5>
-                              <i class="fas fa-caret-down my-auto float-right"></i>
+                              <div class="d-inline-block float-left text-justify">
+                                <h6 class="m-0 py-0 font-weight-bold">
+
+                                <!-- TODO
+                                SELECT * FROM `news` WHERE news.created_at BETWEEN '2023-04-01' AND '2023-04-03' -->
+                                <?= $news['title'] ?>
+                                </h6>
+                                <p class="font-italic mb-0">
+                                  author: <?= $news['name'] ?>
+                                </p>
+                                <p class="font-italic py-0">
+                                  Date posted: <?= $news['created_at'] ?>
+                                </p>
+                              </div>
+                              <i class="fas fa-caret-down float-right"></i>
                             </button>
                           </h5>
 
@@ -178,12 +201,120 @@
                     <?php endforeach; ?>
                   <?php endif; ?>
 
+                  <!-- OPERATOR NEWS -->
+                  <?php if (!empty($operatorNews)) : ?>
+                    <?php foreach ($operatorNews as $news) : ?>
+                      <div class="card mb-0">
+                        <div class="card-header pb-0 " id="headingOne">
+                          <span class="badge bg-warning">News! Operator news</span>
+                          <h5 class="mb-0">
+                            <button class="btn news-trigger w-100 " data-toggle="collapse" data-target="#collapse<?= $news['id'] ?>" aria-expanded="true" aria-controls="collapseOne">
+                              <div class="d-inline-block float-left text-justify">
+                                <h6 class="m-0 py-0 font-weight-bold">
+
+                                <!-- TODO
+                                SELECT * FROM `news` WHERE news.created_at BETWEEN '2023-04-01' AND '2023-04-03' -->
+                                <?= $news['title'] ?>
+                                </h6>
+                                <p class="font-italic mb-0">
+                                  author: <?= $news['name'] ?>
+                                </p>
+                                <p class="font-italic py-0">
+                                  Date posted: <?= $news['created_at'] ?>
+                                </p>
+                              </div>
+                              <i class="fas fa-caret-down float-right"></i>
+                            </button>
+                          </h5>
+
+                          <div id="collapse<?= $news['id'] ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <img class="img-fluid" src="<?= base_url('images/' . $news['img_path']) ?>" alt="" width="100" height="50px">
+                                </div>
+                                <div class="col-lg-6">
+                                  <h5>
+                                    <?= $news['content'] ?>
+                                  </h5>
+                                  <hr>
+                                  <p>
+                                    Created By: <?= $news['name'] ?>
+                                  </p>
+                                  <p>
+                                    Created at: <?= $news['created_at'] ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+                  
+                  
+                  <!-- SUPER AGENT NEWS -->
+                  <?php if (!empty($superAgentNews)) : ?>
+                    <?php foreach ($superAgentNews as $news) : ?>
+                      <div class="card mb-0">
+                        <div class="card-header pb-0 " id="headingOne">
+                          <span class="badge bg-primary">New! Super agent news</span>
+                          <h5 class="mb-0">
+                            <button class="btn news-trigger w-100 " data-toggle="collapse" data-target="#collapse<?= $news['id'] ?>" aria-expanded="true" aria-controls="collapseOne">
+                              <div class="d-inline-block float-left text-justify">
+                                <h6 class="m-0 py-0 font-weight-bold">
+
+                                <!-- TODO
+                                SELECT * FROM `news` WHERE news.created_at BETWEEN '2023-04-01' AND '2023-04-03' -->
+                                <?= $news['title'] ?>
+                                </h6>
+                                <p class="font-italic mb-0">
+                                  author: <?= $news['name'] ?>
+                                </p>
+                                <p class="font-italic py-0">
+                                  Date posted: <?= $news['created_at'] ?>
+                                </p>
+                              </div>
+                              <i class="fas fa-caret-down float-right"></i>
+                            </button>
+                          </h5>
+
+                          <div id="collapse<?= $news['id'] ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-lg-6">
+                                  <img class="img-fluid" src="<?= base_url('images/' . $news['img_path']) ?>" alt="" width="100" height="50px">
+                                </div>
+                                <div class="col-lg-6">
+                                  <h5>
+                                    <?= $news['content'] ?>
+                                  </h5>
+                                  <hr>
+                                  <p>
+                                    Created By: <?= $news['name'] ?>
+                                  </p>
+                                  <p>
+                                    Created at: <?= $news['created_at'] ?>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
 
                 </div>
               </div>
               <!-- /.card-body -->
             </div>
-        
+
         
       </section>
       <!-- /.Left col -->
@@ -280,12 +411,7 @@
 
 <?= view('scripts/dashboard'); ?>
 <script type="text/javascript">
-$('.collapse').on('shown.bs.collapse', function() {
-    $(this).parent().find('i').removeClass('fas fa-caret-down').addClass('fas fa-caret-up')
-  }).on('hidden.bs.collapse', function(){
-    $(this).parent().find('i').removeClass('fas fa-caret-up').addClass('fas fa-caret-down')
-  });
-  
+
 new QRCode(document.getElementById("qrcode"), "<?= base_url('register/' . $id); ?>");
 
 function copyLink() {

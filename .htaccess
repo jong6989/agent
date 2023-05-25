@@ -1,0 +1,7 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^agentlink\.club$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.agentlink\.club$
+RewriteRule ^/?$ "https\:\/\/agentlink\.club\/public\/" [R=301,L]
+
+

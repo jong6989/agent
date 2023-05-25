@@ -73,7 +73,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3><?= number_format($total_bets); ?></h3>
+                            <h3><?= number_format($total_bets,2); ?></h3>
 
                             <p>Total Bets</p>
                           </div>
@@ -86,7 +86,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3><?= number_format($total_payout); ?></h3>
+                            <h3><?= number_format($total_payout,2); ?></h3>
 
                             <p>Total Payout</p>
                           </div>
@@ -100,7 +100,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr); ?></h3>
+                            <h3><?= number_format($total_ggr,2); ?></h3>
 
                             <p>Total GGR</p>
                           </div>
@@ -118,7 +118,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-success">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ( $ggr_share / 100 ) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ( $ggr_share / 100 ) ,2); ?></h3>
 
                             <p>Admin Commission</p>
                           </div>
@@ -131,7 +131,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-warning">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ( $operator_share / 100 ) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ( $operator_share / 100 ),2 ); ?></h3>
 
                             <p>Operator Commission</p>
                           </div>
@@ -144,7 +144,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-danger">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ($super_agent_share / 100) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ($super_agent_share / 100),2 ); ?></h3>
 
                             <p>Area Distributor Commission</p>
                           </div>
@@ -157,7 +157,7 @@
                       <div class="col-lg-3 col-6">
                         <div class="small-box bg-info">
                           <div class="inner">
-                            <h3><?= number_format($total_ggr * ($agent_commission / 100) ); ?></h3>
+                            <h3><?= number_format($total_ggr * ($agent_commission / 100),2 ); ?></h3>
 
                             <p>Affiliate Commission</p>
                           </div>

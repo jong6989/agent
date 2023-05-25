@@ -12,7 +12,7 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1>
-              Area Distributor Profile and Settings
+                Area Distributor Profile and Settings
               </h1>
 
               <?php if($default['phone'] ==''): ?>

@@ -44,8 +44,6 @@
                       <th>Player Name</th>
                       <th>Player Email</th>
                       <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
                       <th>Source</th>
                       <th>Status</th>
                       <th>Action</th>
@@ -60,10 +58,6 @@
                           <td> <?= $v['name']; ?> </td>
                           <td> <?= $v['email']; ?> </td>
                           <td> <?= $v['phone']; ?> </td>
-                          <td> <?= $v['transactions']; ?> </td>
-                          <td> 
-                            <?= PESO; ?><?= number_format($v['commission'],2); ?>
-                          </td>
                           <td> 
                             <?=  ($v['agent'] == $id) ? 'link':'agent' ; ?>
                           </td>
@@ -92,8 +86,6 @@
                       <th>Player Name</th>
                       <th>Player Email</th>
                       <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
                       <th>Source</th>
                       <th>Status</th>
                       <th>Action</th>

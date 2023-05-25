@@ -44,8 +44,6 @@
                       <th>Player Name</th>
                       <th>Player Email</th>
                       <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -59,10 +57,6 @@
                           <td> <?= $v['name']; ?> </td>
                           <td> <?= $v['email']; ?> </td>
                           <td> <?= $v['phone']; ?> </td>
-                          <td> <?= $v['transactions']; ?> </td>
-                          <td> 
-                            <?= PESO; ?><?= number_format($v['commission'],2); ?>
-                          </td>
                           <td> 
                             <span class="badge <?= ($v['player_id'] == 'none') ? 'bg-secondary' : 'bg-success'; ?>">
                               <?= ($v['player_id'] == 'none') ? 'Pending':'Paired'; ?>
@@ -88,8 +82,6 @@
                       <th>Player Name</th>
                       <th>Player Email</th>
                       <th>Player Contact</th>
-                      <th>Transactions</th>
-                      <th>Commissions</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>

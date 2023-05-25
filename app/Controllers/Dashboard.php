@@ -94,5 +94,35 @@ class Dashboard extends BaseController
                 .view( 'password',$data)
                 .view('footer/dashboard');
     }
+    
+    public function change_upline($id){
+        if(!$this->logged){
+            return redirect()->to('login');
+        }
+        if($this->access != 'super_admin'){
+            return redirect()->to('Dashboard');
+        }
+
+        $currentItem = $this->account->find($id);
+        $operator = $this->account->find($currentItem['operator']) ?? ['name'=>''];
+        $SuperAGent = $this->account->find($currentItem['super_agent']) ?? ['name'=>''];
+        
+        $data = [
+            "balance" => $this->balance,
+            "id" => $this->id,
+            "menu" => '',
+            "action" => 'upline',
+            "currentItem" => $currentItem,
+            "operator" => $operator,
+            "super_agent" => $SuperAGent,
+        ];
+        
+
+        
+        return  view('header/dashboard')
+                .view( 'upline',$data)
+                .view('footer/dashboard');
+    }
+    
 
 }

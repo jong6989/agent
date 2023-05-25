@@ -4,8 +4,13 @@
 <?= view('navbar/' . session()->get('access') ); ?>
 <?= view('sidebar/' . session()->get('access')); ?>
 
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+
   <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="app">
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <div class="container-fluid">
@@ -102,11 +107,46 @@
                             
                             <?= form_close(); ?>
                         </div>
-
-
                         
 
                     </div>
+                    
+                    <?php if($access == 'super_admin'): ?>
+                    
+                        <div class="card">
+                            <div class="card-header">
+                              Network
+                            </div>
+        
+                            <div class="card-body">
+                                <h5 >Current Affiliate: <strong>{{current_agent}}</strong> </h5>
+                                <h5 >Current Area Distributor: <strong>{{current_super_agent}}</strong> </h5>
+                                <h5 >Current Operator: <strong>{{current_operator}}</strong> </h5>
+                                
+                                <v-text-field
+                                    :loading="loading"
+                                    v-model="search_agent"
+                                    @keyup="load_agent"
+                                    density="compact"
+                                    variant="solo"
+                                    label="Search New Affiliate"
+                                    append-inner-icon="mdi-magnify"
+                                    single-line
+                                    hide-details
+                                ></v-text-field>
+        
+                                <v-radio-group  v-model="selected_agent">
+                                    <v-radio :key="x.id"  v-for="x in agents" :label="x.name" :value="x.id" ></v-radio>
+                                </v-radio-group>
+        
+                                <v-btn @click="update_agent" variant="outlined" :disabled=" selected_agent=='' " class="bg-blue text-white">
+                                    Update New Affiliate
+                                </v-btn>
+                                
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    
                 <?php endif; ?>
 
                 <?php if(!$valid_access): ?>
@@ -145,6 +185,11 @@
 
 <?= view('scripts/js'); ?>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
 
   var return_url = '<?= base_url( session()->get('access') . "/players"); ?>';
@@ -153,5 +198,71 @@
   }
   
   <?= ($saved) ? 'setTimeout(() => {returnPage()}, 1500);' : ""; ?>
+  
+  
+  
+  
+  
+  const base_url = '<?= base_url(); ?>/api/';
+  const current_id = '<?= $player_id; ?>';
+  
+  var v = new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        methods: {
+            load_agent (){
+                v.loading = true;
+                api('search_agent', {agent: v.search_agent},(data)=>{
+                    v.agents = data;
+                    v.loading = false;
+                } );
+            },
+            update_agent (){
+                Swal.fire({
+                    title: 'Do you want to change Affiliate?',
+                    showDenyButton: true,
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Update Now',
+                    denyButtonText: `No`,
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        api('update_agent', {id: current_id, agent_id: v.selected_agent},(data)=>{
+                            Swal.fire('Saved!', '', 'success').then(()=>{history.back();});
+                        } );
+                        
+                    } else if (result.isDenied) {
+                        Swal.fire('Update Cancled', '', 'info')
+                    }
+                })
+            },
+        },
+        data () {
+                    return {
+                        loading: false,
+                        search_agent: '',
+                        selected_agent: '',
+                        agents: [],
+                        current_agent: '<?= $agent['name']; ?>',
+                        current_super_agent: '<?= $super_agent['name']; ?>',
+                        current_operator: '<?= $operator['name']; ?>',
+                    }
+                },
+        created: ()=>{
+            //
+        }
+    });
+
+    function api(key,params,callback){
+        axios({
+                method: 'post',
+                url: base_url + key,
+                data: params
+            })
+            .then(res => {
+                if(callback!== undefined) callback(res.data.data);
+            })
+    }
+  
+  
   
 </script>

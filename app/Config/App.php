@@ -24,7 +24,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://localhost/agent/public/';
+    public $baseURL = 'public/';
 
     /**
      * --------------------------------------------------------------------------

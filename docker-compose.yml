@@ -1,0 +1,43 @@
+version: "3.2"
+services:
+  php:
+    build:
+      context: .
+    image: agentlink
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html/
+    networks:
+      - default
+    environment:
+      - MYSQL_HOST=agentlinkdb
+      - MYSQL_USER=agentlinkdb
+      - MYSQL_PASSWORD=bqY3!nP8D;hG
+      - MYSQL_DB=agenytpi_agent
+    container_name: agentlink
+  mysql:
+    image: mysql:8.0
+    networks:
+      - default
+    environment:
+      - MYSQL_ROOT_PASSWORD=bqY3!nP8D;hG
+      - MYSQL_USER=agentlinkdb
+      - MYSQL_PASSWORD=bqY3!nP8D;hG
+      - MYSQL_DATABASE=agenytpi_agent
+    container_name: agentlinkdb
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:4.7
+    depends_on: 
+      - mysql
+    networks:
+      - default
+    ports:
+      - 300:80
+    environment: 
+      - PMA_HOST=agentlinkdb
+      - PMA_PORT=3306
+    volumes: 
+      - /sessions
+    container_name: myphpmyadmin
+      

@@ -51,4 +51,5 @@ return array(
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
     'CodeIgniter\\CodingStandard\\' => array($vendorDir . '/codeigniter/coding-standard/src'),
     'CodeIgniter\\' => array($baseDir . '/system'),
+    'Box\\Spout\\' => array($vendorDir . '/box/spout/src/Spout'),
 );

@@ -97,6 +97,10 @@ class ComposerStaticInit0f50ecccbe0498098385905bbe5ba76a
             'CodeIgniter\\CodingStandard\\' => 27,
             'CodeIgniter\\' => 12,
         ),
+        'B' => 
+        array (
+            'Box\\Spout\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -280,6 +284,10 @@ class ComposerStaticInit0f50ecccbe0498098385905bbe5ba76a
         'CodeIgniter\\' => 
         array (
             0 => __DIR__ . '/../..' . '/system',
+        ),
+        'Box\\Spout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/box/spout/src/Spout',
         ),
     );
 

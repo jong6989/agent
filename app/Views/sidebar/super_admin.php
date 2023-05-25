@@ -42,7 +42,7 @@
             <a href="<?= base_url( session()->get('access') . '/super_agents'); ?>" class="nav-link <?= ($menu == 'super_agents') ? 'active':''; ?>">
               <i class="nav-icon fas fa-mask"></i>
               <p>
-                Area Distributors
+                Area Distributor
               </p>
             </a>
           </li>

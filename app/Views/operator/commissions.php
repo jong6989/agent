@@ -73,8 +73,8 @@
                         <td> <?= $v['transaction']; ?>-<?= $v['player_id']; ?></td>
                         <td>
                           
-                          <?php if($selected_account['id'] != $v['player']['agent']): ?>
-                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['agent']; ?>">
+                          <?php  if($selected_account['id'] != $v['player']['agent']): ?>
+                            <a href="<?= base_url('operator/commissions') . '?id=' . $v['player']['agent']; ?>">
                               <button class="btn btn-primary btn-xs">
                                 <i class="fas fa-eye"></i>
                                 View Affiliate
@@ -83,7 +83,7 @@
                           <?php endif; ?>
 
                           <?php if($selected_account['id'] != $v['player']['super_agent']): ?>
-                            <a href="<?= base_url('admin/commissions') . '?id=' . $v['player']['super_agent']; ?>">
+                            <a href="<?= base_url('operator/commissions') . '?id=' . $v['player']['super_agent']; ?>">
                               <button class="btn btn-warning btn-xs">
                                 <i class="fas fa-eye"></i>
                                 View Area Distributor

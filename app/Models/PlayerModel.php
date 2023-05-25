@@ -3,32 +3,28 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use CodeIgniter\Database\RawSql;
 
 class PlayerModel extends Model
 {
-  protected $table            = 'players';
-  protected $primaryKey       = 'id';
-  protected $useAutoIncrement = true;
-  protected $returnType       = 'array';
-  protected $allowedFields    = ['name', 'email', 'phone', 'player_id', 'note', 'agency', 'operator', 'super_agent', 'agent'];
-  protected $beforeInsert = ['beforeInsert'];
+    protected $table            = 'players';
+    protected $primaryKey       = 'id';
+    protected $useAutoIncrement = true;
+    protected $returnType       = 'array';
+    protected $allowedFields    = ['name','email','phone','player_id','note','agency','operator','super_agent','agent'];
+    protected $beforeInsert = ['beforeInsert'];
 
-  protected $useTimestamps = true;
-  protected $dateFormat    = 'datetime';
-  protected $createdField  = 'created_at';
-  protected $updatedField  = 'updated_at';
+    protected $useTimestamps = true;
+    protected $dateFormat    = 'datetime';
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
 
-  protected function beforeInsert(array $data)
+    protected function beforeInsert(array $data){
+        $data['data']['created_at'] = date('Y-m-d H:i:s');
+        return $data;
+    }
+    
+    public function getAllPlayersWithTransactions()
   {
-    $data['data']['created_at'] = date('Y-m-d H:i:s');
-    return $data;
-  }
-
-  public function getAllPlayersWithTransactions()
-  {
-
-    // $query =  $this->db->query("SELECT players.id, players.operator, players.agent, players.super_agent, players.name, players.email, players.phone, players.player_id,  (SELECT COUNT(transactions.id)   FROM transactions WHERE transactions.PLAYER_ID = players.player_id) as 'transactions' FROM players ");
 
     $query =  $this->db->query("
         SELECT players.id, players.operator, players.agent, 
@@ -40,21 +36,6 @@ class PlayerModel extends Model
         ");
 
     return $query->getResultArray();
-
-    // $this->builder()->select(['players.id','players.name','players.email', 'players.phone','players.player_id','accounts.name as agent-name']);
-    // $this->builder()->join('accounts','accounts.id = players.agent','left');
-    // // $this->builder()->join('accounts', 'accounts.operator = players.operator',' left');
-    // return $this;
-
-    //IDEAL FORMAT 
-    // SELECT players.id, players.operator, players.agent, 
-    // players.super_agent, players.name, players.email, players.phone, players.player_id,
-    //   (SELECT COUNT(transactions.id)   FROM transactions WHERE transactions.PLAYER_ID = players.player_id)
-    //   as 'transactions', (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator)
-    //    as 'operator-name', (SELECT accounts.name FROM accounts WHERE accounts.id = players.super_agent)
-    //     as 'super-agent-name', (SELECT accounts.name FROM accounts WHERE accounts.id = players.agent) as
-    //      'agent-name' FROM players
-
   }
 
   public function getPlayersWithSearch($search = null, $page = 1, $perPage = 10)
@@ -112,4 +93,5 @@ class PlayerModel extends Model
 
     return $this->db->query($query)->getNumRows();
   }
+
 }

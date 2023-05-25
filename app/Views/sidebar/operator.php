@@ -73,7 +73,7 @@
               </p>
             </a>
           </li>
-
+          
           <li class="nav-item">
             <a href="<?= base_url(session()->get('access') . '/news'); ?>" class="nav-link <?= ($menu == 'news') ? 'active':''; ?>">
             <i class="nav-icon fas fa-newspaper"></i>

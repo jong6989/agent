@@ -9,6 +9,7 @@ use App\Models\PlayerModel;
 use App\Models\GamePlayerModel;
 use App\Models\NewsModel;
 use App\Models\TransactionModel;
+use CodeIgniter\I18n\Time;
 
 class SuperAgent extends BaseController
 {
@@ -86,13 +87,10 @@ class SuperAgent extends BaseController
             $data['list'] = $this->wallet->where('account_id', $account_id)->limit(2000)->orderBy('id','DESC')->find() ?? [];
             $data['payouts'] = $this->wallet->where('account_id', $account_id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             foreach ($data['list'] as $key => $value) {
-                $data['list'][$key]['player'] = $this->player->where('player_id',$value['player_id'])->first();
+                $data['list'][$key]['player'] = $this->player->where('player_id',$value['player_id'])->first() ??  ['agent'=>'','super_agent'=>'','operator'=>''];
             }
             $data['commissions'] = $this->wallet->where('account_id', $account_id)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             
-            foreach ( $data['list'] as $k => $v) {
-                $data['list'][$k]['player'] = $this->player->where('player_id', $v['player_id'])->first();
-            }
         }
         
         if($var == 'dashboard'){
@@ -102,23 +100,31 @@ class SuperAgent extends BaseController
             $year = date('Y');
             
             //payout
-            $data['payout_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['payout_last_year'] = $this->wallet->where('account_id', $this->id)->where('year', intval($year) - 1)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
             
             //NEWS
-            // dd(print_r($this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')->join('accounts', 'accounts.id = news.account_id')->where('accounts.access', 'admin')->orWhere('accounts.access', 'operator')->findAll()));
-            $data['adminAndOperatorNews'] = $this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')
+            $time =     Time::now('asia/singapore');
+
+           $end = $time->subDays(2);
+
+            $data['adminNews'] = $this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')
                                                         ->join('accounts', 'accounts.id = news.account_id')
                                                         ->where('accounts.access', 'admin')
-                                                        ->orWhere('accounts.access', 'operator')
+                                                        ->where("DATE_FORMAT(news.created_at,'%Y-%m-%d') >= '$end' ")
                                                         ->orderBy('news.id', 'desc')
                                                         ->findAll(5);
+
+            $data['operatorNews'] = $this->news->select('news.id, news.title, news.content, news.img_path, news.created_at, accounts.name')
+                                                        ->join('accounts', 'accounts.id = news.account_id')
+                                                        ->where('accounts.access', 'operator')
+                                                        ->where("DATE_FORMAT(news.created_at,'%Y-%m-%d') >= '$end' ")
+                                                        ->orderBy('news.id', 'desc')
+                                                        ->findAll(5);            
             
             //income
-            $data['commission_day'] = $this->wallet->where('account_id', $this->id)->where('day', $day)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_month'] = $this->wallet->where('account_id', $this->id)->where('month', $month)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_last_month'] = $this->wallet->where('account_id', $this->id)->where('month', $last_month )->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
             $data['commission_year'] = $this->wallet->where('account_id', $this->id)->where('year', $year)->where('type', 'income')->select('sum(amount) as total')->first()['total'] ?? 0;
@@ -137,7 +143,7 @@ class SuperAgent extends BaseController
             $data['agents'] = $this->account->where('access', 'agent')->where('super_agent', $this->id)->countAllResults();
             $data['payouts'] = $this->wallet->where('account_id', $this->id)->where('type', 'payout')->select('sum(amount) as total')->first()['total'] ?? 0;
         }
-
+        
         if($var == 'news'){
             $allOperatorNews = $this->news->allNewsWithRelation($this->id)->find();
             
@@ -309,7 +315,7 @@ class SuperAgent extends BaseController
                 .view($this->access . '/profile',$data)
                 .view('footer/dashboard');
     }
-
+    
     public function news()
     {
         // NEWS
@@ -334,7 +340,7 @@ class SuperAgent extends BaseController
         $data = [
             "balance" => $this->balance,
             "id" => $this->id,
-            "menu" => 'super_agent_profile',
+            "menu" => '',
             "action" => '',
             "validation" => $this->validator,
             "default" => $default,
@@ -486,6 +492,7 @@ class SuperAgent extends BaseController
             . view($this->access . '/add_news', $data)
             . view('footer/dashboard');
     }
+
 
 
 }

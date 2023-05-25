@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Affiliates</h1>
+            <h1>Master Agents</h1>
           </div>
           
         </div>
@@ -50,7 +50,7 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Commission Share</th>
-                    <th>Area Distributor</th>
+                    <th>Super Agent</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -82,6 +82,12 @@
                               Change Password
                             </button>
                           </a>
+                          <a href="<?= base_url('upline/' . $v['id']); ?>">
+                            <button class="btn btn-warning btn-xs">
+                              <i class="fas fa-lock"></i>
+                              Change Network
+                            </button>
+                          </a>
                         </td>
                       </tr>
                     <?php endforeach; ?>
@@ -95,7 +101,7 @@
                     <th>Email</th>
                     <th>Address</th>
                     <th>Commission Share</th>
-                    <th>Area Distributor</th>
+                    <th>Super Agent</th>
                     <th>Total Commisssions</th>
                     <th>Status</th>
                     <th>Action</th>

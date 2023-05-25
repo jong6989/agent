@@ -11,7 +11,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Area Distributors</h1>
+            <h1>Super Agents</h1>
           </div>
           
         </div>
@@ -78,6 +78,12 @@
                             <button class="btn btn-danger btn-xs">
                               <i class="fas fa-lock"></i>
                               Change Password
+                            </button>
+                          </a>
+                          <a href="<?= base_url('upline/' . $v['id']); ?>">
+                            <button class="btn btn-warning btn-xs">
+                              <i class="fas fa-lock"></i>
+                              Change Network
                             </button>
                           </a>
                         </td>

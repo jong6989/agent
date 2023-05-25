@@ -27,43 +27,7 @@
             <div class="col-12">
               
 
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Upload Buenas report via spreedsheet with the following KEYS: ( 'TRANSACTION ID','PLAYER ID','BET TIME','CHANNEL TYPE','BET AMOUNT','PAYOUT','REFUND','GROSS GAMING REVENUE' ) </h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                    
-
-                    <div id="import_success" class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                      <h5><i class="icon fas fa-check"></i> Data Imported!</h5>
-                      Saved: <span id="imported_numbers"></span>
-                    </div>
-
-                    <div class="outer-container">
-
-                        <?= form_open_multipart( 'reports' )  ?>
-                            <div>
-                                <label>Choose Excel
-                                    File</label> <input type="file" name="file"
-                                    id="file" accept=".xls,.xlsx">
-                                <button type="submit" id="submit" name="import" class="btn btn-info"
-                                    class="btn-submit">Import</button>
-                        
-                            </div>
-                        <?= form_close(); ?>
-                        <div id="spinner" class="row">
-                          <div  class="spinner-border text-primary" role="status"></div>
-                          <h5> ------- Importing...</h5>
-                        </div>
-                        
-                    </div>
-
-
-                </div>
-                <!-- /.card-body -->
-              </div>
+              
 
 
               <div class="card">
@@ -74,16 +38,16 @@
                 <div class="card-body">
                     
                       <h4>
-                        Pending Transactions: <strong><?= number_format($current_trans_pending); ?></strong>
+                        Pending Transactions: <strong id="pending_transactions"><?= number_format($current_trans_pending); ?></strong>
                       </h4>
 
                       <h4>
-                        Processed Transactions: <strong><?= number_format($current_trans_processed); ?></strong>
+                        Processed Transactions: <strong id="completed_transactions"><?= number_format($current_trans_processed); ?></strong>
                       </h4>
 
                       <button id="process_available" class="btn btn-warning">
                         <i class="fas fa-share"></i>
-                        Process Available Transactions ( <strong><?= number_format($available_for_processing); ?></strong> )
+                        Process Available Transactions 
                       </button>
 
                       <div id="process_spinner" class="row">
@@ -104,7 +68,49 @@
                 <!-- /.card-body -->
               </div>
 
-
+            <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Upload Buenas report via spreedsheet with the following KEYS: ( 'TRANSACTION ID','PLAYER ID','BET TIME','CHANNEL TYPE','BET AMOUNT','PAYOUT','REFUND','GROSS GAMING REVENUE' ) </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        
+    
+                        <div id="import_success" class="alert alert-success alert-dismissible">
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <h5><i class="icon fas fa-check"></i> Data Imported!</h5>
+                          Saved: <span id="imported_numbers"></span>
+                        </div>
+    
+                        <div class="outer-container">
+    
+                            <?= form_open_multipart( 'reports' )  ?>
+                                <div>
+                                    <label>Choose Excel
+                                        File</label> <input type="file" name="file"
+                                        id="file" accept=".xls,.xlsx">
+                                    <button type="submit" id="submit" name="import" class="btn btn-info"
+                                        class="btn-submit">Import</button>
+                            
+                                </div>
+                            <?= form_close(); ?>
+                            <div id="spinner" class="row">
+                              <div  class="spinner-border text-primary" role="status"></div>
+                              <h5> ------- Importing...</h5>
+                            </div>
+                            
+                            <h5>Import Logs</h5>
+                              <ol>
+                                <?php foreach ($import_logs as $key => $value): ?>
+                                  <li><?= $value['info']; ?> , <?= $value['created_at']; ?> </li>
+                                <?php endforeach; ?>
+                              </ol>
+                        </div>
+    
+    
+                    </div>
+                <!-- /.card-body -->
+              </div>
 
 
             </div>
@@ -137,7 +143,7 @@
   $('#process_spinner').hide();
   var targetPath = '<?= $targetPath ?? ""; ?>';
   if(targetPath !== ""){
-    $('#spinner').show();
+    // $('#spinner').show();
     $.post( "<?= base_url('api/import_report'); ?>",{targetPath}, function( data ) {
       console.log('targetPath post',data);
       $('#spinner').hide();
@@ -156,5 +162,18 @@
       location.reload();
     });
   } );
+  
+  function load_transactions(){
+      $.get( "<?= base_url('api/get_transaction_count'); ?>", function( data ) {
+          
+      $("#pending_transactions").text(data.data.pending.toLocaleString());
+      $("#completed_transactions").text(data.data.processed.toLocaleString());
+      
+      setTimeout(() => {
+        load_transactions();
+      }, 5000);
+    }); 
+  }
+  load_transactions();
 
 </script>

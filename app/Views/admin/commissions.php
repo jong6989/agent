@@ -98,7 +98,7 @@
                         <td> <?= $v['id']; ?> </td>
                         <td> <?= $v['created_at']; ?> </td>
                         <td> <?= PESO . ' ' . $v['amount']; ?> </td>
-                        <td> <?= $v['type']; ?></td>
+                        <td> <?= $v['type']; ?> </td>
                         <td> <?= $v['transaction']; ?>-<?= $v['player_id']; ?></td>
                         <td>
                           

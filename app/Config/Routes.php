@@ -45,6 +45,7 @@ $routes->get('/api/(:any)', 'Api::$1');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/logout', 'Dashboard::logout');
 $routes->match(['get', 'post'], '/password/(:any)', 'Dashboard::change_password/$1');
+$routes->match(['get', 'post'], '/upline/(:any)', 'Dashboard::change_upline/$1');
 
 //super admin
 $routes->get('/super_admin', 'Admin::index/dashboard');
@@ -90,6 +91,13 @@ $routes->match(['get', 'post'], '/edit_player/(:any)', 'Player::edit_player/$1')
 $routes->get('/api', 'Api::index');
 $routes->post('/api/import_report', 'Api::import_report');
 $routes->post('/api/process_commission', 'Api::process_commission');
+$routes->post('/api/search_operator', 'Api::search_operator');
+$routes->post('/api/update_operator', 'Api::update_operator');
+$routes->post('/api/search_super_agent', 'Api::search_super_agent');
+$routes->post('/api/update_super_agent', 'Api::update_super_agent');
+$routes->post('/api/search_agent', 'Api::search_agent');
+$routes->post('/api/update_agent', 'Api::update_agent');
+$routes->get('/api/get_transaction_count', 'Api::get_transaction_count');
 
 //Payouts
 $routes->get('/payouts/(:any)', 'Payout::index/$1');

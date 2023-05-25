@@ -1,0 +1,11 @@
+runtime: php81
+
+# entrypoint: php index.php
+
+env_variables:
+  CLOUDSQL_CONNECTION_NAME: agentlink-8c911:asia-southeast1:agentlinkdb
+  CLOUDSQL_USER: root
+  CLOUDSQL_PASSWORD: rMg8jMA6fb9fx3uG
+
+runtime_config:
+  document_root: .

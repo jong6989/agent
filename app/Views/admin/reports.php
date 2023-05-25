@@ -63,16 +63,16 @@
                 <div class="card-body">
                     
                       <h4>
-                        Pending Transactions: <strong><?= number_format($current_trans_pending); ?></strong>
+                        Pending Transactions: <strong id="pending_transactions"><?= number_format($current_trans_pending); ?></strong>
                       </h4>
 
                       <h4>
-                        Processed Transactions: <strong><?= number_format($current_trans_processed); ?></strong>
+                        Processed Transactions: <strong id="completed_transactions"><?= number_format($current_trans_processed); ?></strong>
                       </h4>
 
                       <button id="process_available" class="btn btn-warning">
                         <i class="fas fa-share"></i>
-                        Process Available Transactions ( <strong><?= number_format($available_for_processing); ?></strong> )
+                        Process Available Transactions 
                       </button>
 
                       <div id="process_spinner" class="row">
@@ -171,7 +171,7 @@
   $('#process_spinner').hide();
   var targetPath = '<?= $targetPath ?? ""; ?>';
   if(targetPath !== ""){
-    $('#spinner').show();
+    // $('#spinner').show();
     $.post( "<?= base_url('api/import_report'); ?>",{targetPath}, function( data ) {
       console.log('targetPath post',data);
       $('#spinner').hide();
@@ -190,5 +190,18 @@
       location.reload();
     });
   } );
+  
+  function load_transactions(){
+      $.get( "<?= base_url('api/get_transaction_count'); ?>", function( data ) {
+          
+      $("#pending_transactions").text(data.data.pending.toLocaleString());
+      $("#completed_transactions").text(data.data.processed.toLocaleString());
+      
+      setTimeout(() => {
+        load_transactions();
+      }, 5000);
+    }); 
+  }
+  load_transactions();
 
 </script>

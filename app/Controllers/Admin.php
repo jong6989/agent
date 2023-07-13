@@ -30,44 +30,7 @@ class Admin extends BaseController
         $this->access = session()->get('access');
         $this->balance = $this->wallet->where('account_id', $this->id)->select('sum(amount) as total')->first()['total'] ?? 0;
         
-        //process player id
-        $pending_pair = $this->player->where('note !=','')->where('player_id','none')->find();
-        foreach ($pending_pair as $key => $player) {
-            $gameplayer_query = $this->gameplayer->where('game_player_id',$player['note'])->find();
-            if(count($gameplayer_query) > 0){
-                $gamePLayer = $gameplayer_query[0];
-
-                //if already paired
-                if($gamePLayer["linked"] == 1){
-                    $this->player->save([
-                        'id' => $player['id'],
-                        'note' => ''
-                    ]); // remove the note
-                }else {
-                    $this->gameplayer->save([
-                        "id" => $gamePLayer['id'],
-                        "affiliate_player_id" => $player['id'],
-                        "operator" => $player['operator'],
-                        "agency" => $player['agency'],
-                        "super_agent" => $player['super_agent'],
-                        "agent" => $player['agent'],
-                        "linked" => 1,
-                    ]);//update game player
-                    $this->transaction
-                        ->set('operator',$player['operator'])
-                        ->set('agency',$player['agency'])
-                        ->set('super_agent',$player['super_agent'])
-                        ->set('agent',$player['agent'])
-                        ->where('PLAYER_ID', $player['note'])
-                        ->update();//update all connected transactions
-                    $this->player->save([
-                        'id' => $player['id'],
-                        'note' => '',
-                        'player_id' => $player['note'],
-                    ]);
-                }
-            }
-        }
+        
     }
 
     public function index($var)
@@ -396,12 +359,10 @@ class Admin extends BaseController
             ];
         
             if (in_array($_FILES["file"]["type"], $allowedFileType)) {
-        
                 $targetPath = 'uploads/' . $_FILES['file']['name'];
                 move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
                 
                 $this->logs->save(["name"=>"import_reports","account_id"=> $this->id, "info" => $_FILES['file']['name'] ]);
-        
                 $data['targetPath'] = $targetPath;
             }
         }

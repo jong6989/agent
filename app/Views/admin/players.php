@@ -62,6 +62,7 @@
                   <thead>
                     <tr>
                       <th>ID</th>
+                      <th>Date</th>
                       <th>Operator</th>
                       <th>Area Distributor</th>
                       <th>Affiliate</th>
@@ -79,6 +80,7 @@
                       <?php foreach ($list as $k => $v) : ?>
                         <tr>
                           <td> <?= $v['id']; ?> </td>
+                          <td> <?= $v['created_at']; ?> </td>
                           <td> <?= $v['operator-name']; ?> </td>
                           <td> <?= $v['super-agent-name']; ?> </td>
                           <td> <?= $v['agent-name']; ?> </td>
@@ -121,6 +123,7 @@
                   <tfoot>
                     <tr>
                       <th>ID</th>
+                      <th>Date</th>
                       <th>Operator</th>
                       <th>Area Distributor</th>
                       <th>Affiliate</th>

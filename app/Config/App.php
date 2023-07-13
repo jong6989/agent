@@ -24,7 +24,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'http://34.173.214.9/';
+    public $baseURL = 'https://agentlink.club/'; //'http://34.170.138.196/';
 
     /**
      * --------------------------------------------------------------------------

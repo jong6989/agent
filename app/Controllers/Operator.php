@@ -71,7 +71,7 @@ class Operator extends BaseController
         }
         if($var == 'players'){
             $list = [];
-            $limit = $this->request->getVar('limit') ?? 10000;
+            $limit = $this->request->getVar('limit') ?? 80000;
             $like = $this->request->getVar('like') ?? '';
             $like_key = $this->request->getVar('like_key') ?? '';
             $q = $this->player;

@@ -4,7 +4,7 @@ namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\IncomingRequest;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
-use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
+// use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
 use App\Models\AccountModel;
 use App\Models\LogsModel;
@@ -68,12 +68,12 @@ class Api extends BaseController
         $saved = 0;
         
         
-        // $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
         
-        // $spreadSheet = $Reader->load($targetPath);
-        // $excelSheet = $spreadSheet->getActiveSheet();
-        // $excelData = $excelSheet->toArray();
-        // $dataCount = count($excelData);
+        $spreadSheet = $Reader->load($targetPath);
+        $excelSheet = $spreadSheet->getActiveSheet();
+        $excelData = $excelSheet->toArray();
+        $dataCount = count($excelData);
 
         $data = [
             "items" => 0,
@@ -82,117 +82,36 @@ class Api extends BaseController
         ];
 
         
-        
-        $reader = ReaderEntityFactory::createXLSXReader();
-        $reader->open($targetPath);
-        # read each cell of each row of each sheet
-        foreach ($reader->getSheetIterator() as $sheet) {
-            foreach ($sheet->getRowIterator() as $row) {
+        // // /////////////////// Box\Spout
+        // $reader = ReaderEntityFactory::createXLSXReader();
+        // $reader->open($targetPath);
+        // # read each cell of each row of each sheet
+        // foreach ($reader->getSheetIterator() as $sheet) {
+        //     foreach ($sheet->getRowIterator() as $row) {
                 
-                // if($saved == 150){$reader->close(); die();}
+        //         // if($saved == 150){$reader->close(); die();}
                 
-                //compile cells
-                $v = [];
-                foreach ($row->getCells() as $cell) {
-                    $v[] = $cell->getValue();
-                }
-                if($saved == 0){
-                    //get keys
-                    foreach ($target_keys as $key => $value) {
-                        if(in_array($value,$v)){
-                            $target_index[] = array_search($value,$v);
-                        }
-                    }
-                    $data['target_index'] = $target_index;
-                }else {
-                    $iid = $v[$target_index[0]];//trans ID
-                
-                    if( $iid !== '' && $iid !== ' ' && $iid !== null && $iid !== '0' && $iid !== 0){
-                        $exist = $this->transaction->where('TRANSACTION_ID', $iid)->countAllResults();
-                        
-                        if($exist == 0){
-                            echo  ' here<br>';
-                            $newTransData = [];
-                            //build data set
-                            foreach ($target_keys as $x => $y) {
-                                $x_index = str_replace(" ","_",$y);
-                                $x_value = $v[$target_index[$x]];
-                                $newTransData[$x_index] = $x_value ?? 0;
-                            }
-                            //save to database count($target_keys)
-                            if(count($newTransData) == count($target_keys) ){
-                                //save game player data
-                                $playerId = $v[$target_index[1]];
-                                $player = $this->gameplayer->where('game_player_id', $playerId)->find();
-                                
-                                
-                                if(count($player) == 0){
-                                    $this->gameplayer->save([
-                                        "game_player_id" => $playerId
-                                    ]);
-                                }else {
-                                    $p = $player[0];
-                                    $newTransData['operator'] = $p['operator'];
-                                    $newTransData['agency'] = $p['agency'];
-                                    $newTransData['super_agent'] = $p['super_agent'];
-                                    $newTransData['agent'] = $p['agent'];
-                                }
-                                
-                                if($newTransData['BET_TIME']){
-                                    $newTransData['BET_TIME'] = json_decode(json_encode($newTransData['BET_TIME']), true);
-                                    if($newTransData['BET_TIME']['date']){
-                                        $newTransData['BET_TIME'] = $newTransData['BET_TIME']['date'];
-                                        $dateRaw = explode(' ',$newTransData['BET_TIME']);
-                                        
-                                        if(count($dateRaw) > 0){
-                                            $dateArray = explode('-',$dateRaw[0]);
-                                            if($dateArray[2]){
-                                                $newTransData['year'] = $dateArray[0];
-                                                $newTransData['month'] = $dateArray[1];
-                                                $newTransData['day'] = $dateArray[2];
-                                            }
-                                        } 
-                                    }
-                                }
-                               
-                                
-                                $this->transaction->save($newTransData);
-    
-                                
-                            }
-                                
-                        }
-                    }
-                    echo '--trans id: '. $iid . '--'.$saved.'--,';
-                }
-                
-                $saved++;
-                
-            }
-        }
-        $reader->close();
-        
-        
-        //////
-
-        // if($dataCount > 1){
-        //     $saved = 0;
-        //     //get keys
-        //     foreach ($target_keys as $key => $value) {
-        //         if(in_array($value,$excelData[0])){
-        //             $target_index[] = array_search($value,$excelData[0]);
+        //         //compile cells
+        //         $v = [];
+        //         foreach ($row->getCells() as $cell) {
+        //             $v[] = $cell->getValue();
         //         }
-        //     }
-        //     $data['target_index'] = $target_index;
-        //     //save to DB
-        //     foreach ($excelData as $k => $v) {
-        //         if($k > 0 ){
+        //         if($saved == 0){
+        //             //get keys
+        //             foreach ($target_keys as $key => $value) {
+        //                 if(in_array($value,$v)){
+        //                     $target_index[] = array_search($value,$v);
+        //                 }
+        //             }
+        //             $data['target_index'] = $target_index;
+        //         }else {
         //             $iid = $v[$target_index[0]];//trans ID
+                
         //             if( $iid !== '' && $iid !== ' ' && $iid !== null && $iid !== '0' && $iid !== 0){
-                       
-                        
         //                 $exist = $this->transaction->where('TRANSACTION_ID', $iid)->countAllResults();
+                        
         //                 if($exist == 0){
+        //                     echo  ' here<br>';
         //                     $newTransData = [];
         //                     //build data set
         //                     foreach ($target_keys as $x => $y) {
@@ -205,6 +124,8 @@ class Api extends BaseController
         //                         //save game player data
         //                         $playerId = $v[$target_index[1]];
         //                         $player = $this->gameplayer->where('game_player_id', $playerId)->find();
+                                
+                                
         //                         if(count($player) == 0){
         //                             $this->gameplayer->save([
         //                                 "game_player_id" => $playerId
@@ -216,30 +137,111 @@ class Api extends BaseController
         //                             $newTransData['super_agent'] = $p['super_agent'];
         //                             $newTransData['agent'] = $p['agent'];
         //                         }
-        //                         $dateRaw = explode(' ',$newTransData['BET_TIME']);
                                 
-        //                         if(count($dateRaw) > 1){
-        //                             $dateArray = explode('/',$dateRaw[0]);
-        //                             if(count($dateArray) == 3){
-        //                                 $newTransData['month'] = $dateArray[0];
-        //                                 $newTransData['day'] = $dateArray[1];
-        //                                 $newTransData['year'] = $dateArray[2];
+        //                         if($newTransData['BET_TIME']){
+        //                             $newTransData['BET_TIME'] = json_decode(json_encode($newTransData['BET_TIME']), true);
+        //                             if($newTransData['BET_TIME']['date']){
+        //                                 $newTransData['BET_TIME'] = $newTransData['BET_TIME']['date'];
+        //                                 $dateRaw = explode(' ',$newTransData['BET_TIME']);
+                                        
+        //                                 if(count($dateRaw) > 0){
+        //                                     $dateArray = explode('-',$dateRaw[0]);
+        //                                     if($dateArray[2]){
+        //                                         $newTransData['year'] = $dateArray[0];
+        //                                         $newTransData['month'] = $dateArray[1];
+        //                                         $newTransData['day'] = $dateArray[2];
+        //                                     }
+        //                                 } 
         //                             }
         //                         }
+                               
+                                
         //                         $this->transaction->save($newTransData);
-
-        //                         $saved++;
+    
+                                
         //                     }
                                 
         //                 }
         //             }
-
+        //             echo '--trans id: '. $iid . '--'.$saved.'--,';
         //         }
+                
+        //         $saved++;
+                
         //     }
-        //     // $data['saved'] = $saved;
-        //     $data['imported'] = $saved;
-
         // }
+        // $reader->close();
+
+        // // /////////////////// end Box\Spout
+        
+        
+        ////  PhpOffice\PhpSpreadsheet
+        if($dataCount > 1){
+            $saved = 0;
+            //get keys
+            foreach ($target_keys as $key => $value) {
+                if(in_array($value,$excelData[0])){
+                    $target_index[] = array_search($value,$excelData[0]);
+                }
+            }
+            $data['target_index'] = $target_index;
+            //save to DB
+            foreach ($excelData as $k => $v) {
+                if($k > 0 ){
+                    $iid = $v[$target_index[0]];//trans ID
+                    if( $iid !== '' && $iid !== ' ' && $iid !== null && $iid !== '0' && $iid !== 0){
+                       
+                        
+                        $exist = $this->transaction->where('TRANSACTION_ID', $iid)->countAllResults();
+                        if($exist == 0){
+                            $newTransData = [];
+                            //build data set
+                            foreach ($target_keys as $x => $y) {
+                                $x_index = str_replace(" ","_",$y);
+                                $x_value = $v[$target_index[$x]];
+                                $newTransData[$x_index] = $x_value ?? 0;
+                            }
+                            //save to database count($target_keys)
+                            if(count($newTransData) == count($target_keys) ){
+                                //save game player data
+                                $playerId = $v[$target_index[1]];
+                                $player = $this->gameplayer->where('game_player_id', $playerId)->find();
+                                if(count($player) == 0){
+                                    $this->gameplayer->save([
+                                        "game_player_id" => $playerId
+                                    ]);
+                                }else {
+                                    $p = $player[0];
+                                    $newTransData['operator'] = $p['operator'];
+                                    $newTransData['agency'] = $p['agency'];
+                                    $newTransData['super_agent'] = $p['super_agent'];
+                                    $newTransData['agent'] = $p['agent'];
+                                }
+                                $dateRaw = explode(' ',$newTransData['BET_TIME']);
+                                
+                                if(count($dateRaw) > 1){
+                                    $dateArray = explode('/',$dateRaw[0]);
+                                    if(count($dateArray) == 3){
+                                        $newTransData['month'] = $dateArray[0];
+                                        $newTransData['day'] = $dateArray[1];
+                                        $newTransData['year'] = $dateArray[2];
+                                    }
+                                }
+                                $this->transaction->save($newTransData);
+
+                                $saved++;
+                            }
+                                
+                        }
+                    }
+
+                }
+            }
+            // $data['saved'] = $saved;
+            $data['imported'] = $saved;
+
+        }
+        /////////////// end PhpOffice\PhpSpreadsheet
 
 
         return $this->respond($data,200);
@@ -357,6 +359,25 @@ class Api extends BaseController
         }
 
         return $this->respond($data,200);
+    }
+
+
+
+    public function check_processing(){
+
+        $count = 0;
+
+        $all_linked_players = $this->gameplayer->where("linked",1)->find();
+        foreach ($all_linked_players as $k => $v) {
+
+            $ggr = $this->transaction->where("PLAYER_ID", $v['game_player_id'])->countAllResults();
+            $count += $ggr;
+            
+
+
+        }
+
+        return $this->respond(['data'=>$count],200);
     }
 
     public function search_operator(){
@@ -546,6 +567,57 @@ class Api extends BaseController
                     'processed' => $done,
                     'pending' => $pending
                 ],
+            'status' => 'success',
+        ];
+
+        return $this->respond($data,200);
+    }
+    
+
+    public function auto_pair(){
+
+        
+        //process player id
+        $pending_pair = $this->player->where('note !=','')->where('player_id','none')->find();
+        foreach ($pending_pair as $key => $player) {
+            $gameplayer_query = $this->gameplayer->where('game_player_id',$player['note'])->find();
+            if(count($gameplayer_query) > 0){
+                $gamePLayer = $gameplayer_query[0];
+
+                //if already paired
+                if($gamePLayer["linked"] == 1){
+                    $this->player->save([
+                        'id' => $player['id'],
+                        'note' => ''
+                    ]); // remove the note
+                }else {
+                    $this->gameplayer->save([
+                        "id" => $gamePLayer['id'],
+                        "affiliate_player_id" => $player['id'],
+                        "operator" => $player['operator'],
+                        "agency" => $player['agency'],
+                        "super_agent" => $player['super_agent'],
+                        "agent" => $player['agent'],
+                        "linked" => 1,
+                    ]);//update game player
+                    $this->transaction
+                        ->set('operator',$player['operator'])
+                        ->set('agency',$player['agency'])
+                        ->set('super_agent',$player['super_agent'])
+                        ->set('agent',$player['agent'])
+                        ->where('PLAYER_ID', $player['note'])
+                        ->update();//update all connected transactions
+                    $this->player->save([
+                        'id' => $player['id'],
+                        'note' => '',
+                        'player_id' => $player['note'],
+                    ]);
+                }
+            }
+        }
+
+        $data = [
+            'data' => 'ok',
             'status' => 'success',
         ];
 

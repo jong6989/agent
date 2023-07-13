@@ -50,7 +50,7 @@ class PlayerModel extends Model
     if ($search) {
       $search = $this->db->escapeString($search);
       $query =   "SELECT players.id, players.operator, players.agent, players.super_agent, players.name, players.email, 
-      players.phone, players.player_id, (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator) as 
+      players.phone, players.player_id, players.created_at, (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator) as 
       'operator-name', (SELECT accounts.name FROM accounts WHERE accounts.id = players.super_agent) as 'super-agent-name',
        (SELECT accounts.name FROM accounts WHERE accounts.id = players.agent) as 'agent-name' FROM players WHERE
         (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator ) LIKE '%$search%' OR 
@@ -60,7 +60,7 @@ class PlayerModel extends Model
           '%$search%' OR players.player_id LIKE '%$search%' LIMIT $perPage OFFSET $offSetValue";
     } else {
       $query = "SELECT players.id, players.operator, players.agent, players.super_agent, players.name, players.email,
-       players.phone, players.player_id, (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator) as 
+       players.phone, players.player_id, players.created_at, (SELECT accounts.name FROM accounts WHERE accounts.id = players.operator) as 
        'operator-name', (SELECT accounts.name FROM accounts WHERE accounts.id = players.super_agent) as 'super-agent-name', 
        (SELECT accounts.name FROM accounts WHERE accounts.id = players.agent) as 'agent-name' FROM players LIMIT $perPage OFFSET $offSetValue";
     }

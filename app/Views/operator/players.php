@@ -43,6 +43,7 @@
                         <th>Operator</th>
                         <th>Area Distributor</th>
                         <th>Affiliate</th>
+                        <th>Date</th>
                         <th>Player ID</th>
                         <th>Player Name</th>
                         <th>Player Email</th>
@@ -62,6 +63,7 @@
                             <td> <?= $v['operator']['name']; ?> </td>
                             <td> <?= $v['super_agent']['name']; ?> </td>
                             <td> <?= $v['agent']['name']; ?> </td>
+                            <td> <?= $v['created_at']; ?> </td>
                             <td> <?= $v['player_id']; ?> </td>
                             <td> <?= $v['name']; ?> </td>
                             <td> <?= $v['email']; ?> </td>
@@ -97,6 +99,7 @@
                         <th>Operator</th>
                         <th>Area Distributor</th>
                         <th>Affiliate</th>
+                        <th>Date</th>
                         <th>Player ID</th>
                         <th>Player Name</th>
                         <th>Player Email</th>

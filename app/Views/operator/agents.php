@@ -35,6 +35,7 @@
                   <thead>
                   <tr>
                     <th>ID</th>
+                    <th>Date</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -50,6 +51,7 @@
                     <?php foreach ($list as $k => $v): ?>
                       <tr>
                         <td> <?= $v['id']; ?> </td>
+                        <td> <?= $v['created_at']; ?> </td>
                         <td> <?= $v['name']; ?> </td>
                         <td> <?= $v['email']; ?> </td>
                         <td> <?= $v['phone']; ?> </td>
@@ -71,6 +73,7 @@
                   <tfoot>
                   <tr>
                     <th>ID</th>
+                    <th>Date</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>

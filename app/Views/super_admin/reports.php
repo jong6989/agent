@@ -78,8 +78,7 @@
     
                         <div id="import_success" class="alert alert-success alert-dismissible">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                          <h5><i class="icon fas fa-check"></i> Data Imported!</h5>
-                          Saved: <span id="imported_numbers"></span>
+                          <h5><i class="icon fas fa-check"></i> Data Uploaded!</h5>
                         </div>
     
                         <div class="outer-container">
@@ -147,7 +146,6 @@
     $.post( "<?= base_url('api/import_report'); ?>",{targetPath}, function( data ) {
       console.log('targetPath post',data);
       $('#spinner').hide();
-      $("#imported_numbers").text(data.imported + ' / ' + data.items);
       $('#import_success').show();
       setTimeout(() => {
         location.href = '<?= base_url('reports'); ?>';
@@ -171,7 +169,7 @@
       
       setTimeout(() => {
         load_transactions();
-      }, 5000);
+      }, 1000);
     }); 
   }
   load_transactions();

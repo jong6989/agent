@@ -40,6 +40,8 @@ $routes->set404Override();
 
 
 $routes->get('/', 'Login::index');
+$routes->addRedirect('/public', '/');
+$routes->addRedirect('/public/(:any)', '/$1');
 $routes->match(['get', 'post'], '/login', 'Login::index');
 $routes->get('/api/(:any)', 'Api::$1');
 $routes->get('/dashboard', 'Dashboard::index');
@@ -98,6 +100,8 @@ $routes->post('/api/update_super_agent', 'Api::update_super_agent');
 $routes->post('/api/search_agent', 'Api::search_agent');
 $routes->post('/api/update_agent', 'Api::update_agent');
 $routes->get('/api/get_transaction_count', 'Api::get_transaction_count');
+$routes->get('/api/check_processing', 'Api::check_processing');
+$routes->get('/api/auto_pair', 'Api::auto_pair');
 
 //Payouts
 $routes->get('/payouts/(:any)', 'Payout::index/$1');
